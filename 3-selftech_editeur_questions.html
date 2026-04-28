@@ -349,7 +349,7 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
     <p>Les <strong id="modal-q-count"></strong> questions actuelles seront remplacées par de nouvelles questions générées par l'IA.</p>
     <div class="modal-acts">
       <button class="btn-cancel" onclick="closeRegenModal()">Annuler</button>
-      <button class="btn-confirm" onclick="confirmRegen()">Régénérer</button>
+      <button class="btn-confirm" onclick="confirmRegen()">Générer</button>
     </div>
   </div>
 </div>
@@ -476,7 +476,7 @@ function renderQuestions(ch) {
   const pct = Math.round((n / 10) * 100);
 
   const qHTML = n === 0
-    ? `<div class="empty-q">Aucune question — régénérez avec l'IA, pichez dans les bibliothèques ou ajoutez manuellement</div>`
+    ? `<div class="empty-q">Aucune question — régénérez avec l'IA, piochez dans les bibliothèques ou ajoutez manuellement</div>`
     : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
 
   document.getElementById('main-editor').innerHTML = `
