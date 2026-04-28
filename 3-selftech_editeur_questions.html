@@ -63,8 +63,11 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
 .sb-bot{margin-top:auto;padding-top:14px;border-top:1px solid #e8edf4;display:flex;flex-direction:column;gap:6px}
 .sb-total{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;text-align:center;padding:0 4px}
 .sb-total strong{color:#18375d}
-.btn-save{width:100%;background:#18375d;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif}
-.btn-save:hover{background:#122a47}
+.btn-save{width:100%;background:#18375d;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.15s}
+.btn-save:hover:not(:disabled){background:#122a47}
+.btn-save:disabled{background:#c5ccd5;cursor:not-allowed;opacity:0.7}
+.btn-save-hint{font-size:10px;color:#eb6366;font-family:'Asap',sans-serif;text-align:center;padding:0 4px;line-height:1.4;display:none}
+.btn-save-hint.visible{display:block}
 
 /* ── MAIN ──────────────────────────────────────── */
 .main-editor{padding:22px 28px;overflow-y:auto;background:#fff}
@@ -310,7 +313,8 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
       <div id="chap-nav"></div>
       <div class="sb-bot">
         <div class="sb-total" id="sb-total"></div>
-        <button class="btn-save">Enregistrer le thème</button>
+        <div class="btn-save-hint" id="btn-save-hint">4 questions min. par chapitre</div>
+        <button class="btn-save" id="btn-save" onclick="trySave()">Enregistrer le thème</button>
       </div>
     </div>
 
@@ -341,6 +345,19 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
   <div class="panel-list" id="panel-list"></div>
 </div>
 
+<!-- MODALE ENREGISTREMENT BLOQUÉ -->
+<div class="modal-overlay" id="modal-save-blocked">
+  <div class="modal">
+    <div style="font-size:22px;margin-bottom:12px">🔒</div>
+    <h3>Impossible d'enregistrer le thème</h3>
+    <p>Chaque chapitre doit contenir au moins <strong>4 questions</strong> avant de pouvoir enregistrer. Les chapitres suivants sont incomplets :</p>
+    <div id="modal-save-list" style="display:flex;flex-direction:column;gap:6px;margin:12px 0 20px"></div>
+    <div class="modal-acts">
+      <button class="btn-confirm" style="background:#18375d" onclick="closeSaveModal()">Compléter les questions</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODALE REGEN -->
 <div class="modal-overlay" id="modal-regen">
   <div class="modal">
@@ -349,7 +366,7 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
     <p>Les <strong id="modal-q-count"></strong> questions actuelles seront remplacées par de nouvelles questions générées par l'IA.</p>
     <div class="modal-acts">
       <button class="btn-cancel" onclick="closeRegenModal()">Annuler</button>
-      <button class="btn-confirm" onclick="confirmRegen()">Générer</button>
+      <button class="btn-confirm" onclick="confirmRegen()">Régénérer</button>
     </div>
   </div>
 </div>
@@ -476,7 +493,7 @@ function renderQuestions(ch) {
   const pct = Math.round((n / 10) * 100);
 
   const qHTML = n === 0
-    ? `<div class="empty-q">Aucune question — régénérez avec l'IA, piochez dans les bibliothèques ou ajoutez manuellement</div>`
+    ? `<div class="empty-q">Aucune question — régénérez avec l'IA, pichez dans les bibliothèques ou ajoutez manuellement</div>`
     : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
 
   document.getElementById('main-editor').innerHTML = `
@@ -699,20 +716,20 @@ function renderProfils(ch) {
 
 // ── INTERACTIONS QUESTIONS ────────────────────────────────────────────────────
 function toggleCard(id) { openCards[id] = !openCards[id]; renderMain(); }
-function deleteQ(id) { chapters[activeChap].questions = chapters[activeChap].questions.filter(q => q.id !== id); delete openCards[id]; renderNav(); renderMain(); }
+function deleteQ(id) { chapters[activeChap].questions = chapters[activeChap].questions.filter(q => q.id !== id); delete openCards[id]; renderNav(); renderMain(); updateSaveButton(); }
 function regenOne(id, btn) {
   btn.style.animation = 'spin 0.7s linear infinite'; btn.disabled = true;
   setTimeout(() => {
     const ch = chapters[activeChap], idx = ch.questions.findIndex(q => q.id === id);
     if (idx > -1) ch.questions[idx] = { id, type: 'choix', prov: 'AI', text: "Lors d'un briefing sécurité, vous réalisez que vous n'avez pas bien mémorisé une consigne. Que faites-vous ?", tags: [{t:'Connaissance',ai:true},{t:'Réaction',ai:true}], answers: [{l:"Je fais semblant d'avoir compris",s:0},{l:"Je demande à un collègue après la réunion",s:1},{l:"Je pose la question immédiatement, sans hésiter",s:2}] };
-    renderNav(); renderMain();
+    renderNav(); renderMain(); updateSaveButton();
   }, 1000);
 }
 function addManual() {
   if (chapters[activeChap].questions.length >= 10) return;
   const id = 'q' + Date.now();
   chapters[activeChap].questions.push({ id, type: 'choix', prov: 'CLIENT', text: "Nouvelle mise en situation", tags: [], answers: [{l:"Réponse A",s:0},{l:"Réponse B",s:1},{l:"Réponse C",s:2}] });
-  openCards[id] = true; renderNav(); renderMain();
+  openCards[id] = true; renderNav(); renderMain(); updateSaveButton();
 }
 function removeTag(qid, ti) { const q = chapters[activeChap].questions.find(q => q.id === qid); if (q) q.tags.splice(ti, 1); renderMain(); }
 function addTag(qid) { const t = prompt('Nom du tag :'); if (!t) return; const q = chapters[activeChap].questions.find(q => q.id === qid); if (q && q.tags.length < 6) q.tags.push({t, ai:false}); renderMain(); }
@@ -731,7 +748,7 @@ function confirmRegen() {
     {id:'qr4',type:'likert',prov:'AI',text:"Je connais le plan d'évacuation de mon bâtiment.",tags:[{t:'Évacuation',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
     {id:'qr5',type:'choix',prov:'AI',text:"Un premier incendie se déclare dans un local voisin. Votre premier réflexe ?",tags:[{t:'Incendie',ai:true},{t:'Réflexe',ai:true}],answers:[{l:"J'évalue si je peux l'éteindre seul",s:0},{l:"J'alerte et j'attends des instructions",s:1},{l:"J'alerte immédiatement et j'évacue",s:2}]},
   ];
-  openCards = {}; renderNav(); renderMain();
+  openCards = {}; renderNav(); renderMain(); updateSaveButton();
 }
 
 // ── SCORING ───────────────────────────────────────────────────────────────────
@@ -837,14 +854,52 @@ function addFromLib(qid) {
   if (!bq) return;
   bq.added = true;
   chapters[activeChap].questions.push({ id: 'q' + Date.now(), type: 'likert', prov: bq.prov, text: bq.text, tags: bq.tags.map(t => ({t, ai:false})), answers: [{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}] });
-  renderNav(); renderMain();
+  renderNav(); renderMain(); updateSaveButton();
   renderPanelList(document.getElementById('panel-search-inp').value, activeFilterTag);
+}
+
+// ── SAVE ──────────────────────────────────────────────────────────────────────
+function updateSaveButton() {
+  const incomplete = chapters.filter(c => c.questions.length < 4);
+  const btn = document.getElementById('btn-save');
+  const hint = document.getElementById('btn-save-hint');
+  if (incomplete.length === 0) {
+    btn.disabled = false;
+    hint.classList.remove('visible');
+  } else {
+    btn.disabled = true;
+    hint.classList.add('visible');
+  }
+}
+
+function trySave() {
+  const incomplete = chapters.filter(c => c.questions.length < 4);
+  if (incomplete.length > 0) {
+    // Construire la liste des chapitres incomplets
+    const list = document.getElementById('modal-save-list');
+    list.innerHTML = incomplete.map(c => `
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:9px 14px">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${c.name}</div>
+          <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;margin-top:2px">${c.questions.length} question${c.questions.length !== 1 ? 's' : ''} — il en faut au moins 4</div>
+        </div>
+        <button onclick="closeSaveModal();setTab(${c.id-1},'questions')" style="background:#eb6366;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Asap,sans-serif">Compléter →</button>
+      </div>`).join('');
+    document.getElementById('modal-save-blocked').classList.add('on');
+    return;
+  }
+  // Tout bon → simuler sauvegarde
+  alert('Thème enregistré avec succès !');
+}
+
+function closeSaveModal() {
+  document.getElementById('modal-save-blocked').classList.remove('on');
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderNav();
 renderMain();
+updateSaveButton();
 </script>
 </body>
 </html>
-
