@@ -1,0 +1,273 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.shell{font-family:'Asap',sans-serif;border-radius:14px;border:1px solid #cdd5e0;background:#fff}
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;border-radius:14px 14px 0 0}
+.logo{display:flex;align-items:stretch}
+.logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
+.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
+.logo-tech span{font-size:8px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:0.5px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;transition:all 0.12s;font-family:'Asap',sans-serif}
+.sn.on{background:#18375d;color:#fff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+
+/* Breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:6px;padding:12px 24px;border-bottom:1px solid #f0f4f8;background:#fafbfc}
+.bc-link{font-size:12px;color:#007883;cursor:pointer;font-weight:500;font-family:'Asap',sans-serif}
+.bc-sep{font-size:12px;color:#c5ccd5}
+.bc-cur{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
+
+/* Barre 2 étapes */
+.steps{display:flex;align-items:center;gap:0;padding:16px 24px;border-bottom:1px solid #f0f4f8;background:#fff}
+.step-item{display:flex;align-items:center;gap:8px;cursor:pointer}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Asap',sans-serif;flex-shrink:0;transition:all 0.2s}
+.step-circle.on{background:#18375d;color:#fff}
+.step-circle.done{background:#007883;color:#fff}
+.step-circle.off{background:#edf1f7;color:#94a3b8}
+.step-lbl{font-size:13px;font-weight:600;font-family:'Asap',sans-serif;transition:all 0.2s}
+.step-lbl.on{color:#18375d}
+.step-lbl.done{color:#007883}
+.step-lbl.off{color:#c5ccd5}
+.step-connector{flex:1;height:2px;margin:0 14px;border-radius:1px;transition:background 0.3s}
+.step-connector.done{background:#007883}
+.step-connector.off{background:#e2e8f0}
+
+/* Layout 2 colonnes */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:460px}
+.col-left{padding:24px;border-right:1px solid #f0f4f8}
+.col-right{padding:24px;background:#fafbfc;border-radius:0 0 14px 0}
+
+.col-title{font-size:13px;font-weight:700;color:#18375d;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px;font-family:'Asap',sans-serif}
+
+/* Formulaire */
+.ai-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,#18375d,#007883);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:14px;font-family:'Asap',sans-serif;letter-spacing:0.04em}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:10px;font-weight:700;color:#18375d;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;font-family:'Asap',sans-serif}
+.field label span{color:#eb6366}
+.inp{width:100%;padding:9px 13px;border:1px solid #d8e0ea;border-radius:8px;font-size:13px;color:#18375d;font-family:'Asap',sans-serif;outline:none;transition:border-color 0.15s;background:#fff}
+.inp:focus{border-color:#18375d}
+.inp::placeholder{color:#c5ccd5}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+textarea.inp{resize:vertical;min-height:56px;line-height:1.5}
+.slider-row{display:flex;align-items:center;gap:10px;margin-top:6px}
+.slider-row input[type=range]{flex:1;accent-color:#18375d;cursor:pointer}
+.slider-hint{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif}
+.slider-val{font-size:17px;font-weight:700;color:#18375d;min-width:20px;font-family:'Asap',sans-serif}
+.btn-generate{background:#eb6366;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:8px;margin-top:18px;width:100%;justify-content:center}
+.btn-generate:hover{background:#d4474a}
+
+/* Côté chapitres */
+.empty-chap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:#c5ccd5;font-size:13px;font-family:'Asap',sans-serif;text-align:center;padding:20px}
+.empty-ico{font-size:32px;opacity:0.4}
+
+/* Loading */
+.loading{display:none;align-items:center;gap:10px;color:#18375d;font-size:13px;font-weight:500;font-family:'Asap',sans-serif;padding:20px 0;justify-content:center}
+.loading.on{display:flex}
+.spin{width:18px;height:18px;border:2px solid #d8e0ea;border-top-color:#18375d;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Liste chapitres */
+.chap-result{display:none}
+.chap-result.on{display:block}
+.result-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.result-theme{font-size:13px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px}
+.result-count{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif}
+.edit-note{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;font-style:italic;margin-bottom:14px}
+.chap-list{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.chap-item{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;transition:border-color 0.12s}
+.chap-item:hover{border-color:#b8c4d4}
+.chap-left{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0}
+.chap-tag{font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;font-family:'Asap',sans-serif}
+.chap-num{width:26px;height:26px;border-radius:50%;background:#18375d;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Asap',sans-serif}
+.chap-body{flex:1;min-width:0}
+.chap-name{font-size:13px;font-weight:600;color:#18375d;margin-bottom:3px;font-family:'Asap',sans-serif;outline:none;border-radius:4px;padding:1px 3px}
+.chap-name:focus{background:#edf1f7}
+.chap-desc{font-size:11px;color:#64748b;line-height:1.5;font-family:'Asap',sans-serif;outline:none;border-radius:4px;padding:1px 3px}
+.chap-desc:focus{background:#edf1f7}
+.chap-edit-btn{color:#c5ccd5;font-size:12px;cursor:pointer;padding:3px;border-radius:5px;border:none;background:transparent;flex-shrink:0}
+.chap-edit-btn:hover{background:#f0f4f8;color:#18375d}
+.result-actions{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid #f0f4f8}
+.btn-regen{background:#edf1f7;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:5px}
+.btn-regen:hover{background:#dde3ed}
+.btn-validate{background:#007883;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px}
+.btn-validate:hover{background:#005f65}
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <div class="logo">
+      <span class="logo-self">SELF</span>
+      <div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div>
+    </div>
+    <div class="tb-sp"></div>
+    <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
+  </div>
+  <div class="subnav">
+    <button class="sn">Dashboard</button>
+    <button class="sn">Mes autodiagnostics</button>
+    <button class="sn on">Ma bibliothèque</button>
+    <button class="sn">Bibliothèque partagée</button>
+    <button class="sn">Résultats</button>
+    <button class="sn">Paramètres</button>
+  </div>
+  <div class="breadcrumb">
+    <span class="bc-link">Ma bibliothèque</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-cur">Nouveau thème</span>
+  </div>
+
+  <!-- Barre 2 étapes -->
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-circle on" id="sc1">1</div>
+      <span class="step-lbl on" id="sl1">Thème</span>
+    </div>
+    <div class="step-connector off" id="connector"></div>
+    <div class="step-item">
+      <div class="step-circle off" id="sc2">2</div>
+      <span class="step-lbl off" id="sl2">Chapitres</span>
+    </div>
+  </div>
+
+  <!-- 2 colonnes -->
+  <div class="two-col">
+    <!-- Gauche : formulaire -->
+    <div class="col-left">
+      <div class="ai-badge">✦ Génération par IA</div>
+      <div class="field">
+        <label>Nom du thème <span>*</span></label>
+        <input class="inp" id="inp-name" type="text" placeholder="Ex : Sécurité & culture de sûreté…">
+      </div>
+      <div class="inp-row">
+        <div class="field">
+          <label>Secteur / contexte</label>
+          <input class="inp" type="text" placeholder="Nucléaire, santé…">
+        </div>
+        <div class="field">
+          <label>Public cible</label>
+          <select class="inp">
+            <option>Tous collaborateurs</option>
+            <option>Managers</option>
+            <option selected>Équipes terrain</option>
+            <option>Direction</option>
+            <option>Nouveaux arrivants</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Consignes pour l'IA</label>
+        <textarea class="inp" placeholder="Ex : Axer sur les comportements du quotidien, éviter le vocabulaire technique…"></textarea>
+      </div>
+      <div class="field">
+        <label>Nombre de chapitres : <span id="nb-label">3</span></label>
+        <div class="slider-row">
+          <span class="slider-hint">2</span>
+          <input type="range" id="inp-nb" min="2" max="7" value="3" oninput="updateSlider(this.value)">
+          <span class="slider-hint">7</span>
+          <span class="slider-val" id="slider-val">3</span>
+        </div>
+      </div>
+      <button class="btn-generate" onclick="generate()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+        Générer la structure avec l'IA
+      </button>
+    </div>
+
+    <!-- Droite : chapitres -->
+    <div class="col-right">
+      <div class="empty-chap" id="empty-state">
+        <div class="empty-ico">◫</div>
+        <div>Les chapitres générés<br>apparaîtront ici</div>
+      </div>
+      <div class="loading" id="loading">
+        <div class="spin"></div>
+        L'IA structure vos chapitres…
+      </div>
+      <div class="chap-result" id="chap-result">
+        <div class="result-meta">
+          <div class="result-theme">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#007883"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            <span id="result-name"></span>
+          </div>
+          <span class="result-count" id="result-count"></span>
+        </div>
+        <div class="edit-note">Cliquez sur un nom ou une description pour le modifier.</div>
+        <div class="chap-list" id="chap-list"></div>
+        <div class="result-actions">
+          <button class="btn-regen" onclick="generate()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6M23 20v-6h-6" stroke="#18375d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15" stroke="#18375d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Régénérer
+          </button>
+          <button class="btn-validate" onclick="sendPrompt('Faisons la maquette de l\'éditeur de questions — ajouter des questions à chaque chapitre avec scoring IA modifiable')">
+            Valider et ajouter les questions →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const chapModels = [
+  {name:"Connaître les risques", desc:"Identifier les principaux risques du poste de travail et les situations à risque du quotidien."},
+  {name:"Adopter les bons réflexes", desc:"Mettre en pratique les comportements préventifs adaptés à chaque situation professionnelle."},
+  {name:"Travailler en équipe en sécurité", desc:"Comprendre comment les comportements collectifs influencent la sécurité de l'environnement de travail."},
+  {name:"Réagir et signaler", desc:"Savoir comment réagir face à un incident et mobiliser les bons interlocuteurs."},
+  {name:"Évoluer dans la culture sécurité", desc:"Intégrer la sécurité comme réflexe permanent et vecteur d'amélioration continue."},
+  {name:"Veille & retour d'expérience", desc:"Partager les incidents et quasi-accidents pour améliorer les pratiques collectives."},
+  {name:"Sécurité & bien-être", desc:"Comprendre le lien entre conditions de travail, bien-être et prévention des risques."},
+];
+
+function updateSlider(v){
+  document.getElementById('nb-label').textContent = v;
+  document.getElementById('slider-val').textContent = v;
+}
+
+function generate(){
+  const name = document.getElementById('inp-name').value.trim() || 'Sécurité & culture de sûreté';
+  const nb = parseInt(document.getElementById('inp-nb').value);
+
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('chap-result').classList.remove('on');
+  document.getElementById('loading').classList.add('on');
+
+  // Étape 1 done
+  document.getElementById('sc1').className = 'step-circle done';
+  document.getElementById('sl1').className = 'step-lbl done';
+  document.getElementById('connector').className = 'step-connector done';
+  document.getElementById('sc2').className = 'step-circle on';
+  document.getElementById('sl2').className = 'step-lbl on';
+
+  setTimeout(()=>{
+    document.getElementById('loading').classList.remove('on');
+    document.getElementById('result-name').textContent = name;
+    document.getElementById('result-count').textContent = nb + ' chapitre' + (nb>1?'s':'') + ' générés';
+
+    const list = document.getElementById('chap-list');
+    list.innerHTML = '';
+    for(let i=0;i<nb;i++){
+      const c = chapModels[i]||{name:`Chapitre ${i+1}`,desc:'Description à compléter.'};
+      list.innerHTML += `
+        <div class="chap-item">
+          <div class="chap-left">
+            <div class="chap-tag">Chap.</div>
+            <div class="chap-num">${i+1}</div>
+          </div>
+          <div class="chap-body">
+            <div class="chap-name" contenteditable="true">${c.name}</div>
+            <div class="chap-desc" contenteditable="true">${c.desc}</div>
+          </div>
+          <button class="chap-edit-btn" title="Modifier">✏️</button>
+        </div>`;
+    }
+    document.getElementById('chap-result').classList.add('on');
+  }, 1600);
+}
+</script>
