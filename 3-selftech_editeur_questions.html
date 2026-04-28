@@ -87,6 +87,9 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
 .btn-pioche:hover{background:#e5f4f5}
 .btn-add-manual{background:#fff;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .btn-add-manual:hover{background:#edf1f7}
+.btn-add-ai-one{background:#fff;color:#18375d;border:1.5px solid #18375d;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:all 0.15s}
+.btn-add-ai-one:hover:not(:disabled){background:linear-gradient(90deg,#18375d,#007883);color:#fff;border-color:transparent}
+.btn-add-ai-one:disabled{opacity:0.38;cursor:not-allowed}
 
 /* Compteur questions */
 .q-counter{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -383,10 +386,30 @@ const chapters = [
   { id:1, name:"Connaître les risques",           desc:"Identifier les principaux risques du poste de travail.",
     questions:[
       {id:'q1',type:'likert',prov:'AI',text:"Dans mon travail quotidien, j'identifie les situations susceptibles de présenter un risque.",tags:[{t:'Risque',ai:false},{t:'Quotidien',ai:true},{t:'Vigilance',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
-      {id:'q2',type:'choix',prov:'AI',text:"Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?",tags:[{t:'Réaction',ai:false},{t:'Signalement',ai:true}],answers:[{l:"Je continue, ça passera probablement",s:0},{l:"J'en parle à un collègue entre deux tâches",s:1},{l:"Je m'arrête, j'évalue et je remonte l'info",s:2}]},
-      {id:'q3',type:'choix',prov:'AI',text:"Un collègue vous demande où se trouvent les EPI pour une tâche inhabituelle. Vous…",tags:[{t:'EPI',ai:false},{t:'Connaissance',ai:true}],answers:[{l:"Je lui dis que je ne sais pas vraiment",s:0},{l:"Je lui indique vaguement où chercher",s:1},{l:"Je l'accompagne et l'aide à identifier le bon équipement",s:2}]},
-      {id:'q4',type:'likert',prov:'AI',text:"Je connais les consignes de sécurité spécifiques à mon poste de travail.",tags:[{t:'Consignes',ai:true},{t:'Connaissance',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
-      {id:'q5',type:'choix',prov:'AI',text:"Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?",tags:[{t:'Signalement',ai:false},{t:'Proactivité',ai:true}],answers:[{l:"Je n'en fais rien, pas de dommage pas de problème",s:0},{l:"J'en parle à un collègue mais sans remonter officiellement",s:1},{l:"Je le signale formellement, même sans conséquence",s:2}]},
+      {id:'q2',type:'choix',prov:'AI',text:"Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?",tags:[{t:'Réaction',ai:false},{t:'Signalement',ai:true}],answers:[
+        {l:"Je continue, ça passera probablement",s:0},
+        {l:"Je ralentis et j'observe un peu, sans rien changer",s:1},
+        {l:"J'en parle à un collègue pour avoir son avis",s:1},
+        {l:"Je m'arrête, j'évalue et je remonte l'info à mon responsable",s:2},
+      ]},
+      {id:'q3',type:'choix',prov:'AI',text:"Un collègue vous demande où se trouvent les EPI pour une tâche inhabituelle. Vous…",tags:[{t:'EPI',ai:false},{t:'Connaissance',ai:true}],answers:[
+        {l:"Je lui dis que je ne sais pas vraiment",s:0},
+        {l:"Je lui indique vaguement où chercher",s:1},
+        {l:"Je lui montre l'emplacement sans vérifier que c'est le bon",s:1},
+        {l:"Je l'accompagne et l'aide à identifier l'équipement adapté",s:2},
+      ]},
+      {id:'q4',type:'choix',prov:'AI',text:"Comment décririez-vous votre niveau de connaissance des consignes de sécurité sur votre site ?",tags:[{t:'Consignes',ai:true},{t:'Connaissance',ai:true}],answers:[
+        {l:"Je ne les connais pas vraiment",s:0},
+        {l:"J'en connais quelques-unes, les plus basiques",s:1},
+        {l:"Je les connais globalement mais pas dans le détail",s:1},
+        {l:"Je les connais et suis capable de les expliquer à quelqu'un",s:2},
+      ]},
+      {id:'q5',type:'choix',prov:'AI',text:"Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?",tags:[{t:'Signalement',ai:false},{t:'Proactivité',ai:true}],answers:[
+        {l:"Je n'en fais rien, pas de dommage pas de problème",s:0},
+        {l:"J'y repense mais je ne le signale pas formellement",s:0},
+        {l:"J'en parle à un collègue mais sans remonter officiellement",s:1},
+        {l:"Je le signale formellement, même sans conséquence",s:2},
+      ]},
     ],
     profils:[
       {niveau:1,titre:"La vigilance s'invite rarement dans votre quotidien",phrase:"Vous naviguez souvent en automatique, les signaux de risque passent inaperçus.",description:"Au quotidien, vous évoluez dans une forme d'habitude professionnelle qui laisse peu de place à la vigilance active. Ce n'est pas un manque d'intention — c'est souvent une exposition progressive aux risques qui les rend invisibles. La bonne nouvelle : cette prise de conscience est déjà un premier pas.",motscles:["Automatisme","Vigilance faible"]},
@@ -395,7 +418,20 @@ const chapters = [
     ],
     seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]
   },
-  { id:2, name:"Adopter les bons réflexes",       desc:"Mettre en pratique les comportements préventifs.",        questions:[{id:'q6',type:'likert',prov:'AI',text:"Je porte mes EPI dès que la situation l'exige.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]}], profils:[{niveau:1,titre:"Les réflexes préventifs ne sont pas encore naturels",phrase:"Les automatismes de protection se construisent encore.",description:"",motscles:[]},{niveau:2,titre:"Vous faites les bons gestes dans les situations connues",phrase:"Il reste des angles morts dans les contextes moins habituels.",description:"",motscles:[]},{niveau:3,titre:"Prévenir est un réflexe que vous n'avez plus besoin d'activer",phrase:"Vos comportements préventifs sont devenus une seconde nature.",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
+  { id:2, name:"Adopter les bons réflexes",       desc:"Mettre en pratique les comportements préventifs.",        questions:[
+    {id:'q6',type:'choix',prov:'AI',text:"Vous êtes sur le point de commencer une tâche et réalisez que vous n'avez pas vos EPI avec vous. Vous êtes à 5 minutes de les récupérer.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[
+      {l:"Je commence quand même, je serai prudent",s:0},
+      {l:"Je fais une partie de la tâche sans EPI et j'irai les chercher ensuite",s:0},
+      {l:"Je demande à un collègue de me prêter les siens",s:1},
+      {l:"Je vais les chercher avant de commencer, sans exception",s:2},
+    ]},
+    {id:'q7',type:'choix',prov:'AI',text:"Lorsque vous découvrez un équipement défectueux, que faites-vous ?",tags:[{t:'Équipement',ai:true},{t:'Signalement',ai:false}],answers:[
+      {l:"Je continue à l'utiliser en faisant attention",s:0},
+      {l:"Je le mets de côté mais sans rien signaler",s:1},
+      {l:"Je préviens un collègue pour qu'il le signale",s:1},
+      {l:"Je le mets hors service et le signale immédiatement",s:2},
+    ]},
+  ], profils:[{niveau:1,titre:"Les réflexes préventifs ne sont pas encore naturels",phrase:"Les automatismes de protection se construisent encore.",description:"",motscles:[]},{niveau:2,titre:"Vous faites les bons gestes dans les situations connues",phrase:"Il reste des angles morts dans les contextes moins habituels.",description:"",motscles:[]},{niveau:3,titre:"Prévenir est un réflexe que vous n'avez plus besoin d'activer",phrase:"Vos comportements préventifs sont devenus une seconde nature.",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
   { id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l'impact des comportements collectifs.",       questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
   { id:4, name:"Réagir et signaler",               desc:"Réagir face à un incident et mobiliser les bons interlocuteurs.", questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
 ];
@@ -509,6 +545,10 @@ function renderQuestions(ch) {
         <button class="btn-regen-all" onclick="${btnRegenAction}">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.95L1 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           ${btnRegenLabel}
+        </button>
+        <button class="btn-add-ai-one" onclick="addOneAI()" ${n >= 10 ? 'disabled title="Maximum 10 questions atteint"' : ''}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Ajouter une question avec l'IA
         </button>
         <button class="btn-pioche" onclick="openPanel()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#007883" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
@@ -773,6 +813,54 @@ function addManual() {
   const id = 'q' + Date.now();
   chapters[activeChap].questions.push({ id, type: 'choix', prov: 'CLIENT', text: "Nouvelle mise en situation", tags: [], answers: [{l:"Réponse A",s:0},{l:"Réponse B",s:1},{l:"Réponse C",s:2}] });
   openCards[id] = true; renderNav(); renderMain(); updateSaveButton();
+}
+
+function addOneAI() {
+  if (chapters[activeChap].questions.length >= 10) return;
+  const btn = document.querySelector('.btn-add-ai-one');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Génération…'; }
+  const newQuestions = [
+    {type:'choix', text:"Vous êtes en réunion et un collègue mentionne une anomalie qu'il a remarquée mais n'a pas signalée. Comment réagissez-vous ?",
+     tags:[{t:'Collectif',ai:true},{t:'Signalement',ai:true}],
+     answers:[
+       {l:"Je n'interviens pas, ce n'est pas mon rôle de le relancer",s:0},
+       {l:"Je l'encourage à en parler, sans aller plus loin",s:1},
+       {l:"Je lui suggère de le signaler et propose de l'accompagner si besoin",s:2},
+       {l:"Je signale moi-même l'anomalie au responsable après la réunion",s:1},
+     ]},
+    {type:'choix', text:"Une procédure de sécurité vous semble inadaptée à votre réalité terrain. Que faites-vous ?",
+     tags:[{t:'Procédure',ai:true},{t:'Proactivité',ai:true}],
+     answers:[
+       {l:"Je l'ignore discrètement et fais à ma façon",s:0},
+       {l:"Je l'applique sans rien dire, même si elle me semble inadaptée",s:0},
+       {l:"J'en parle à un collègue pour voir si c'est un ressenti partagé",s:1},
+       {l:"Je remonte l'observation à mon responsable en proposant une piste d'amélioration",s:2},
+     ]},
+    {type:'choix', text:"En fin de journée, vous remarquez qu'un équipement a été mal rangé. Vous êtes pressé de partir.",
+     tags:[{t:'Réflexe',ai:true},{t:'Collectif',ai:true}],
+     answers:[
+       {l:"Je le laisse, quelqu'un s'en occupera demain",s:0},
+       {l:"Je préviens un collègue encore présent pour qu'il s'en occupe",s:1},
+       {l:"Je le signale par message à mon responsable avant de partir",s:1},
+       {l:"Je prends 2 minutes pour le ranger correctement avant de partir",s:2},
+     ]},
+    {type:'choix', text:"Lors d'une tâche habituelle, vous ressentez une légère douleur que vous n'avez pas l'habitude d'avoir. Que faites-vous ?",
+     tags:[{t:'Vigilance',ai:true},{t:'Réaction',ai:true}],
+     answers:[
+       {l:"Je continue, ça passera probablement",s:0},
+       {l:"Je ralentis mais je finis la tâche avant d'en parler",s:1},
+       {l:"J'arrête la tâche et j'en parle à mon responsable",s:2},
+       {l:"Je cherche d'abord si quelqu'un d'autre a déjà eu ce problème",s:1},
+     ]},
+  ];
+  const existingCount = chapters[activeChap].questions.length;
+  const pick = newQuestions[existingCount % newQuestions.length];
+  setTimeout(() => {
+    const id = 'q' + Date.now();
+    chapters[activeChap].questions.push({ id, type: pick.type, prov: 'AI', text: pick.text, tags: pick.tags, answers: pick.answers });
+    openCards[id] = true;
+    renderNav(); renderMain(); updateSaveButton();
+  }, 1100);
 }
 function removeTag(qid, ti) { const q = chapters[activeChap].questions.find(q => q.id === qid); if (q) q.tags.splice(ti, 1); renderMain(); }
 function addTag(qid) { const t = prompt('Nom du tag :'); if (!t) return; const q = chapters[activeChap].questions.find(q => q.id === qid); if (q && q.tags.length < 6) q.tags.push({t, ai:false}); renderMain(); }
