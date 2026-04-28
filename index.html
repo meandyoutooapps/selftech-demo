@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -21,9 +20,9 @@
 .grow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .grow h2{font-size:17px;font-weight:600;color:#18375d;margin:0 0 3px;font-family:'Asap',sans-serif}
 .grow p{font-size:13px;color:#64748b;margin:0;font-family:'Asap',sans-serif}
-.btn-p{background:#eb6366;color:#ffffff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-p{background:#eb6366;color:#ffffff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0}
 .btn-p:hover{background:#d4474a}
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .kpi{border-radius:10px;padding:16px 18px}
 .kpi-l{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;font-family:'Asap',sans-serif}
 .kpi-v{font-size:28px;font-weight:700;line-height:1;margin-bottom:5px;font-family:'Asap',sans-serif}
@@ -83,30 +82,30 @@
   </div>
 
   <div class="subnav">
-    <button class="sn on">Dashboard</button>
+    <button class="sn on" onclick="window.location.href='index.html'">Dashboard</button>
     <button class="sn" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
     <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
-    <button class="sn">Bibliothèque partagée</button>
-    <button class="sn" onclick="sendPrompt('Faisons la maquette Résultats — profil Client direct payant')">Résultats</button>
-    <button class="sn">Paramètres</button>
+    <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
+    <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
+    <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
   </div>
 
   <div class="content">
-<div class="content">
 
-  <div class="grow">
-    <div>
-      <h2>Bonjour, Sonora RH</h2>
-      <p>Lundi 28 avril 2025 · 2 autodiagnostics publiés</p>
+    <div class="grow">
+      <div>
+        <h2>Bonjour, Sonora RH</h2>
+        <p>Lundi 28 avril 2025 · 2 autodiagnostics publiés</p>
+      </div>
+
+      <button class="btn-p" onclick="window.location.href='selftech_creer_autodiagnostic.html'">
+        <svg width="13" height="13" viewBox="0 0 12 12" fill="none" style="flex-shrink:0">
+          <line x1="6" y1="1" x2="6" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="1" y1="6" x2="11" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Créer un autodiagnostic
+      </button>
     </div>
-
-    <button class="btn-p" onclick="window.location.href='selftech_creer_autodiagnostic.html'">
-      ...
-      Créer un autodiagnostic
-    </button>
-  </div>
-
-  <div class="kpi-row">
 
     <div class="kpi-row">
       <div class="kpi k-nb">
@@ -114,16 +113,19 @@
         <div class="kpi-v">12</div>
         <div class="kpi-s">2 publiés · 4 brouillons</div>
       </div>
+
       <div class="kpi k-tl">
         <div class="kpi-l">Passations enregistrées</div>
         <div class="kpi-v">800</div>
         <div class="kpi-s">sur 2 autodiagnostics actifs</div>
       </div>
+
       <div class="kpi k-cr">
         <div class="kpi-l">Passations restantes</div>
         <div class="kpi-v">200</div>
         <div class="kpi-s">800 utilisées / 1 000 achetées</div>
       </div>
+
       <div class="kpi k-nb">
         <div class="kpi-l">Autodiagnostics clôturés</div>
         <div class="kpi-v">6</div>
@@ -135,9 +137,10 @@
       <div class="card">
         <div class="ch">
           <span class="cht">Mes autodiagnostics récents</span>
-          <span class="cha">Voir tous →</span>
+          <span class="cha" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Voir tous →</span>
         </div>
-        <div class="adr" onclick="sendPrompt('Faisons la maquette Résultats — profil Client direct payant')">
+
+        <div class="adr" onclick="window.location.href='selftech_resultats.html'">
           <div class="sbar sp"></div>
           <div class="adi">
             <div class="adn">Sécurité & culture de sûreté</div>
@@ -146,7 +149,8 @@
           <span class="bdg bon">Publié</span>
           <span class="adt">2 j</span>
         </div>
-        <div class="adr">
+
+        <div class="adr" onclick="window.location.href='selftech_resultats.html'">
           <div class="sbar sp"></div>
           <div class="adi">
             <div class="adn">Quel est mon niveau de compréhension des risques cyber ?</div>
@@ -155,7 +159,8 @@
           <span class="bdg bon">Publié</span>
           <span class="adt">6 j</span>
         </div>
-        <div class="adr">
+
+        <div class="adr" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">
           <div class="sbar sb"></div>
           <div class="adi">
             <div class="adn">Changer sans se crisper : mes réflexes face aux transformations</div>
@@ -164,7 +169,8 @@
           <span class="bdg bdr">Brouillon</span>
           <span class="adt">2 sem</span>
         </div>
-        <div class="adr">
+
+        <div class="adr" onclick="window.location.href='selftech_resultats.html'">
           <div class="sbar sc"></div>
           <div class="adi">
             <div class="adn">Et si mon quotidien m'exposait aux risques psychosociaux ?</div>
@@ -181,6 +187,7 @@
             <div class="pkhl">Pack passations</div>
             <div class="pkht">Pack M · 1 000 passations</div>
           </div>
+
           <div class="pkb">
             <div class="pknums">
               <span class="pkbig">200</span>
@@ -196,18 +203,21 @@
 
         <div class="card">
           <div class="ch"><span class="cht">Accès rapides</span></div>
+
           <div style="padding:12px 14px;display:flex;flex-direction:column;gap:7px">
-            <button class="qa" onclick="sendPrompt('Faisons la maquette Créer un autodiagnostic — avec les 2 options : autonome ou depuis la bibliothèque partagée')">
+            <button class="qa" onclick="window.location.href='selftech_creer_autodiagnostic.html'">
               <div class="qd" style="background:#eb6366"></div>
               <span>Créer un autodiagnostic</span>
               <span class="qar">↗</span>
             </button>
-            <button class="qa" onclick="sendPrompt('Faisons la maquette Mes autodiagnostics — profil Client direct payant')">
+
+            <button class="qa" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">
               <div class="qd" style="background:#18375d"></div>
               <span>Mes autodiagnostics</span>
               <span class="qar">↗</span>
             </button>
-            <button class="qa" onclick="sendPrompt('Faisons la maquette Résultats — profil Client direct payant')">
+
+            <button class="qa" onclick="window.location.href='selftech_resultats.html'">
               <div class="qd" style="background:#007883"></div>
               <span>Voir les résultats</span>
               <span class="qar">↗</span>
