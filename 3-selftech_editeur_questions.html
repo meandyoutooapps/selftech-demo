@@ -1,9 +1,19 @@
-
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Éditeur — Selftech</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-.shell{font-family:'Asap',sans-serif;border-radius:14px;border:1px solid #cdd5e0;background:#fff;position:relative;overflow:hidden}
-.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;border-radius:14px 14px 0 0}
+body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
+
+/* ── SHELL ─────────────────────────────────────── */
+.shell{font-family:'Asap',sans-serif;background:#fff;min-height:100vh}
+
+/* ── TOPBAR ────────────────────────────────────── */
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px}
 .logo{display:flex;align-items:stretch}
 .logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
 .logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
@@ -12,50 +22,87 @@
 .acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
 .av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
 .acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
-.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px}
-.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;font-family:'Asap',sans-serif}
+
+/* ── SUBNAV ────────────────────────────────────── */
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;font-family:'Asap',sans-serif;transition:all 0.12s}
 .sn.on{background:#18375d;color:#fff;font-weight:600}
-.breadcrumb{display:flex;align-items:center;gap:6px;padding:11px 24px;border-bottom:1px solid #f0f4f8;background:#fafbfc}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+
+/* ── BREADCRUMB ────────────────────────────────── */
+.breadcrumb{display:flex;align-items:center;gap:6px;padding:11px 24px;border-bottom:1px solid #f0f4f8;background:#fafbfc;flex-wrap:wrap}
 .bc-link{font-size:12px;color:#007883;cursor:pointer;font-weight:500;font-family:'Asap',sans-serif}
+.bc-link:hover{text-decoration:underline}
 .bc-sep{font-size:12px;color:#c5ccd5}
 .bc-cur{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
-.editor-layout{display:grid;grid-template-columns:210px 1fr;min-height:540px}
-.sidebar{border-right:1px solid #e8edf4;padding:14px 10px;background:#fafbfc}
-.sb-title{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;padding:0 4px;font-family:'Asap',sans-serif}
-.chap-nav{display:flex;flex-direction:column;gap:3px}
-.cni{padding:8px 10px;border-radius:8px;cursor:pointer;border:1px solid transparent;font-family:'Asap',sans-serif;transition:all 0.12s}
-.cni:hover{background:#eef1f6}
-.cni.on{background:#fff;border-color:#d8e0ea;box-shadow:0 1px 4px rgba(24,55,93,0.07)}
+
+/* ── LAYOUT ────────────────────────────────────── */
+.editor-layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 120px)}
+
+/* ── SIDEBAR ───────────────────────────────────── */
+.sidebar{border-right:1px solid #e8edf4;padding:16px 12px;background:#fafbfc;display:flex;flex-direction:column;gap:5px}
+.sb-title{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;padding:0 4px;font-family:'Asap',sans-serif}
+
+.cni{border-radius:10px;border:1px solid transparent;font-family:'Asap',sans-serif;transition:all 0.15s;background:transparent;overflow:hidden}
+.cni.on{background:#fff;border-color:#d8e0ea;box-shadow:0 2px 8px rgba(24,55,93,0.08)}
+.cni-head{padding:10px 11px 8px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.cni:not(.on) .cni-head:hover{background:#eef1f6;border-radius:9px 9px 0 0}
 .cni-lbl{font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em}
-.cni-name{font-size:12px;font-weight:600;color:#18375d;margin-top:2px;line-height:1.3}
-.cni-meta{font-size:10px;color:#94a3b8;margin-top:3px;display:flex;align-items:center;gap:4px}
-.cni-dot{width:7px;height:7px;border-radius:50%;background:#007883;display:inline-block}
-.sb-bot{margin-top:14px;padding-top:12px;border-top:1px solid #e8edf4;display:flex;flex-direction:column;gap:6px}
-.btn-save{width:100%;background:#18375d;color:#fff;border:none;border-radius:8px;padding:9px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif}
+.cni-name{font-size:13px;font-weight:600;color:#18375d;line-height:1.3}
+.cni-meta{display:flex;align-items:center;gap:5px;margin-top:3px}
+.cni-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.cni-qcount{font-size:11px;color:#64748b;font-family:'Asap',sans-serif}
+
+/* Boutons Questions / Profils */
+.cni-tabs{display:flex;gap:5px;padding:0 11px 10px;margin-top:2px}
+.cni-tab{flex:1;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:600;font-family:'Asap',sans-serif;text-align:center;cursor:pointer;border:1px solid #d8e0ea;background:#fff;color:#64748b;transition:all 0.15s}
+.cni-tab.on{background:#18375d;color:#fff;border-color:#18375d}
+.cni-tab:not(.on):hover{background:#eef1f6;border-color:#b8c4d4;color:#18375d}
+
+.sb-bot{margin-top:auto;padding-top:14px;border-top:1px solid #e8edf4;display:flex;flex-direction:column;gap:6px}
+.sb-total{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;text-align:center;padding:0 4px}
+.sb-total strong{color:#18375d}
+.btn-save{width:100%;background:#18375d;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif}
 .btn-save:hover{background:#122a47}
-.sb-count{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;text-align:center}
-.sb-count span{font-weight:700;color:#18375d}
-.main-editor{padding:18px 22px;overflow-y:auto;position:relative}
-.chap-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f4f8}
+
+/* ── MAIN ──────────────────────────────────────── */
+.main-editor{padding:22px 28px;overflow-y:auto;background:#fff}
+
+/* En-tête chapitre */
+.chap-head{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f0f4f8;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
 .chap-info{flex:1;min-width:0}
-.chap-badge{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;font-family:'Asap',sans-serif;margin-bottom:3px}
-.chap-name-inp{font-size:16px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;border:none;outline:none;border-bottom:2px solid transparent;background:transparent;width:100%;transition:border-color 0.15s}
+.chap-badge{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;font-family:'Asap',sans-serif;margin-bottom:4px}
+.chap-name-inp{font-size:17px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;border:none;outline:none;border-bottom:2px solid transparent;background:transparent;width:100%;transition:border-color 0.15s;padding-bottom:1px}
 .chap-name-inp:focus{border-bottom-color:#18375d}
-.chap-desc-inp{font-size:12px;color:#64748b;font-family:'Asap',sans-serif;border:none;outline:none;border-bottom:1px solid transparent;background:transparent;width:100%;margin-top:4px;transition:border-color 0.15s}
+.chap-desc-inp{font-size:12px;color:#64748b;font-family:'Asap',sans-serif;border:none;outline:none;border-bottom:1px solid transparent;background:transparent;width:100%;margin-top:5px;transition:border-color 0.15s}
 .chap-desc-inp:focus{border-bottom-color:#d8e0ea}
-.chap-btns{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
-.btn-regen-all{background:linear-gradient(90deg,#18375d,#007883);color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.chap-actions{display:flex;gap:7px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.btn-regen-all{background:linear-gradient(90deg,#18375d,#007883);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .btn-regen-all:hover{opacity:0.88}
-.btn-pioche{background:#fff;color:#007883;border:1px solid #b8dfe0;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn-pioche{background:#fff;color:#007883;border:1px solid #b8dfe0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .btn-pioche:hover{background:#e5f4f5}
-.btn-add-manual{background:#fff;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn-add-manual{background:#fff;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .btn-add-manual:hover{background:#edf1f7}
-.q-counter{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+
+/* Compteur questions */
+.q-counter{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .qc-text{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
 .qc-text strong{color:#18375d}
-.qc-bar{height:4px;background:#edf1f7;border-radius:2px;overflow:hidden;width:80px}
-.qc-fill{height:100%;border-radius:2px;background:#007883;transition:width 0.3s}
+.qc-bar{height:5px;background:#edf1f7;border-radius:3px;overflow:hidden;width:90px}
+.qc-fill{height:100%;border-radius:3px;background:#007883;transition:width 0.3s}
+
+/* Info Likert */
+.likert-info{background:#f0f8ff;border:1px solid #b8dfe0;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px}
+.likert-info-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+.likert-info-body{font-size:11px;color:#18375d;font-family:'Asap',sans-serif;line-height:1.5}
+.likert-info-body strong{font-weight:700}
+.likert-info-toggle{font-size:11px;color:#007883;font-weight:600;cursor:pointer;white-space:nowrap;margin-left:auto;flex-shrink:0}
+
+/* Questions list */
 .q-list{display:flex;flex-direction:column;gap:8px}
+
+/* Question card */
 .q-card{border:1px solid #d8e0ea;border-radius:12px;overflow:hidden;background:#fff;transition:border-color 0.12s}
 .q-card:hover{border-color:#b8c4d4}
 .q-card.open{border-color:#18375d}
@@ -64,17 +111,14 @@
 .q-card.open .q-num{background:#18375d;color:#fff}
 .q-main{flex:1;min-width:0}
 .q-text{font-size:13px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif;line-height:1.4;margin-bottom:7px}
-
-/* Ligne tags : provenance d'abord, puis contenu */
 .q-tags-row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
 
-/* TAG DE PROVENANCE — non modifiable, violet/indigo */
+/* Tags de provenance */
 .tag-prov{display:inline-flex;align-items:center;gap:4px;background:#f0edff;border:1px solid #c4b5fd;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;color:#6d28d9;font-family:'Asap',sans-serif;white-space:nowrap;cursor:default}
 .tag-prov.expert{background:#fef3c7;border-color:#fcd34d;color:#92400e}
 .tag-prov.client{background:#f0fdf4;border-color:#86efac;color:#166534}
-.tag-prov-ico{font-size:10px}
 
-/* TAG DE CONTENU — modifiable */
+/* Tags de contenu */
 .tag-pill{display:inline-flex;align-items:center;gap:3px;background:#edf1f7;border:1px solid #c5cfdc;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif}
 .tag-pill.ai-sug{background:#e5f4f5;border-color:#b8dfe0;color:#007883}
 .tag-x{cursor:pointer;opacity:0.45;margin-left:1px;font-size:12px;line-height:1}
@@ -82,57 +126,116 @@
 .tag-add{display:inline-flex;align-items:center;gap:3px;background:transparent;border:1px dashed #c5cfdc;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:600;color:#94a3b8;font-family:'Asap',sans-serif;cursor:pointer;transition:all 0.12s}
 .tag-add:hover{border-color:#007883;color:#007883;background:#e5f4f5}
 
+/* Actions droite */
 .q-right{display:flex;align-items:center;gap:0;flex-shrink:0;margin-top:1px}
-.q-chevron-btn{background:none;border:none;cursor:pointer;color:#c5ccd5;font-size:14px;padding:4px 6px;transition:all 0.15s;line-height:1;display:flex;align-items:center}
+.q-chevron-btn{background:none;border:none;cursor:pointer;color:#c5ccd5;font-size:14px;padding:4px 6px;transition:all 0.15s;line-height:1}
 .q-chevron-btn:hover{color:#18375d}
 .q-card.open .q-chevron-btn{color:#18375d;transform:rotate(180deg)}
 .q-vsep{width:1px;height:22px;background:#e8edf4;margin:0 4px}
 .qa-btn{width:30px;height:30px;border-radius:8px;border:1px solid #e8edf4;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;flex-shrink:0}
 .qa-btn:hover{background:#f7f9fc;border-color:#c5cfdc}
 .qa-btn.del:hover{background:#fceaea;border-color:#f5c0c1}
-.qa-btn.regen:hover{background:#e5f4f5;border-color:#b8dfe0}
+.qa-btn.regen-q:hover{background:#e5f4f5;border-color:#b8dfe0}
+
+/* Corps question */
 .q-body{display:none;padding:10px 14px 14px 48px;border-top:1px solid #f0f4f8}
 .q-card.open .q-body{display:block}
 .type-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;font-family:'Asap',sans-serif;margin-bottom:10px;display:inline-block}
 .tb-likert{background:#e5f4f5;color:#007883}
 .tb-choix{background:#edf1f7;color:#18375d}
 .score-note{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;font-style:italic;margin-bottom:8px}
-.likert-list{display:flex;flex-direction:column;gap:5px}
+.likert-list{display:flex;flex-direction:column;gap:6px}
 .la-row{display:flex;align-items:center;gap:8px}
 .la-bar{width:3px;height:18px;border-radius:2px;background:#e2e8f0;flex-shrink:0}
 .la-inp{flex:1;font-size:12px;font-family:'Asap',sans-serif;border:none;outline:none;background:transparent;border-bottom:1px solid transparent;transition:border-color 0.15s}
 .la-inp:focus{border-bottom-color:#d8e0ea}
-.mc-list{display:flex;flex-direction:column;gap:5px}
-.mc-row{display:flex;align-items:center;gap:8px;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:7px 11px}
+.la-score-info{font-size:10px;color:#94a3b8;font-family:'Asap',sans-serif;flex-shrink:0;min-width:55px;text-align:right}
+.mc-list{display:flex;flex-direction:column;gap:6px}
+.mc-row{display:flex;align-items:center;gap:8px;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:8px 12px;transition:border-color 0.12s}
+.mc-row:hover{border-color:#c5cfdc}
 .mc-dot{width:7px;height:7px;border-radius:50%;background:#c5ccd5;flex-shrink:0}
 .mc-inp{flex:1;font-size:12px;font-family:'Asap',sans-serif;border:none;outline:none;background:transparent}
-.score-pill{display:flex;align-items:center;gap:3px;background:#edf1f7;border:1px solid #c5cfdc;border-radius:20px;padding:2px 8px;cursor:pointer;transition:all 0.15s;flex-shrink:0}
+.score-pill{display:flex;align-items:center;gap:4px;background:#edf1f7;border:1px solid #c5cfdc;border-radius:20px;padding:4px 10px;cursor:pointer;transition:all 0.15s;flex-shrink:0}
 .score-pill:hover{background:#dde3ed}
 .score-pill.editing{background:#18375d;border-color:#18375d}
 .sp-lbl{font-size:9px;font-weight:700;color:#94a3b8;font-family:'Asap',sans-serif;text-transform:uppercase}
 .sp-lbl.e{color:rgba(255,255,255,0.6)}
-.sp-val{font-size:11px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;min-width:12px;text-align:center}
+.sp-val{font-size:12px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;min-width:22px;text-align:center}
 .sp-val.e{color:#fff}
 
-/* Panel */
-.overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(15,30,55,0.35);z-index:40;display:none;border-radius:14px}
+/* ── VUE PROFILS ───────────────────────────────── */
+.profils-view{display:none}
+.profils-view.on{display:block}
+
+/* Seuils */
+.seuils-card{background:#fafbfc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;margin-bottom:20px}
+.seuils-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.seuils-title{font-size:13px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px}
+.seuils-hint{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;font-style:italic}
+.seuils-row{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.seuil-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #d8e0ea;border-radius:10px;padding:10px 16px;flex:1;min-width:180px}
+.seuil-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.seuil-label{font-size:12px;font-weight:600;color:#475569;font-family:'Asap',sans-serif;flex:1}
+.seuil-range{display:flex;align-items:center;gap:6px}
+.seuil-inp{width:52px;padding:5px 8px;border:1px solid #d8e0ea;border-radius:7px;font-size:13px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;text-align:center;outline:none;transition:border-color 0.15s}
+.seuil-inp:focus{border-color:#18375d}
+.seuil-sep{font-size:12px;color:#94a3b8;font-family:'Asap',sans-serif}
+
+/* Profil cards */
+.profils-grid{display:flex;flex-direction:column;gap:16px}
+.profil-card{border-radius:12px;overflow:hidden;border:1px solid #e2e8f0}
+.profil-header{padding:13px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.profil-level{display:flex;align-items:center;gap:9px}
+.profil-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.profil-level-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-family:'Asap',sans-serif}
+.profil-score-range{font-size:12px;font-weight:600;font-family:'Asap',sans-serif;opacity:0.7}
+.btn-ai-profil{display:flex;align-items:center;gap:5px;border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.12s}
+.profil-body{padding:18px;background:#fff;display:flex;flex-direction:column;gap:14px}
+.pfield label{display:block;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;font-family:'Asap',sans-serif}
+.pfield input{width:100%;padding:9px 12px;border:1px solid #d8e0ea;border-radius:8px;font-size:13px;color:#18375d;font-family:'Asap',sans-serif;outline:none;transition:border-color 0.15s}
+.pfield input:focus{border-color:#18375d}
+.pfield input::placeholder{color:#c5ccd5;font-weight:400}
+.pfield input.short{font-weight:400;color:#475569}
+
+/* Rich text editor */
+.rte-wrap{border:1px solid #d8e0ea;border-radius:8px;overflow:hidden;transition:border-color 0.15s}
+.rte-wrap:focus-within{border-color:#18375d}
+.rte-toolbar{display:flex;gap:3px;padding:6px 8px;border-bottom:1px solid #f0f4f8;background:#fafbfc;flex-wrap:wrap;align-items:center}
+.rte-btn{width:28px;height:28px;border:1px solid transparent;border-radius:6px;background:transparent;cursor:pointer;font-size:12px;font-weight:700;color:#475569;display:flex;align-items:center;justify-content:center;font-family:'Asap',sans-serif;transition:all 0.12s}
+.rte-btn:hover{background:#edf1f7;border-color:#d8e0ea}
+.rte-sep{width:1px;height:20px;background:#e2e8f0;margin:0 3px}
+.rte-area{min-height:80px;padding:11px 13px;font-size:13px;color:#475569;font-family:'Asap',sans-serif;line-height:1.6;outline:none}
+.rte-area:empty:before{content:attr(data-placeholder);color:#c5ccd5;pointer-events:none}
+
+/* Mots clés profil */
+.mkw-wrap{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:7px 10px;border:1px solid #d8e0ea;border-radius:8px;min-height:38px;background:#fff;cursor:text;transition:border-color 0.15s}
+.mkw-wrap:focus-within{border-color:#18375d}
+.mkw{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;font-family:'Asap',sans-serif;border:1px solid}
+.mkw-x{cursor:pointer;opacity:0.45;font-size:12px;margin-left:1px}
+.mkw-x:hover{opacity:1}
+.mkw-inp{border:none;outline:none;font-size:12px;font-family:'Asap',sans-serif;color:#18375d;background:transparent;min-width:80px;flex:1}
+.mkw-inp::placeholder{color:#c5ccd5}
+
+/* Médias */
+.media-row{display:flex;gap:10px}
+.media-slot{flex:1;border:1.5px dashed #d8e0ea;border-radius:8px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:all 0.12s;background:#fafbfc;text-align:center}
+.media-slot:hover{border-color:#007883;background:#e5f4f5}
+.media-ico{font-size:22px}
+.media-lbl{font-size:11px;font-weight:600;color:#94a3b8;font-family:'Asap',sans-serif}
+.media-hint{font-size:10px;color:#c5ccd5;font-family:'Asap',sans-serif}
+
+/* Panel latéral */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,30,55,0.35);z-index:40;display:none}
 .overlay.on{display:block}
-.panel-right{position:absolute;top:0;right:-380px;width:360px;height:100%;background:#fff;border-left:1px solid #d8e0ea;z-index:50;transition:right 0.25s ease;display:flex;flex-direction:column;border-radius:0 14px 14px 0}
+.panel-right{position:fixed;top:0;right:-380px;width:360px;height:100%;background:#fff;border-left:1px solid #d8e0ea;z-index:50;transition:right 0.25s ease;display:flex;flex-direction:column}
 .panel-right.on{right:0}
-.panel-head{padding:14px 18px;border-bottom:1px solid #e8edf4;display:flex;align-items:center;justify-content:space-between}
+.panel-head{padding:15px 18px;border-bottom:1px solid #e8edf4;display:flex;align-items:center;justify-content:space-between}
 .panel-title{font-size:14px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif}
 .panel-close{width:28px;height:28px;border-radius:7px;border:1px solid #e8edf4;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#64748b}
 .panel-close:hover{background:#f7f9fc}
-
-/* Toggle bibliothèque */
 .lib-toggle{display:flex;margin:12px 16px;background:#f0f4f8;border-radius:8px;padding:3px;gap:3px}
 .lib-btn{flex:1;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:none;background:transparent;color:#64748b;transition:all 0.15s;text-align:center}
 .lib-btn.on{background:#fff;color:#18375d;box-shadow:0 1px 4px rgba(24,55,93,0.1)}
-
-/* Légende provenance */
-.prov-legend{display:flex;flex-wrap:wrap;gap:5px;padding:8px 16px;border-bottom:1px solid #f0f4f8;border-top:1px solid #f0f4f8;background:#fafbfc}
-.legend-lbl{font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;width:100%;font-family:'Asap',sans-serif;margin-bottom:3px}
-
 .panel-search{padding:10px 16px;border-bottom:1px solid #f0f4f8}
 .search-inp{width:100%;padding:8px 12px;border:1px solid #d8e0ea;border-radius:8px;font-size:13px;font-family:'Asap',sans-serif;outline:none;color:#18375d}
 .search-inp:focus{border-color:#007883}
@@ -144,27 +247,32 @@
 .panel-list{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:6px}
 .panel-q{background:#fafbfc;border:1px solid #e8edf4;border-radius:10px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;transition:border-color 0.12s}
 .panel-q:hover{border-color:#b8c4d4}
-.panel-q-body{flex:1;min-width:0}
-.panel-q-text{font-size:12px;color:#18375d;font-family:'Asap',sans-serif;font-weight:500;line-height:1.4;margin-bottom:5px}
-.panel-q-tags{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.panel-q-text{font-size:12px;color:#18375d;font-family:'Asap',sans-serif;font-weight:500;line-height:1.4;margin-bottom:4px}
+.panel-q-meta{display:flex;flex-wrap:wrap;gap:4px}
 .btn-add-from-base{width:26px;height:26px;border-radius:50%;background:#18375d;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;margin-top:2px;transition:background 0.12s}
 .btn-add-from-base:hover{background:#007883}
-.panel-empty{text-align:center;padding:28px;color:#94a3b8;font-size:13px;font-family:'Asap',sans-serif}
 
-/* Modale */
-.modal-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(15,30,55,0.45);z-index:60;display:none;align-items:center;justify-content:center;border-radius:14px}
+/* Modale régénération */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,30,55,0.45);z-index:60;display:none;align-items:center;justify-content:center}
 .modal-overlay.on{display:flex}
-.modal{background:#fff;border-radius:12px;padding:24px;max-width:360px;width:90%;border:1px solid #d8e0ea}
+.modal{background:#fff;border-radius:14px;padding:26px;max-width:380px;width:90%;border:1px solid #d8e0ea;box-shadow:0 12px 32px rgba(24,55,93,0.15)}
 .modal h3{font-size:15px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;margin-bottom:8px}
 .modal p{font-size:13px;color:#64748b;font-family:'Asap',sans-serif;line-height:1.6;margin-bottom:18px}
 .modal-acts{display:flex;gap:8px;justify-content:flex-end}
-.btn-cancel{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:1px solid #d8e0ea;background:#fff;color:#64748b}
-.btn-confirm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:none;background:#eb6366;color:#fff}
+.btn-cancel{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:1px solid #d8e0ea;background:#fff;color:#64748b}
+.btn-cancel:hover{background:#f7f9fc}
+.btn-confirm{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:none;background:#eb6366;color:#fff}
 .btn-confirm:hover{background:#d4474a}
+
+.empty-q{text-align:center;padding:40px;color:#94a3b8;font-size:13px;font-family:'Asap',sans-serif;border:1.5px dashed #e2e8f0;border-radius:10px}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+</head>
+<body>
+<div class="shell">
 
-<div class="shell" id="shell">
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="logo">
       <span class="logo-self">SELF</span>
@@ -173,153 +281,212 @@
     <div class="tb-sp"></div>
     <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
   </div>
+
+  <!-- SUBNAV -->
   <div class="subnav">
     <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
     <button class="sn" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
     <button class="sn on" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
-    <button class="sn">Bibliothèque partagée</button>
-    <button class="sn">Résultats</button>
-    <button class="sn">Paramètres</button>
-  </div>
-  <div class="breadcrumb">
-    <span class="bc-link">Ma bibliothèque</span>
-    <span class="bc-sep">›</span>
-    <span class="bc-link">Nouveau thème</span>
-    <span class="bc-sep">›</span>
-    <span class="bc-cur">Questions — Sécurité & culture de sûreté</span>
+    <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
+    <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
+    <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
   </div>
 
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <span class="bc-link" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-link" onclick="window.location.href='2-selftech_creer_theme_ia.html'">Sécurité & culture de sûreté</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-cur" id="bc-cur">Questions — Connaître les risques</span>
+  </div>
+
+  <!-- LAYOUT -->
   <div class="editor-layout">
+
+    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sb-title">Chapitres</div>
-      <div class="chap-nav" id="chap-nav"></div>
+      <div id="chap-nav"></div>
       <div class="sb-bot">
-        <div class="sb-count" id="sb-count"></div>
+        <div class="sb-total" id="sb-total"></div>
         <button class="btn-save">Enregistrer le thème</button>
       </div>
     </div>
+
+    <!-- MAIN -->
     <div class="main-editor" id="main-editor"></div>
   </div>
 
-  <div class="overlay" id="overlay" onclick="closePanel()"></div>
-  <div class="panel-right" id="panel-right">
-    <div class="panel-head">
-      <span class="panel-title">Piocher dans les bibliothèques</span>
-      <button class="panel-close" onclick="closePanel()">✕</button>
-    </div>
-    <div class="lib-toggle">
-      <button class="lib-btn on" id="lib-btn-ma" onclick="switchLib('ma')">Ma bibliothèque</button>
-      <button class="lib-btn" id="lib-btn-shared" onclick="switchLib('shared')">Bibliothèque partagée Selftech</button>
-    </div>
-    <div class="prov-legend">
-      <div class="legend-lbl">Légende provenance</div>
-      <span class="tag-prov">🤖 Base assistée par IA</span>
-      <span class="tag-prov expert">⭐ Conçu par expert·e</span>
-      <span class="tag-prov client">🤝 Contribution client</span>
-    </div>
-    <div class="panel-search">
-      <input class="search-inp" id="panel-search-inp" placeholder="Rechercher par mot-clé…" oninput="filterPanel(this.value)">
-    </div>
-    <div class="panel-tags">
-      <div class="panel-tags-lbl">Filtrer par tag de contenu</div>
-      <div id="panel-tags-wrap" style="display:flex;flex-wrap:wrap;gap:5px"></div>
-    </div>
-    <div class="panel-list" id="panel-list"></div>
-  </div>
+</div>
 
-  <div class="modal-overlay" id="modal-regen">
-    <div class="modal">
-      <div style="font-size:22px;margin-bottom:12px">⚠️</div>
-      <h3>Régénérer toutes les questions ?</h3>
-      <p>Les <strong id="modal-q-count"></strong> questions actuelles seront remplacées par de nouvelles questions générées par l'IA.</p>
-      <div class="modal-acts">
-        <button class="btn-cancel" onclick="closeRegenModal()">Annuler</button>
-        <button class="btn-confirm" onclick="confirmRegen()">Régénérer</button>
-      </div>
+<!-- PANEL BIBLIOTHÈQUES -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel-right" id="panel-right">
+  <div class="panel-head">
+    <span class="panel-title">Piocher dans les bibliothèques</span>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="lib-toggle">
+    <button class="lib-btn on" id="lib-btn-ma" onclick="switchLib('ma')">Ma bibliothèque</button>
+    <button class="lib-btn" id="lib-btn-shared" onclick="switchLib('shared')">Bibliothèque Selftech</button>
+  </div>
+  <div class="panel-search">
+    <input class="search-inp" id="panel-search-inp" placeholder="Rechercher par mot-clé…" oninput="filterPanel(this.value)">
+  </div>
+  <div class="panel-tags">
+    <div class="panel-tags-lbl">Filtrer par tag</div>
+    <div id="panel-tags-wrap" style="display:flex;flex-wrap:wrap;gap:5px"></div>
+  </div>
+  <div class="panel-list" id="panel-list"></div>
+</div>
+
+<!-- MODALE REGEN -->
+<div class="modal-overlay" id="modal-regen">
+  <div class="modal">
+    <div style="font-size:22px;margin-bottom:12px">⚠️</div>
+    <h3>Régénérer toutes les questions ?</h3>
+    <p>Les <strong id="modal-q-count"></strong> questions actuelles seront remplacées par de nouvelles questions générées par l'IA.</p>
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="closeRegenModal()">Annuler</button>
+      <button class="btn-confirm" onclick="confirmRegen()">Régénérer</button>
     </div>
   </div>
 </div>
 
 <script>
-// PROVENANCE types
+// ── DONNÉES ──────────────────────────────────────────────────────────────────
 const PROV = {
   AI:     {key:'ai',     label:'Base assistée par IA', ico:'🤖', cls:''},
   EXPERT: {key:'expert', label:'Conçu par expert·e',   ico:'⭐', cls:'expert'},
   CLIENT: {key:'client', label:'Contribution client',  ico:'🤝', cls:'client'},
 };
 
-const chapters=[
-  {id:1,name:"Connaître les risques",desc:"Identifier les principaux risques du poste de travail.",questions:[
-    {id:'q1',type:'likert',prov:'AI',text:"Dans mon travail quotidien, j'identifie les situations susceptibles de présenter un risque.",tags:[{t:'Risque',ai:false},{t:'Quotidien',ai:true},{t:'Vigilance',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-    {id:'q2',type:'choix',prov:'AI',text:"Face à une situation inconnue qui semble risquée, quelle est ma première réaction ?",tags:[{t:'Réaction',ai:false},{t:'Signalement',ai:true}],answers:[{l:"Je continue sans m'y attarder",s:1},{l:"J'en parle à un collègue",s:2},{l:"Je m'arrête et j'évalue",s:3},{l:"Je remonte l'information",s:4}]},
-    {id:'q3',type:'likert',prov:'AI',text:"Je connais les équipements de protection individuelle adaptés à mon poste.",tags:[{t:'EPI',ai:false},{t:'Connaissance',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-    {id:'q4',type:'choix',prov:'AI',text:"Comment décririez-vous votre niveau de connaissance des consignes de sécurité ?",tags:[{t:'Consignes',ai:true},{t:'Évaluation',ai:true}],answers:[{l:"Je ne les connais pas",s:1},{l:"Je les connais partiellement",s:2},{l:"Je les connais globalement",s:3},{l:"Je les maîtrise et applique",s:4}]},
-    {id:'q5',type:'likert',prov:'AI',text:"Je signale systématiquement les situations dangereuses à mon responsable.",tags:[{t:'Signalement',ai:false},{t:'Proactivité',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-  ]},
-  {id:2,name:"Adopter les bons réflexes",desc:"Mettre en pratique les comportements préventifs.",questions:[
-    {id:'q6',type:'likert',prov:'AI',text:"Je porte mes EPI dès que la situation l'exige.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-  ]},
-  {id:3,name:"Travailler en équipe",desc:"Comprendre l'impact des comportements collectifs.",questions:[]},
-  {id:4,name:"Réagir et signaler",desc:"Réagir face à un incident.",questions:[]},
+const chapters = [
+  { id:1, name:"Connaître les risques",           desc:"Identifier les principaux risques du poste de travail.",
+    questions:[
+      {id:'q1',type:'likert',prov:'AI',text:"Dans mon travail quotidien, j'identifie les situations susceptibles de présenter un risque.",tags:[{t:'Risque',ai:false},{t:'Quotidien',ai:true},{t:'Vigilance',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
+      {id:'q2',type:'choix',prov:'AI',text:"Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?",tags:[{t:'Réaction',ai:false},{t:'Signalement',ai:true}],answers:[{l:"Je continue, ça passera probablement",s:0},{l:"J'en parle à un collègue entre deux tâches",s:1},{l:"Je m'arrête, j'évalue et je remonte l'info",s:2}]},
+      {id:'q3',type:'choix',prov:'AI',text:"Un collègue vous demande où se trouvent les EPI pour une tâche inhabituelle. Vous…",tags:[{t:'EPI',ai:false},{t:'Connaissance',ai:true}],answers:[{l:"Je lui dis que je ne sais pas vraiment",s:0},{l:"Je lui indique vaguement où chercher",s:1},{l:"Je l'accompagne et l'aide à identifier le bon équipement",s:2}]},
+      {id:'q4',type:'likert',prov:'AI',text:"Je connais les consignes de sécurité spécifiques à mon poste de travail.",tags:[{t:'Consignes',ai:true},{t:'Connaissance',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
+      {id:'q5',type:'choix',prov:'AI',text:"Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?",tags:[{t:'Signalement',ai:false},{t:'Proactivité',ai:true}],answers:[{l:"Je n'en fais rien, pas de dommage pas de problème",s:0},{l:"J'en parle à un collègue mais sans remonter officiellement",s:1},{l:"Je le signale formellement, même sans conséquence",s:2}]},
+    ],
+    profils:[
+      {niveau:1,titre:"La vigilance s'invite rarement dans votre quotidien",phrase:"Vous naviguez souvent en automatique, les signaux de risque passent inaperçus.",description:"Au quotidien, vous évoluez dans une forme d'habitude professionnelle qui laisse peu de place à la vigilance active. Ce n'est pas un manque d'intention — c'est souvent une exposition progressive aux risques qui les rend invisibles. La bonne nouvelle : cette prise de conscience est déjà un premier pas.",motscles:["Automatisme","Vigilance faible"]},
+      {niveau:2,titre:"Vous avez l'œil, mais pas encore le réflexe",phrase:"Votre sensibilité aux risques existe — elle s'exprime encore de façon irrégulière.",description:"Vous percevez les risques dans certaines situations, mais cela reste lié au contexte ou à votre état d'attention du moment. Ce qui vous manque encore, c'est la constance du regard. Vous êtes à un stade charnière : les automatismes de vigilance se construisent.",motscles:["Irrégulier","En construction"]},
+      {niveau:3,titre:"La vigilance fait partie de votre ADN professionnel",phrase:"Vous repérez et traitez les risques avec constance, même quand personne ne regarde.",description:"Vous avez intégré la vigilance comme une posture naturelle. Vous ne cherchez pas les risques — vous les voyez, presque instinctivement. Ce réflexe est une ressource précieuse pour vous et pour les personnes qui travaillent avec vous.",motscles:["Ancré","Ressource collective"]},
+    ],
+    seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]
+  },
+  { id:2, name:"Adopter les bons réflexes",       desc:"Mettre en pratique les comportements préventifs.",        questions:[{id:'q6',type:'likert',prov:'AI',text:"Je porte mes EPI dès que la situation l'exige.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]}], profils:[{niveau:1,titre:"Les réflexes préventifs ne sont pas encore naturels",phrase:"Les automatismes de protection se construisent encore.",description:"",motscles:[]},{niveau:2,titre:"Vous faites les bons gestes dans les situations connues",phrase:"Il reste des angles morts dans les contextes moins habituels.",description:"",motscles:[]},{niveau:3,titre:"Prévenir est un réflexe que vous n'avez plus besoin d'activer",phrase:"Vos comportements préventifs sont devenus une seconde nature.",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
+  { id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l'impact des comportements collectifs.",       questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
+  { id:4, name:"Réagir et signaler",               desc:"Réagir face à un incident et mobiliser les bons interlocuteurs.", questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
 ];
 
-// Bibliothèque "Ma bibli" = questions déjà créées par ce client
-const myLibQuestions=[
+const profils_config = [
+  {couleur:'#ff847e', bgHead:'#fff0ef', borderHead:'#ffd6d4', textColor:'#c0392b', nom:'En développement'},
+  {couleur:'#ffc744', bgHead:'#fff9ec', borderHead:'#ffedb8', textColor:'#b7840a', nom:'En progression'},
+  {couleur:'#77cd8a', bgHead:'#f0fbf2', borderHead:'#b8e8c0', textColor:'#27823a', nom:'Ancré'},
+];
+
+const myLibQuestions = [
   {id:'m1',prov:'AI',text:"Je participe activement aux exercices de sécurité organisés.",tags:["Exercice","Participation"],added:false},
-  {id:'m2',prov:'AI',text:"Je consulte régulièrement les affichages de sécurité sur mon lieu de travail.",tags:["Affichage","Veille"],added:false},
+  {id:'m2',prov:'AI',text:"Je consulte régulièrement les affichages de sécurité.",tags:["Affichage","Veille"],added:false},
   {id:'m3',prov:'AI',text:"Je suis capable d'expliquer les procédures d'évacuation à un collègue.",tags:["Évacuation","Formation"],added:false},
 ];
-
-// Bibliothèque partagée Selftech
-const sharedLibQuestions=[
+const sharedLibQuestions = [
   {id:'s1',prov:'EXPERT',text:"Avant de démarrer une tâche, j'identifie systématiquement les risques potentiels.",tags:["Risque","Méthode"],added:false},
   {id:'s2',prov:'EXPERT',text:"Je sais utiliser les équipements de premiers secours présents sur mon site.",tags:["Secours","EPI"],added:false},
   {id:'s3',prov:'CLIENT',text:"Je remonte les presqu'accidents à mon manager sans attendre.",tags:["Signalement","Proactivité"],added:false},
-  {id:'s4',prov:'AI',text:"Je respecte les zones de circulation réservées aux piétons dans les ateliers.",tags:["Circulation","Réflexe"],added:false},
-  {id:'s5',prov:'EXPERT',text:"Je connais la procédure à suivre en cas d'accident du travail sur mon site.",tags:["Procédure","Réaction"],added:false},
+  {id:'s4',prov:'AI',text:"Je respecte les zones de circulation réservées aux piétons.",tags:["Circulation","Réflexe"],added:false},
 ];
 
-let activeChap=0,openCards={},activeFilterTag='',activeLib='ma';
+let activeChap = 0;
+let activeTab = 'questions'; // 'questions' | 'profils'
+let openCards = {};
+let activeFilterTag = '';
+let activeLib = 'ma';
+let likertInfoOpen = false;
 
-const icoRegen=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.95L1 10" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const icoTrash=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14H6L5 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#eb6366" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4h6v2" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+// ── SVGs ─────────────────────────────────────────────────────────────────────
+const icoRegen = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.95L1 10" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const icoTrash = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14H6L5 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#eb6366" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4h6v2" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>`;
 
-function provTag(provKey){
-  const p=PROV[provKey];
-  if(!p)return'';
-  return`<span class="tag-prov ${p.cls}" title="${p.label}">${p.ico} ${p.label}</span>`;
+// ── RENDER NAV ────────────────────────────────────────────────────────────────
+function renderNav() {
+  const nav = document.getElementById('chap-nav');
+  nav.innerHTML = '';
+  chapters.forEach((c, i) => {
+    const n = c.questions.length;
+    const hasProfiles = c.profils.some(p => p.titre.length > 0);
+    const dotColor = n >= 5 ? '#77cd8a' : n > 0 ? '#ffc744' : '#d8e0ea';
+    const div = document.createElement('div');
+    div.className = `cni ${i === activeChap ? 'on' : ''}`;
+    div.innerHTML = `
+      <div class="cni-head" onclick="selectChap(${i})">
+        <div class="cni-lbl">Chapitre ${c.id}</div>
+        <div class="cni-name">${c.name}</div>
+        <div class="cni-meta">
+          <span class="cni-dot" style="background:${dotColor}"></span>
+          <span class="cni-qcount">${n}/10 questions</span>
+        </div>
+      </div>
+      <div class="cni-tabs">
+        <button class="cni-tab ${i === activeChap && activeTab === 'questions' ? 'on' : ''}" onclick="setTab(${i},'questions')">Questions</button>
+        <button class="cni-tab ${i === activeChap && activeTab === 'profils' ? 'on' : ''}" onclick="setTab(${i},'profils')">Profils</button>
+      </div>`;
+    nav.appendChild(div);
+  });
+  // Total
+  const total = chapters.reduce((a, c) => a + c.questions.length, 0);
+  document.getElementById('sb-total').innerHTML = `<strong>${total}</strong> questions au total`;
 }
 
-function renderNav(){
-  document.getElementById('chap-nav').innerHTML=chapters.map((c,i)=>{
-    const n=c.questions.length;
-    return`<div class="cni ${i===activeChap?'on':''}" onclick="selectChap(${i})">
-      <div class="cni-lbl">Chapitre ${c.id}</div>
-      <div class="cni-name">${c.name}</div>
-      <div class="cni-meta">${n>0?'<span class="cni-dot"></span>':''} ${n}/10</div>
-    </div>`;
-  }).join('');
-  const n=chapters[activeChap].questions.length;
-  document.getElementById('sb-count').innerHTML=`<span>${n}</span>/10 questions`;
+function selectChap(i) {
+  activeChap = i;
+  openCards = {};
+  renderNav();
+  renderMain();
 }
 
-function selectChap(i){activeChap=i;openCards={};renderNav();renderMain();}
+function setTab(i, tab) {
+  activeChap = i;
+  activeTab = tab;
+  openCards = {};
+  renderNav();
+  renderMain();
+}
 
-function renderMain(){
-  const ch=chapters[activeChap];
-  const n=ch.questions.length,pct=Math.round((n/10)*100);
-  const qHTML=n===0
-    ?`<div style="text-align:center;padding:36px;color:#94a3b8;font-size:13px;font-family:Asap,sans-serif;border:1.5px dashed #e2e8f0;border-radius:10px">Aucune question — régénérez avec l'IA, pioche dans les bibliothèques ou ajoutez manuellement</div>`
-    :ch.questions.map((q,qi)=>renderCard(q,qi)).join('');
+// ── RENDER MAIN ───────────────────────────────────────────────────────────────
+function renderMain() {
+  const ch = chapters[activeChap];
+  document.getElementById('bc-cur').textContent =
+    activeTab === 'questions'
+      ? `Questions — ${ch.name}`
+      : `Profils — ${ch.name}`;
 
-  document.getElementById('main-editor').innerHTML=`
+  if (activeTab === 'questions') renderQuestions(ch);
+  else renderProfils(ch);
+}
+
+// ── VUE QUESTIONS ─────────────────────────────────────────────────────────────
+function renderQuestions(ch) {
+  const n = ch.questions.length;
+  const pct = Math.round((n / 10) * 100);
+
+  const qHTML = n === 0
+    ? `<div class="empty-q">Aucune question — régénérez avec l'IA, pichez dans les bibliothèques ou ajoutez manuellement</div>`
+    : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
+
+  document.getElementById('main-editor').innerHTML = `
     <div class="chap-head">
       <div class="chap-info">
-        <div class="chap-badge">Chapitre ${ch.id}</div>
+        <div class="chap-badge">Chapitre ${ch.id} · Questions</div>
         <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
         <input class="chap-desc-inp" value="${ch.desc}">
       </div>
-      <div class="chap-btns">
+      <div class="chap-actions">
         <button class="btn-regen-all" onclick="askRegen()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.95L1 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Régénérer avec l'IA
@@ -334,33 +501,56 @@ function renderMain(){
         </button>
       </div>
     </div>
+
     <div class="q-counter">
-      <span class="qc-text"><strong>${n}</strong> question${n!==1?'s':''} · min 5, max 10</span>
+      <span class="qc-text"><strong>${n}</strong> question${n !== 1 ? 's' : ''} · min 5, max 10</span>
       <div class="qc-bar"><div class="qc-fill" style="width:${pct}%"></div></div>
     </div>
-    <div class="q-list">${qHTML}</div>`;
+
+    <div class="likert-info" id="likert-info">
+      <span class="likert-info-ico">ℹ️</span>
+      <div class="likert-info-body">
+        <strong>Conversion échelle → score</strong> — Les questions Likert (1→5) sont normalisées : 1=0 · 2=0,5 · 3=1 · 4=1,5 · 5=2.
+        <span id="likert-extra" style="display:none"> Pour les formulations négatives, l'échelle est inversée : 1=2 · 2=1,5 · 3=1 · 4=0,5 · 5=0. Les mises en situation à choix (0/1/2) et les Likert normalisés sont calculés ensemble pour la moyenne du chapitre.</span>
+      </div>
+      <span class="likert-info-toggle" onclick="toggleLikertInfo()">Voir plus</span>
+    </div>
+
+    <div class="q-list" id="q-list">${qHTML}</div>`;
 }
 
-function renderCard(q,qi){
-  const open=openCards[q.id];
-  const tagsHTML=q.tags.map((t,ti)=>`
-    <span class="tag-pill ${t.ai?'ai-sug':''}">${t.ai?'✦ ':''}${t.t}
+function toggleLikertInfo() {
+  likertInfoOpen = !likertInfoOpen;
+  const el = document.getElementById('likert-extra');
+  const btn = document.querySelector('.likert-info-toggle');
+  if (el) el.style.display = likertInfoOpen ? 'inline' : 'none';
+  if (btn) btn.textContent = likertInfoOpen ? 'Réduire' : 'Voir plus';
+}
+
+function renderCard(q, qi) {
+  const open = openCards[q.id];
+  const p = PROV[q.prov] || {};
+  const provHTML = p.label ? `<span class="tag-prov ${p.cls}">${p.ico} ${p.label}</span>` : '';
+  const tagsHTML = q.tags.map((t, ti) => `
+    <span class="tag-pill ${t.ai ? 'ai-sug' : ''}">${t.ai ? '✦ ' : ''}${t.t}
       <span class="tag-x" onclick="removeTag('${q.id}',${ti});event.stopPropagation()">×</span>
     </span>`).join('');
-  const addBtn=q.tags.length<6?`<span class="tag-add" onclick="addTag('${q.id}');event.stopPropagation()">+ Tag</span>`:'';
+  const addBtn = q.tags.length < 6 ? `<span class="tag-add" onclick="addTag('${q.id}');event.stopPropagation()">+ Tag</span>` : '';
 
-  let bodyHTML='';
-  if(open){
-    const answersHTML=q.type==='likert'
-      ?`<div class="likert-list">${q.answers.map((a,ai)=>`
+  let bodyHTML = '';
+  if (open) {
+    const isLikert = q.type === 'likert';
+    const answersHTML = isLikert
+      ? `<div class="likert-list">${q.answers.map((a, ai) => `
           <div class="la-row">
             <div class="la-bar"></div>
             <input class="la-inp" value="${a.l}" style="color:${ai===0?'#eb6366':ai===4?'#007883':'#475569'}">
+            <span class="la-score-info">→ score ${a.s}</span>
             <div class="score-pill" onclick="editScore(this,event)" data-score="${a.s}">
               <span class="sp-lbl">Score</span><span class="sp-val">${a.s}</span>
             </div>
           </div>`).join('')}</div>`
-      :`<div class="mc-list">${q.answers.map(a=>`
+      : `<div class="mc-list">${q.answers.map(a => `
           <div class="mc-row">
             <div class="mc-dot"></div>
             <input class="mc-inp" value="${a.l}">
@@ -368,28 +558,26 @@ function renderCard(q,qi){
               <span class="sp-lbl">Score</span><span class="sp-val">${a.s}</span>
             </div>
           </div>`).join('')}</div>`;
-    bodyHTML=`<div class="q-body">
-      <span class="type-badge ${q.type==='likert'?'tb-likert':'tb-choix'}">${q.type==='likert'?'Échelle 1 → 5':'Choix multiple'}</span>
-      <div class="score-note">Scores proposés par l'IA · cliquez pour modifier</div>
+
+    bodyHTML = `<div class="q-body">
+      <span class="type-badge ${isLikert ? 'tb-likert' : 'tb-choix'}">${isLikert ? 'Échelle 1→5 (normalisée 0→2)' : 'Mise en situation — choix comportemental'}</span>
+      <div class="score-note">Scores : 0 = posture fragile · 1 = intention partielle · 2 = posture constructive · Cliquez pour modifier</div>
       ${answersHTML}
     </div>`;
   }
 
   return `
-    <div class="q-card ${open?'open':''}" id="qc-${q.id}">
+    <div class="q-card ${open ? 'open' : ''}" id="qc-${q.id}">
       <div class="q-header" onclick="toggleCard('${q.id}')">
-        <div class="q-num">${qi+1}</div>
+        <div class="q-num">${qi + 1}</div>
         <div class="q-main">
           <div class="q-text">${q.text}</div>
-          <div class="q-tags-row">
-            ${provTag(q.prov)}
-            ${tagsHTML}${addBtn}
-          </div>
+          <div class="q-tags-row">${provHTML}${tagsHTML}${addBtn}</div>
         </div>
         <div class="q-right" onclick="event.stopPropagation()">
-          <button class="q-chevron-btn" onclick="toggleCard('${q.id}')" title="Déplier / replier">▾</button>
+          <button class="q-chevron-btn" onclick="toggleCard('${q.id}')">▾</button>
           <div class="q-vsep"></div>
-          <button class="qa-btn regen" title="Régénérer avec l'IA" onclick="regenOne('${q.id}',this)">${icoRegen}</button>
+          <button class="qa-btn regen-q" title="Régénérer avec l'IA" onclick="regenOne('${q.id}',this)">${icoRegen}</button>
           <button class="qa-btn del" title="Supprimer" onclick="deleteQ('${q.id}')">${icoTrash}</button>
         </div>
       </div>
@@ -397,136 +585,266 @@ function renderCard(q,qi){
     </div>`;
 }
 
-function toggleCard(id){openCards[id]=!openCards[id];renderMain();}
-function deleteQ(id){chapters[activeChap].questions=chapters[activeChap].questions.filter(q=>q.id!==id);delete openCards[id];renderNav();renderMain();}
-function regenOne(id,btn){
-  btn.style.animation='spin 0.7s linear infinite';btn.disabled=true;
-  setTimeout(()=>{
-    const ch=chapters[activeChap],idx=ch.questions.findIndex(q=>q.id===id);
-    if(idx>-1) ch.questions[idx]={id,type:'likert',prov:'AI',text:"Je vérifie les conditions de sécurité avant toute activité.",tags:[{t:'Vérification',ai:true},{t:'Proactivité',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]};
-    renderNav();renderMain();
-  },1000);
-}
-function addManual(){
-  if(chapters[activeChap].questions.length>=10)return;
-  const id='q'+Date.now();
-  chapters[activeChap].questions.push({id,type:'choix',prov:null,text:"Nouvelle question",tags:[],answers:[{l:"Réponse A",s:1},{l:"Réponse B",s:2},{l:"Réponse C",s:3},{l:"Réponse D",s:4}]});
-  openCards[id]=true;renderNav();renderMain();
-}
-function removeTag(qid,ti){const q=chapters[activeChap].questions.find(q=>q.id===qid);if(q)q.tags.splice(ti,1);renderMain();}
-function addTag(qid){const tag=prompt('Nom du tag :');if(!tag)return;const q=chapters[activeChap].questions.find(q=>q.id===qid);if(q&&q.tags.length<6)q.tags.push({t:tag,ai:false});renderMain();}
-function askRegen(){
-  const n=chapters[activeChap].questions.length;
-  document.getElementById('modal-q-count').textContent=`${n} question${n!==1?'s':''}`;
-  document.getElementById('modal-regen').classList.add('on');
-}
-function closeRegenModal(){document.getElementById('modal-regen').classList.remove('on');}
-function confirmRegen(){
-  closeRegenModal();
-  chapters[activeChap].questions=[
-    {id:'qr1',type:'likert',prov:'AI',text:"Je respecte les procédures de sécurité même sous pression.",tags:[{t:'Procédure',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-    {id:'qr2',type:'choix',prov:'AI',text:"Que faites-vous si un collègue ne respecte pas une consigne ?",tags:[{t:'Collectif',ai:true}],answers:[{l:"Je n'interviens pas",s:1},{l:"Je lui en parle",s:2},{l:"Je préviens le responsable",s:3},{l:"Je fais les deux",s:4}]},
-    {id:'qr3',type:'likert',prov:'AI',text:"Je participe activement aux formations sécurité.",tags:[{t:'Formation',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-    {id:'qr4',type:'likert',prov:'AI',text:"Je connais le plan d'évacuation de mon bâtiment.",tags:[{t:'Évacuation',ai:true}],answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]},
-    {id:'qr5',type:'choix',prov:'AI',text:"Quel est votre premier réflexe face à un début d'incendie ?",tags:[{t:'Incendie',ai:true}],answers:[{l:"J'essaie de l'éteindre seul",s:1},{l:"J'alerte et j'évacue",s:2},{l:"Je cherche l'extincteur",s:3},{l:"J'alerte, j'évacue et j'utilise l'extincteur",s:4}]},
-  ];
-  openCards={};renderNav();renderMain();
+// ── VUE PROFILS ───────────────────────────────────────────────────────────────
+function renderProfils(ch) {
+  const seuilsHTML = ch.seuils.map((s, i) => {
+    const pc = profils_config[i];
+    return `
+      <div class="seuil-item">
+        <div class="seuil-dot" style="background:${pc.couleur}"></div>
+        <span class="seuil-label">${pc.nom}</span>
+        <div class="seuil-range">
+          <input class="seuil-inp" type="number" min="0" max="2" step="0.1" value="${s.min}" onchange="chapters[activeChap].seuils[${i}].min=parseFloat(this.value)">
+          <span class="seuil-sep">→</span>
+          <input class="seuil-inp" type="number" min="0" max="2.1" step="0.1" value="${s.max}" onchange="chapters[activeChap].seuils[${i}].max=parseFloat(this.value)">
+        </div>
+      </div>`;
+  }).join('');
+
+  const profilsHTML = ch.profils.map((p, i) => {
+    const pc = profils_config[i];
+    const mkwHTML = p.motscles.map((m, mi) => `
+      <span class="mkw" style="background:${pc.bgHead};border-color:${pc.borderHead};color:${pc.textColor}">${m}
+        <span class="mkw-x" onclick="removeMkw(${i},${mi})">×</span>
+      </span>`).join('');
+
+    return `
+      <div class="profil-card">
+        <div class="profil-header" style="background:${pc.bgHead};border-bottom:1px solid ${pc.borderHead}">
+          <div class="profil-level">
+            <div class="profil-dot" style="background:${pc.couleur}"></div>
+            <span class="profil-level-name" style="color:${pc.textColor}">Profil ${i+1} — ${pc.nom}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="profil-score-range" style="color:${pc.textColor}">Score ${ch.seuils[i].min} → ${ch.seuils[i].max}</span>
+            <button class="btn-ai-profil" style="background:rgba(0,0,0,0.08);color:${pc.textColor}" onclick="genProfil(${i})">
+              ${icoStar} Générer avec l'IA
+            </button>
+          </div>
+        </div>
+        <div class="profil-body">
+
+          <div class="pfield">
+            <label>Titre du profil <span style="color:#eb6366">*</span></label>
+            <input type="text" value="${p.titre}" placeholder="Titre évocateur — le répondant se projette dans ce comportement" oninput="chapters[activeChap].profils[${i}].titre=this.value">
+          </div>
+
+          <div class="pfield">
+            <label>Phrase courte de résumé</label>
+            <input type="text" class="short" value="${p.phrase}" placeholder="Une phrase concise, bienveillante, sans jugement" oninput="chapters[activeChap].profils[${i}].phrase=this.value">
+          </div>
+
+          <div class="pfield">
+            <label>Description détaillée</label>
+            <div class="rte-wrap">
+              <div class="rte-toolbar">
+                <button class="rte-btn" onclick="fmt('bold')" title="Gras"><b>G</b></button>
+                <button class="rte-btn" onclick="fmt('underline')" title="Souligné"><u>S</u></button>
+                <div class="rte-sep"></div>
+                <button class="rte-btn" onclick="fmt('insertUnorderedList')" title="Liste à puces">☰</button>
+                <div class="rte-sep"></div>
+                <button class="rte-btn" onclick="addLink()" title="Lien hypertexte">🔗</button>
+              </div>
+              <div class="rte-area" contenteditable="true" data-placeholder="Description bienveillante et actionnable — peut contenir des liens, du gras, une liste…">${p.description}</div>
+            </div>
+          </div>
+
+          <div class="pfield">
+            <label>Mots clés <span style="font-weight:400;text-transform:none;font-style:italic;color:#c5ccd5">(affichage uniquement — pas de valeur en base)</span></label>
+            <div class="mkw-wrap" onclick="this.querySelector('.mkw-inp').focus()">
+              ${mkwHTML}
+              <input class="mkw-inp" placeholder="+ mot clé" onkeydown="addMkw(event,${i},'${pc.bgHead}','${pc.borderHead}','${pc.textColor}')">
+            </div>
+          </div>
+
+          <div class="pfield">
+            <label>Médias optionnels</label>
+            <div class="media-row">
+              <div class="media-slot" title="Depuis la médiathèque (Paramètres)">
+                <span class="media-ico">🖼</span>
+                <span class="media-lbl">Ajouter une image</span>
+                <span class="media-hint">Depuis la médiathèque</span>
+              </div>
+              <div class="media-slot" title="URL vidéo ou médiathèque">
+                <span class="media-ico">▶️</span>
+                <span class="media-lbl">Ajouter une vidéo</span>
+                <span class="media-hint">URL ou médiathèque</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('main-editor').innerHTML = `
+    <div class="chap-head">
+      <div class="chap-info">
+        <div class="chap-badge">Chapitre ${ch.id} · Profils de résultat</div>
+        <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+        <input class="chap-desc-inp" value="${ch.desc}">
+      </div>
+    </div>
+
+    <div class="seuils-card">
+      <div class="seuils-head">
+        <span class="seuils-title">${icoStar} Seuils de score par profil</span>
+        <span class="seuils-hint">Calculés automatiquement · ajustables manuellement · score de 0 à 2</span>
+      </div>
+      <div class="seuils-row">${seuilsHTML}</div>
+    </div>
+
+    <div class="profils-grid">${profilsHTML}</div>`;
 }
 
-function openPanel(){
-  activeFilterTag='';activeLib='ma';
-  document.getElementById('panel-search-inp').value='';
+// ── INTERACTIONS QUESTIONS ────────────────────────────────────────────────────
+function toggleCard(id) { openCards[id] = !openCards[id]; renderMain(); }
+function deleteQ(id) { chapters[activeChap].questions = chapters[activeChap].questions.filter(q => q.id !== id); delete openCards[id]; renderNav(); renderMain(); }
+function regenOne(id, btn) {
+  btn.style.animation = 'spin 0.7s linear infinite'; btn.disabled = true;
+  setTimeout(() => {
+    const ch = chapters[activeChap], idx = ch.questions.findIndex(q => q.id === id);
+    if (idx > -1) ch.questions[idx] = { id, type: 'choix', prov: 'AI', text: "Lors d'un briefing sécurité, vous réalisez que vous n'avez pas bien mémorisé une consigne. Que faites-vous ?", tags: [{t:'Connaissance',ai:true},{t:'Réaction',ai:true}], answers: [{l:"Je fais semblant d'avoir compris",s:0},{l:"Je demande à un collègue après la réunion",s:1},{l:"Je pose la question immédiatement, sans hésiter",s:2}] };
+    renderNav(); renderMain();
+  }, 1000);
+}
+function addManual() {
+  if (chapters[activeChap].questions.length >= 10) return;
+  const id = 'q' + Date.now();
+  chapters[activeChap].questions.push({ id, type: 'choix', prov: 'CLIENT', text: "Nouvelle mise en situation", tags: [], answers: [{l:"Réponse A",s:0},{l:"Réponse B",s:1},{l:"Réponse C",s:2}] });
+  openCards[id] = true; renderNav(); renderMain();
+}
+function removeTag(qid, ti) { const q = chapters[activeChap].questions.find(q => q.id === qid); if (q) q.tags.splice(ti, 1); renderMain(); }
+function addTag(qid) { const t = prompt('Nom du tag :'); if (!t) return; const q = chapters[activeChap].questions.find(q => q.id === qid); if (q && q.tags.length < 6) q.tags.push({t, ai:false}); renderMain(); }
+function askRegen() {
+  const n = chapters[activeChap].questions.length;
+  document.getElementById('modal-q-count').textContent = `${n} question${n !== 1 ? 's' : ''}`;
+  document.getElementById('modal-regen').classList.add('on');
+}
+function closeRegenModal() { document.getElementById('modal-regen').classList.remove('on'); }
+function confirmRegen() {
+  closeRegenModal();
+  chapters[activeChap].questions = [
+    {id:'qr1',type:'choix',prov:'AI',text:"Votre manager vous demande de débuter une nouvelle tâche sans briefing sécurité. Vous…",tags:[{t:'Procédure',ai:true}],answers:[{l:"Je commence, j'aviserai si problème",s:0},{l:"Je cherche les consignes par moi-même avant",s:1},{l:"Je demande le briefing avant de commencer",s:2}]},
+    {id:'qr2',type:'likert',prov:'AI',text:"Je respecte les procédures de sécurité même sous pression du temps.",tags:[{t:'Pression',ai:true},{t:'Procédure',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
+    {id:'qr3',type:'choix',prov:'AI',text:"Vous observez un collègue qui prend un risque sans s'en rendre compte. Que faites-vous ?",tags:[{t:'Collectif',ai:true}],answers:[{l:"Je l'observe sans intervenir",s:0},{l:"Je lui en parle plus tard",s:1},{l:"Je lui signale calmement sur le moment",s:2}]},
+    {id:'qr4',type:'likert',prov:'AI',text:"Je connais le plan d'évacuation de mon bâtiment.",tags:[{t:'Évacuation',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
+    {id:'qr5',type:'choix',prov:'AI',text:"Un premier incendie se déclare dans un local voisin. Votre premier réflexe ?",tags:[{t:'Incendie',ai:true},{t:'Réflexe',ai:true}],answers:[{l:"J'évalue si je peux l'éteindre seul",s:0},{l:"J'alerte et j'attends des instructions",s:1},{l:"J'alerte immédiatement et j'évacue",s:2}]},
+  ];
+  openCards = {}; renderNav(); renderMain();
+}
+
+// ── SCORING ───────────────────────────────────────────────────────────────────
+function editScore(pill, e) {
+  e.stopPropagation();
+  const isEditing = pill.classList.contains('editing');
+  document.querySelectorAll('.score-pill.editing').forEach(p => closeScore(p));
+  if (isEditing) return;
+  pill.classList.add('editing');
+  const lbl = pill.querySelector('.sp-lbl'), valEl = pill.querySelector('.sp-val');
+  lbl.classList.add('e'); valEl.classList.add('e'); valEl.style.display = 'none';
+  const inp = document.createElement('input');
+  inp.type = 'number'; inp.min = '0'; inp.max = '2'; inp.step = '0.5'; inp.value = pill.dataset.score;
+  inp.style.cssText = 'width:38px;font-size:12px;font-weight:700;color:#fff;background:transparent;border:none;outline:none;text-align:center;font-family:Asap,sans-serif';
+  pill.appendChild(inp); inp.focus(); inp.select();
+  inp.addEventListener('blur', () => closeScore(pill));
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === 'Escape') closeScore(pill); });
+}
+function closeScore(pill) {
+  const inp = pill.querySelector('input');
+  if (inp) { pill.dataset.score = inp.value || pill.dataset.score; inp.remove(); }
+  const valEl = pill.querySelector('.sp-val');
+  if (valEl) { valEl.textContent = pill.dataset.score; valEl.style.display = ''; valEl.classList.remove('e'); }
+  const lbl = pill.querySelector('.sp-lbl');
+  if (lbl) lbl.classList.remove('e');
+  pill.classList.remove('editing');
+}
+
+// ── INTERACTIONS PROFILS ──────────────────────────────────────────────────────
+function removeMkw(profIdx, mkIdx) {
+  chapters[activeChap].profils[profIdx].motscles.splice(mkIdx, 1);
+  renderMain();
+}
+function addMkw(e, profIdx, bg, border, color) {
+  if (e.key !== 'Enter') return;
+  const inp = e.target, val = inp.value.trim();
+  if (!val) return;
+  e.preventDefault();
+  chapters[activeChap].profils[profIdx].motscles.push(val);
+  inp.value = '';
+  renderMain();
+}
+function genProfil(profIdx) {
+  const pc = profils_config[profIdx];
+  const texts = [
+    {titre:"La vigilance s'invite rarement dans votre quotidien", phrase:"Vous naviguez souvent en automatique, les signaux de risque passent inaperçus.", desc:"Au quotidien, vous évoluez dans une forme d'habitude professionnelle qui laisse peu de place à la vigilance active. Ce n'est pas un manque d'intention — c'est souvent une exposition progressive aux risques qui les rend invisibles."},
+    {titre:"Vous avez l'œil, mais pas encore le réflexe", phrase:"Votre sensibilité aux risques existe — elle s'exprime encore de façon irrégulière.", desc:"Vous percevez les risques dans certaines situations, mais cela reste lié au contexte ou à votre état d'attention du moment. Ce qui vous manque encore, c'est la constance du regard."},
+    {titre:"La vigilance fait partie de votre ADN professionnel", phrase:"Vous repérez et traitez les risques avec constance, même quand personne ne regarde.", desc:"Vous avez intégré la vigilance comme une posture naturelle. Ce réflexe est une ressource précieuse pour vous et pour les personnes qui travaillent avec vous."},
+  ];
+  const t = texts[profIdx];
+  chapters[activeChap].profils[profIdx].titre = t.titre;
+  chapters[activeChap].profils[profIdx].phrase = t.phrase;
+  chapters[activeChap].profils[profIdx].description = t.desc;
+  renderMain();
+}
+function fmt(cmd) { document.execCommand(cmd, false, null); }
+function addLink() { const url = prompt('URL du lien :'); if (url) document.execCommand('createLink', false, url); }
+
+// ── PANEL ─────────────────────────────────────────────────────────────────────
+function openPanel() {
+  activeFilterTag = ''; activeLib = 'ma';
+  document.getElementById('panel-search-inp').value = '';
   document.getElementById('overlay').classList.add('on');
   document.getElementById('panel-right').classList.add('on');
-  updateLibToggle();
-  renderPanelTags();
-  renderPanelList('','');
+  updateLibToggle(); renderPanelTags(); renderPanelList('', '');
 }
-function closePanel(){
+function closePanel() {
   document.getElementById('overlay').classList.remove('on');
   document.getElementById('panel-right').classList.remove('on');
 }
-function switchLib(lib){
-  activeLib=lib;activeFilterTag='';
-  document.getElementById('panel-search-inp').value='';
-  updateLibToggle();renderPanelTags();renderPanelList('','');
+function switchLib(lib) { activeLib = lib; activeFilterTag = ''; document.getElementById('panel-search-inp').value = ''; updateLibToggle(); renderPanelTags(); renderPanelList('', ''); }
+function updateLibToggle() {
+  document.getElementById('lib-btn-ma').classList.toggle('on', activeLib === 'ma');
+  document.getElementById('lib-btn-shared').classList.toggle('on', activeLib === 'shared');
 }
-function updateLibToggle(){
-  document.getElementById('lib-btn-ma').classList.toggle('on',activeLib==='ma');
-  document.getElementById('lib-btn-shared').classList.toggle('on',activeLib==='shared');
+function currentLib() { return activeLib === 'ma' ? myLibQuestions : sharedLibQuestions; }
+function renderPanelTags() {
+  const all = [...new Set(currentLib().flatMap(q => q.tags))];
+  document.getElementById('panel-tags-wrap').innerHTML = all.map(t => `<span class="filter-tag ${t === activeFilterTag ? 'on' : ''}" onclick="filterByTag('${t}')">${t}</span>`).join('');
 }
-function currentLib(){return activeLib==='ma'?myLibQuestions:sharedLibQuestions;}
-
-function renderPanelTags(){
-  const allTags=[...new Set(currentLib().flatMap(q=>q.tags))];
-  document.getElementById('panel-tags-wrap').innerHTML=allTags.map(t=>
-    `<span class="filter-tag ${t===activeFilterTag?'on':''}" onclick="filterByTag('${t}')">${t}</span>`
-  ).join('');
-}
-function filterByTag(t){activeFilterTag=activeFilterTag===t?'':t;renderPanelTags();renderPanelList(document.getElementById('panel-search-inp').value,activeFilterTag);}
-function filterPanel(val){renderPanelList(val,activeFilterTag);}
-
-function renderPanelList(search,tag){
-  const filtered=currentLib().filter(q=>{
-    if(q.added)return false;
-    const ms=!search||q.text.toLowerCase().includes(search.toLowerCase());
-    const mt=!tag||q.tags.includes(tag);
-    return ms&&mt;
-  });
-  const list=document.getElementById('panel-list');
-  if(!filtered.length){list.innerHTML=`<div class="panel-empty">Aucune question disponible</div>`;return;}
-  list.innerHTML=filtered.map(q=>`
+function filterByTag(t) { activeFilterTag = activeFilterTag === t ? '' : t; renderPanelTags(); renderPanelList(document.getElementById('panel-search-inp').value, activeFilterTag); }
+function filterPanel(val) { renderPanelList(val, activeFilterTag); }
+function renderPanelList(search, tag) {
+  const PROV_MAP = {AI:'🤖',EXPERT:'⭐',CLIENT:'🤝'};
+  const filtered = currentLib().filter(q => !q.added && (!search || q.text.toLowerCase().includes(search.toLowerCase())) && (!tag || q.tags.includes(tag)));
+  const list = document.getElementById('panel-list');
+  if (!filtered.length) { list.innerHTML = `<div style="text-align:center;padding:28px;color:#94a3b8;font-size:13px;font-family:Asap,sans-serif">Aucune question disponible</div>`; return; }
+  list.innerHTML = filtered.map(q => `
     <div class="panel-q" id="pq-${q.id}">
-      <div class="panel-q-body">
+      <div style="flex:1">
         <div class="panel-q-text">${q.text}</div>
-        <div class="panel-q-tags">
-          ${provTag(q.prov)}
-          ${q.tags.map(t=>`<span class="tag-pill" style="font-size:10px">${t}</span>`).join('')}
+        <div class="panel-q-meta">
+          <span class="tag-prov ${q.prov==='EXPERT'?'expert':q.prov==='CLIENT'?'client':''}" style="font-size:10px">${PROV_MAP[q.prov]} ${PROV[q.prov]?.label||''}</span>
+          ${q.tags.map(t => `<span class="tag-pill" style="font-size:10px">${t}</span>`).join('')}
         </div>
       </div>
       <button class="btn-add-from-base" onclick="addFromLib('${q.id}')" title="Ajouter">+</button>
     </div>`).join('');
 }
-
-function addFromLib(qid){
-  if(chapters[activeChap].questions.length>=10)return;
-  const lib=currentLib();
-  const bq=lib.find(q=>q.id===qid);
-  if(!bq)return;
-  bq.added=true;
-  chapters[activeChap].questions.push({
-    id:'q'+Date.now(),type:'likert',prov:bq.prov,
-    text:bq.text,
-    tags:bq.tags.map(t=>({t,ai:false})),
-    answers:[{l:"Jamais",s:1},{l:"Rarement",s:2},{l:"Parfois",s:3},{l:"Souvent",s:4},{l:"Toujours",s:5}]
-  });
-  renderNav();renderMain();
-  renderPanelList(document.getElementById('panel-search-inp').value,activeFilterTag);
+function addFromLib(qid) {
+  if (chapters[activeChap].questions.length >= 10) return;
+  const lib = currentLib(), bq = lib.find(q => q.id === qid);
+  if (!bq) return;
+  bq.added = true;
+  chapters[activeChap].questions.push({ id: 'q' + Date.now(), type: 'likert', prov: bq.prov, text: bq.text, tags: bq.tags.map(t => ({t, ai:false})), answers: [{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}] });
+  renderNav(); renderMain();
+  renderPanelList(document.getElementById('panel-search-inp').value, activeFilterTag);
 }
 
-function editScore(pill,e){
-  e.stopPropagation();
-  const isEditing=pill.classList.contains('editing');
-  document.querySelectorAll('.score-pill.editing').forEach(p=>closeScore(p));
-  if(isEditing)return;
-  pill.classList.add('editing');
-  const lbl=pill.querySelector('.sp-lbl'),valEl=pill.querySelector('.sp-val');
-  lbl.classList.add('e');valEl.classList.add('e');valEl.style.display='none';
-  const inp=document.createElement('input');
-  inp.type='number';inp.min='0';inp.max='10';inp.value=pill.dataset.score;
-  inp.style.cssText='width:30px;font-size:11px;font-weight:700;color:#fff;background:transparent;border:none;outline:none;text-align:center;font-family:Asap,sans-serif';
-  pill.appendChild(inp);inp.focus();inp.select();
-  inp.addEventListener('blur',()=>closeScore(pill));
-  inp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key==='Escape')closeScore(pill)});
-}
-function closeScore(pill){
-  const inp=pill.querySelector('input');
-  if(inp){pill.dataset.score=inp.value||pill.dataset.score;inp.remove();}
-  const valEl=pill.querySelector('.sp-val');
-  if(valEl){valEl.textContent=pill.dataset.score;valEl.style.display='';valEl.classList.remove('e');}
-  const lbl=pill.querySelector('.sp-lbl');
-  if(lbl)lbl.classList.remove('e');
-  pill.classList.remove('editing');
-}
-renderNav();renderMain();
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderNav();
+renderMain();
 </script>
+</body>
+</html>
+
