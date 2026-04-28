@@ -1,0 +1,217 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.db{font-family:'Asap',sans-serif;border-radius:14px;overflow:hidden;border:1px solid #cdd5e0;background:#ffffff}
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px}
+.logo{display:flex;align-items:stretch;gap:0}
+.logo-self{font-size:20px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;font-family:'Asap',sans-serif;align-self:center}
+.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
+.logo-tech span{font-size:8px;font-weight:700;color:#ffffff;font-family:'Asap',sans-serif;line-height:1.05;letter-spacing:0.5px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px;cursor:pointer}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#ffffff;font-family:'Asap',sans-serif}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9);font-family:'Asap',sans-serif}
+.subnav{background:#ffffff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;font-family:'Asap',sans-serif;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;transition:all 0.12s}
+.sn.on{background:#18375d;color:#ffffff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+.content{padding:22px 24px;background:#ffffff;display:flex;flex-direction:column;gap:18px}
+.grow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.grow h2{font-size:17px;font-weight:600;color:#18375d;margin:0 0 3px;font-family:'Asap',sans-serif}
+.grow p{font-size:13px;color:#64748b;margin:0;font-family:'Asap',sans-serif}
+.btn-p{background:#eb6366;color:#ffffff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-p:hover{background:#d4474a}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{border-radius:10px;padding:16px 18px}
+.kpi-l{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;font-family:'Asap',sans-serif}
+.kpi-v{font-size:28px;font-weight:700;line-height:1;margin-bottom:5px;font-family:'Asap',sans-serif}
+.kpi-s{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
+.k-nb{background:#edf1f7}.k-nb .kpi-v{color:#18375d}
+.k-tl{background:#e5f4f5}.k-tl .kpi-v{color:#007883}
+.k-cr{background:#fceaea}.k-cr .kpi-v{color:#eb6366}
+.two-col{display:grid;grid-template-columns:1fr 262px;gap:16px;align-items:start}
+.card{background:#ffffff;border:1px solid #d8e0ea;border-radius:12px;overflow:hidden}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #edf1f6}
+.cht{font-size:14px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif}
+.cha{font-size:12px;color:#007883;cursor:pointer;font-family:'Asap',sans-serif;font-weight:500}
+.adr{display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid #edf1f6;cursor:pointer;transition:background 0.1s}
+.adr:last-child{border-bottom:none}
+.adr:hover{background:#f7f9fc}
+.sbar{width:3px;height:36px;border-radius:2px;flex-shrink:0}
+.sp{background:#007883}.sb{background:#c5ccd5}.sc{background:#e0e4ea}
+.adi{flex:1;min-width:0}
+.adn{font-size:13px;font-weight:600;color:#18375d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Asap',sans-serif}
+.adm{font-size:11px;color:#94a3b8;margin-top:3px;font-family:'Asap',sans-serif}
+.bdg{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;font-family:'Asap',sans-serif;letter-spacing:0.03em}
+.bon{background:#e5f4f5;color:#007883}
+.bdr{background:#edf1f7;color:#18375d}
+.bcl{background:#f1f4f8;color:#94a3b8}
+.adt{font-size:11px;color:#b0bac6;white-space:nowrap;min-width:48px;text-align:right;font-family:'Asap',sans-serif}
+.rcol{display:flex;flex-direction:column;gap:16px}
+.pack-card{border:1px solid #d8e0ea;border-radius:12px;overflow:hidden}
+.pkh{background:#18375d;padding:14px 18px}
+.pkhl{font-size:10px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;font-family:'Asap',sans-serif}
+.pkht{font-size:14px;font-weight:600;color:#ffffff;font-family:'Asap',sans-serif}
+.pkb{padding:16px 18px;background:#ffffff;display:flex;flex-direction:column;gap:10px}
+.pknums{display:flex;align-items:baseline;gap:6px}
+.pkbig{font-size:34px;font-weight:700;color:#18375d;line-height:1;font-family:'Asap',sans-serif}
+.pksm{font-size:13px;color:#94a3b8;font-family:'Asap',sans-serif}
+.barw{background:#edf1f7;height:6px;border-radius:3px;overflow:hidden}
+.barf{height:100%;border-radius:3px;background:#eb6366}
+.pki{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif}
+.btn-recharge{width:100%;background:#fceaea;border:1px solid rgba(235,99,102,0.3);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:600;color:#eb6366;cursor:pointer;font-family:'Asap',sans-serif;text-align:left}
+.btn-recharge:hover{background:#f8d5d6}
+.qa{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#ffffff;border:1px solid #d8e0ea;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:#18375d;font-family:'Asap',sans-serif;width:100%;text-align:left;transition:all 0.12s}
+.qa:hover{background:#f7f9fc;border-color:#b8c4d4}
+.qd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.qar{margin-left:auto;font-size:12px;color:#b0bac6}
+</style>
+
+<div class="db">
+  <div class="topbar">
+    <div class="logo">
+      <span class="logo-self">SELF</span>
+      <div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div>
+    </div>
+    <div class="tb-sp"></div>
+    <div class="acct">
+      <div class="av">SR</div>
+      <span class="acct-n">Sonora RH</span>
+    </div>
+  </div>
+
+  <div class="subnav">
+    <button class="sn on">Dashboard</button>
+    <button class="sn" onclick="sendPrompt('Faisons la maquette Mes autodiagnostics — profil Client direct payant')">Mes autodiagnostics</button>
+    <button class="sn">Ma bibliothèque</button>
+    <button class="sn">Bibliothèque partagée</button>
+    <button class="sn" onclick="sendPrompt('Faisons la maquette Résultats — profil Client direct payant')">Résultats</button>
+    <button class="sn">Paramètres</button>
+  </div>
+
+  <div class="content">
+
+    <div class="grow">
+      <div>
+        <h2>Bonjour, Sonora RH</h2>
+        <p>Lundi 28 avril 2025 · 2 autodiagnostics publiés</p>
+      </div>
+      <button class="btn-p" onclick="sendPrompt('Faisons la maquette Créer un autodiagnostic — avec les 2 options : autonome ou depuis la bibliothèque partagée')">
+        <svg width="13" height="13" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><line x1="6" y1="1" x2="6" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        Créer un autodiagnostic
+      </button>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi k-nb">
+        <div class="kpi-l">Autodiagnostics créés</div>
+        <div class="kpi-v">12</div>
+        <div class="kpi-s">2 publiés · 4 brouillons</div>
+      </div>
+      <div class="kpi k-tl">
+        <div class="kpi-l">Passations enregistrées</div>
+        <div class="kpi-v">800</div>
+        <div class="kpi-s">sur 2 autodiagnostics actifs</div>
+      </div>
+      <div class="kpi k-cr">
+        <div class="kpi-l">Passations restantes</div>
+        <div class="kpi-v">200</div>
+        <div class="kpi-s">800 utilisées / 1 000 achetées</div>
+      </div>
+      <div class="kpi k-nb">
+        <div class="kpi-l">Autodiagnostics clôturés</div>
+        <div class="kpi-v">6</div>
+        <div class="kpi-s">résultats consultables</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="ch">
+          <span class="cht">Mes autodiagnostics récents</span>
+          <span class="cha">Voir tous →</span>
+        </div>
+        <div class="adr" onclick="sendPrompt('Faisons la maquette Résultats — profil Client direct payant')">
+          <div class="sbar sp"></div>
+          <div class="adi">
+            <div class="adn">Sécurité & culture de sûreté</div>
+            <div class="adm">3 chapitres · 312 passations</div>
+          </div>
+          <span class="bdg bon">Publié</span>
+          <span class="adt">2 j</span>
+        </div>
+        <div class="adr">
+          <div class="sbar sp"></div>
+          <div class="adi">
+            <div class="adn">Quel est mon niveau de compréhension des risques cyber ?</div>
+            <div class="adm">4 chapitres · 488 passations</div>
+          </div>
+          <span class="bdg bon">Publié</span>
+          <span class="adt">6 j</span>
+        </div>
+        <div class="adr">
+          <div class="sbar sb"></div>
+          <div class="adi">
+            <div class="adn">Changer sans se crisper : mes réflexes face aux transformations</div>
+            <div class="adm">5 chapitres · non publié</div>
+          </div>
+          <span class="bdg bdr">Brouillon</span>
+          <span class="adt">2 sem</span>
+        </div>
+        <div class="adr">
+          <div class="sbar sc"></div>
+          <div class="adi">
+            <div class="adn">Et si mon quotidien m'exposait aux risques psychosociaux ?</div>
+            <div class="adm">3 chapitres · 0 passation</div>
+          </div>
+          <span class="bdg bcl">Clôturé</span>
+          <span class="adt">1 mois</span>
+        </div>
+      </div>
+
+      <div class="rcol">
+        <div class="pack-card">
+          <div class="pkh">
+            <div class="pkhl">Pack passations</div>
+            <div class="pkht">Pack M · 1 000 passations</div>
+          </div>
+          <div class="pkb">
+            <div class="pknums">
+              <span class="pkbig">200</span>
+              <span class="pksm">restantes</span>
+            </div>
+            <div class="barw"><div class="barf" style="width:80%"></div></div>
+            <div class="pki">800 utilisées · expire le 30/06/2026</div>
+            <a href="mailto:contact@selftech.fr?subject=Recharge%20pack%20%E2%80%94%20Sonora%20RH" style="text-decoration:none;display:block">
+              <button class="btn-recharge">Nous contacter pour recharger →</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><span class="cht">Accès rapides</span></div>
+          <div style="padding:12px 14px;display:flex;flex-direction:column;gap:7px">
+            <button class="qa" onclick="sendPrompt('Faisons la maquette Créer un autodiagnostic — avec les 2 options : autonome ou depuis la bibliothèque partagée')">
+              <div class="qd" style="background:#eb6366"></div>
+              <span>Créer un autodiagnostic</span>
+              <span class="qar">↗</span>
+            </button>
+            <button class="qa" onclick="sendPrompt('Faisons la maquette Mes autodiagnostics — profil Client direct payant')">
+              <div class="qd" style="background:#18375d"></div>
+              <span>Mes autodiagnostics</span>
+              <span class="qar">↗</span>
+            </button>
+            <button class="qa" onclick="sendPrompt('Faisons la maquette Résultats — profil Client direct payant')">
+              <div class="qd" style="background:#007883"></div>
+              <span>Voir les résultats</span>
+              <span class="qar">↗</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
