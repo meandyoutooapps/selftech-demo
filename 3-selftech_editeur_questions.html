@@ -492,21 +492,23 @@ function renderQuestions(ch) {
   const n = ch.questions.length;
   const pct = Math.round((n / 10) * 100);
 
-  const qHTML = n === 0
-    ? `<div class="empty-q">Aucune question — régénérez avec l'IA, pichez dans les bibliothèques ou ajoutez manuellement</div>`
-    : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
+  // Option D — libellé contextuel
+  const isEmpty = n === 0;
+  const btnRegenLabel = isEmpty ? 'Générer les questions avec l\'IA' : 'Régénérer avec l\'IA';
+  const btnRegenAction = isEmpty ? 'confirmRegen()' : 'askRegen()';
 
-  document.getElementById('main-editor').innerHTML = `
+  // En-tête commun
+  const header = `
     <div class="chap-head">
       <div class="chap-info">
         <div class="chap-badge">Chapitre ${ch.id} · Questions</div>
         <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
         <input class="chap-desc-inp" value="${ch.desc}">
       </div>
-      <div class="chap-actions">
-        <button class="btn-regen-all" onclick="askRegen()">
+      ${!isEmpty ? `<div class="chap-actions">
+        <button class="btn-regen-all" onclick="${btnRegenAction}">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.95L1 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Régénérer avec l'IA
+          ${btnRegenLabel}
         </button>
         <button class="btn-pioche" onclick="openPanel()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#007883" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
@@ -516,14 +518,56 @@ function renderQuestions(ch) {
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="#18375d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#18375d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Ajouter manuellement
         </button>
-      </div>
-    </div>
+      </div>` : ''}
+    </div>`;
 
+  // Option A — état vide proéminent avec 3 CTAs hiérarchisés
+  const emptyState = `
+    <div style="padding:12px 0 0">
+      <!-- CTA principal : IA -->
+      <div onclick="confirmRegen()" style="background:linear-gradient(135deg,#18375d 0%,#007883 100%);border-radius:14px;padding:28px 24px;cursor:pointer;transition:opacity 0.15s;margin-bottom:12px" onmouseover="this.style.opacity='0.92'" onmouseout="this.style.opacity='1'">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:700;color:#fff;font-family:Asap,sans-serif;margin-bottom:4px">Générer les questions avec l'IA</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.7);font-family:Asap,sans-serif;line-height:1.4">L'IA propose des mises en situation adaptées au chapitre, avec scores comportementaux. Vous pourrez tout modifier ensuite.</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- CTAs secondaires -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div onclick="openPanel()" style="background:#fff;border:1px solid #d8e0ea;border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color 0.15s" onmouseover="this.style.borderColor='#007883';this.style.background='#f0fcfc'" onmouseout="this.style.borderColor='#d8e0ea';this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:9px;background:#e5f4f5;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#007883" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:#18375d;font-family:Asap,sans-serif;margin-bottom:3px">Piocher dans les bibliothèques</div>
+          <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;line-height:1.4">Importez des questions existantes depuis vos bibliothèques.</div>
+        </div>
+        <div onclick="addManual()" style="background:#fff;border:1px solid #d8e0ea;border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color 0.15s" onmouseover="this.style.borderColor='#18375d';this.style.background='#f7f9fc'" onmouseout="this.style.borderColor='#d8e0ea';this.style.background='#fff'">
+          <div style="width:36px;height:36px;border-radius:9px;background:#edf1f7;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="#18375d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#18375d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:#18375d;font-family:Asap,sans-serif;margin-bottom:3px">Ajouter manuellement</div>
+          <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;line-height:1.4">Rédigez vos propres mises en situation de A à Z.</div>
+        </div>
+      </div>
+    </div>`;
+
+  const qHTML = n === 0
+    ? emptyState
+    : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
+
+  document.getElementById('main-editor').innerHTML = `
+    ${header}
+    ${!isEmpty ? `
     <div class="q-counter">
-      <span class="qc-text"><strong>${n}</strong> question${n !== 1 ? 's' : ''} · min 5, max 10</span>
+      <span class="qc-text"><strong>${n}</strong> question${n !== 1 ? 's' : ''} · min 4, max 10</span>
       <div class="qc-bar"><div class="qc-fill" style="width:${pct}%"></div></div>
     </div>
-
     <div class="likert-info" id="likert-info">
       <span class="likert-info-ico">ℹ️</span>
       <div class="likert-info-body">
@@ -531,8 +575,7 @@ function renderQuestions(ch) {
         <span id="likert-extra" style="display:none"> Pour les formulations négatives, l'échelle est inversée : 1=2 · 2=1,5 · 3=1 · 4=0,5 · 5=0. Les mises en situation à choix (0/1/2) et les Likert normalisés sont calculés ensemble pour la moyenne du chapitre.</span>
       </div>
       <span class="likert-info-toggle" onclick="toggleLikertInfo()">Voir plus</span>
-    </div>
-
+    </div>` : ''}
     <div class="q-list" id="q-list">${qHTML}</div>`;
 }
 
