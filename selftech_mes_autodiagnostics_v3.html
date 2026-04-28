@@ -12,63 +12,83 @@
 .acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
 .av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
 .acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
-.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
-.subnav::-webkit-scrollbar{display:none}
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px}
 .sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;transition:all 0.12s;font-family:'Asap',sans-serif}
 .sn.on{background:#18375d;color:#fff;font-weight:600}
 .sn:not(.on):hover{background:#eef1f6;color:#18375d}
 .content{padding:20px 24px;background:#fff}
 .page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
-.page-title{font-size:17px;font-weight:600;color:#18375d}
+.page-title{font-size:17px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif}
 .btn-p{background:#eb6366;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;white-space:nowrap}
 .btn-p:hover{background:#d4474a}
+
+/* Filtres */
 .ftabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .ftab{padding:6px 14px;border-radius:20px;font-size:12px;font-family:'Asap',sans-serif;color:#64748b;cursor:pointer;border:1px solid #d8e0ea;font-weight:500;background:#fff;transition:all 0.12s}
 .ftab.on{background:#18375d;color:#fff;border-color:#18375d;font-weight:600}
 .ftab:not(.on):hover{background:#eef1f6}
-.cpill{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;background:rgba(255,255,255,0.2)}
+.cpill{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;margin-left:4px}
+.ftab.on .cpill{background:rgba(255,255,255,0.2);color:#fff}
 .ftab:not(.on) .cpill{background:rgba(24,55,93,0.1);color:#18375d}
+
+/* Lignes */
 .adlist{display:flex;flex-direction:column;gap:8px}
 .adw{position:relative}
-.adc{background:#fff;border:1px solid #d8e0ea;border-radius:12px;display:flex;align-items:center;gap:12px;padding:14px 16px;transition:border-color 0.12s}
+.adc{background:#fff;border:1px solid #d8e0ea;border-radius:12px;display:flex;align-items:center;gap:12px;padding:13px 16px;transition:border-color 0.12s}
 .adc:hover{border-color:#b8c4d4}
 .sbar{width:4px;height:40px;border-radius:2px;flex-shrink:0}
-.sp{background:#007883}.sb{background:#c5ccd5}.sc{background:#e0e4ea}
+.sp{background:#007883}
+.sb{background:#c5ccd5}
+.sc{background:#e0e4ea}
 .adi{flex:1;min-width:0}
-.adn{font-size:13px;font-weight:600;color:#18375d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
-.adm{font-size:11px;color:#94a3b8}
-.bdg{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.adn{font-size:13px;font-weight:600;color:#18375d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;font-family:'Asap',sans-serif}
+.adm{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif}
+
+/* Tags thème sur la ligne */
+.ad-tags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.ad-tag{font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;background:#edf1f7;color:#18375d;font-family:'Asap',sans-serif;border:1px solid #d0d8e8}
+
+.bdg{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;font-family:'Asap',sans-serif}
 .bon{background:#e5f4f5;color:#007883}
 .bdr{background:#edf1f7;color:#18375d}
 .bcl{background:#f1f4f8;color:#94a3b8}
 .row-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .btn-sm{padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:1px solid;transition:all 0.12s;white-space:nowrap}
-.btn-pub{background:#18375d;color:#fff;border-color:#18375d}.btn-pub:hover{background:#122a47}
-.btn-voir{background:#e5f4f5;color:#007883;border-color:#b8dfe0}.btn-voir:hover{background:#cceaeb}
-.btn-res{background:#edf1f7;color:#18375d;border-color:#c5cfdc}.btn-res:hover{background:#dde3ed}
-.btn-dots{width:32px;height:32px;border-radius:7px;border:1px solid #d8e0ea;background:#fff;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700;letter-spacing:1px;font-family:'Asap',sans-serif;line-height:1}
+.btn-pub{background:#18375d;color:#fff;border-color:#18375d}
+.btn-pub:hover{background:#122a47}
+.btn-voir{background:#e5f4f5;color:#007883;border-color:#b8dfe0}
+.btn-voir:hover{background:#cceaeb}
+.btn-res{background:#edf1f7;color:#18375d;border-color:#c5cfdc}
+.btn-res:hover{background:#dde3ed}
+.btn-dots{width:32px;height:32px;border-radius:7px;border:1px solid #d8e0ea;background:#fff;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;font-weight:700;letter-spacing:2px;font-family:'Asap',sans-serif;line-height:1}
 .btn-dots:hover{background:#eef1f6;border-color:#b8c4d4}
-.dd{position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1px solid #d8e0ea;border-radius:10px;z-index:50;min-width:210px;overflow:hidden;display:none;box-shadow:0 8px 24px rgba(24,55,93,0.13)}
+
+/* Dropdown */
+.dd{position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:1px solid #d8e0ea;border-radius:10px;z-index:50;min-width:220px;overflow:hidden;display:none;box-shadow:0 8px 24px rgba(24,55,93,0.13)}
 .dd.open{display:block}
-.ddi{padding:10px 16px;font-size:13px;font-family:'Asap',sans-serif;color:#18375d;cursor:pointer;display:flex;align-items:center;gap:9px;font-weight:500;border:none;background:#fff;width:100%;text-align:left;transition:background 0.1s}
+.ddi{padding:10px 16px;font-size:13px;font-family:'Asap',sans-serif;color:#18375d;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:500;border:none;background:#fff;width:100%;text-align:left;transition:background 0.1s}
 .ddi:hover{background:#f7f9fc}
-.ddi.danger{color:#eb6366}.ddi.danger:hover{background:#fceaea}
+.ddi.danger{color:#eb6366}
+.ddi.danger:hover{background:#fceaea}
 .dd-sep{height:1px;background:#edf1f6;margin:3px 0}
 .dd-ico{font-size:14px;width:18px;text-align:center}
+
+/* Modale */
 .overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(15,30,55,0.5);display:none;align-items:center;justify-content:center;z-index:100;border-radius:14px}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:14px;padding:28px;max-width:380px;width:90%;border:1px solid #d8e0ea}
-.modal-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
-.modal-icon{width:44px;height:44px;border-radius:10px;background:#fceaea;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.modal h3{font-size:15px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;margin-bottom:6px}
-.modal-ad-name{font-size:13px;font-weight:600;color:#eb6366;font-family:'Asap',sans-serif}
-.modal p{font-size:13px;color:#64748b;font-family:'Asap',sans-serif;line-height:1.6}
-.modal-warn{background:#fceaea;border:1px solid rgba(235,99,102,0.35);border-radius:8px;padding:11px 14px;font-size:12px;color:#b83030;font-family:'Asap',sans-serif;font-weight:600;margin:14px 0 20px;line-height:1.5}
+.modal{background:#fff;border-radius:14px;padding:26px;max-width:380px;width:90%;border:1px solid #d8e0ea;box-shadow:0 12px 32px rgba(24,55,93,0.15)}
+.modal-icon{width:44px;height:44px;border-radius:10px;background:#fceaea;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.modal h3{font-size:15px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;margin-bottom:8px}
+.modal-ad{font-size:13px;font-weight:600;color:#eb6366;font-family:'Asap',sans-serif;margin-bottom:12px}
+.modal p{font-size:13px;color:#64748b;font-family:'Asap',sans-serif;line-height:1.6;margin-bottom:12px}
+.modal-warn{background:#fceaea;border:1px solid rgba(235,99,102,0.35);border-radius:8px;padding:10px 14px;font-size:12px;color:#b83030;font-family:'Asap',sans-serif;font-weight:600;margin-bottom:20px;line-height:1.5}
 .modal-acts{display:flex;gap:8px;justify-content:flex-end}
 .btn-cancel{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:1px solid #d8e0ea;background:#fff;color:#64748b}
 .btn-cancel:hover{background:#f7f9fc}
 .btn-destroy{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:none;background:#eb6366;color:#fff}
 .btn-destroy:hover{background:#d4474a}
+.empty-state{text-align:center;padding:48px 24px;color:#94a3b8;font-size:13px;font-family:'Asap',sans-serif}
+.empty-state strong{display:block;font-size:15px;color:#18375d;margin-bottom:8px;font-family:'Asap',sans-serif}
 </style>
 
 <div class="shell" id="shell">
@@ -82,9 +102,9 @@
   </div>
 
   <div class="subnav">
-    <button class="sn">Dashboard</button>
-    <button class="sn on">Mes autodiagnostics</button>
-    <button class="sn">Ma bibliothèque</button>
+    <button class="sn " onclick="window.location.href='index.html'">Dashboard</button>
+    <button class="sn on" onclick="window.location.href='selftech_mes-autodiagnostics_v3.html'">Mes autodiagnostics</button>
+    <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
     <button class="sn">Bibliothèque partagée</button>
     <button class="sn">Résultats</button>
     <button class="sn">Paramètres</button>
@@ -100,10 +120,10 @@
     </div>
 
     <div class="ftabs">
-      <button class="ftab on" id="tab-tous" onclick="filterAds('tous')">Tous <span class="cpill">5</span></button>
-      <button class="ftab" id="tab-publie" onclick="filterAds('publie')">Publiés <span class="cpill">2</span></button>
-      <button class="ftab" id="tab-brouillon" onclick="filterAds('brouillon')">Brouillons <span class="cpill">2</span></button>
-      <button class="ftab" id="tab-cloture" onclick="filterAds('cloture')">Clôturés <span class="cpill">1</span></button>
+      <button class="ftab on" id="tab-tous" onclick="filter('tous')">Tous<span class="cpill">5</span></button>
+      <button class="ftab" id="tab-publie" onclick="filter('publie')">Publiés<span class="cpill">2</span></button>
+      <button class="ftab" id="tab-brouillon" onclick="filter('brouillon')">Brouillons<span class="cpill">2</span></button>
+      <button class="ftab" id="tab-cloture" onclick="filter('cloture')">Clôturés<span class="cpill">1</span></button>
     </div>
 
     <div class="adlist" id="adlist">
@@ -115,22 +135,27 @@
           <div class="adi">
             <div class="adn">Sécurité & culture de sûreté</div>
             <div class="adm">3 chapitres · 15 questions · 312 passations · publié il y a 2 j</div>
+            <div class="ad-tags">
+              <span class="ad-tag">Sécurité</span>
+              <span class="ad-tag">Nucléaire</span>
+            </div>
           </div>
           <span class="bdg bon">Publié</span>
           <div class="row-acts">
             <button class="btn-sm btn-voir">Voir en ligne</button>
             <button class="btn-sm btn-res">Résultats</button>
-            <button class="btn-dots" onclick="openMenu(1,event)">···</button>
+            <button class="btn-dots" onclick="openMenu('p1',event)">···</button>
           </div>
         </div>
-        <div class="dd" id="dd-1">
+        <div class="dd" id="dd-p1">
           <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
           <button class="ddi"><span class="dd-ico">🔗</span>Voir en ligne</button>
+          <button class="ddi"><span class="dd-ico">📊</span>Résultats</button>
           <div class="dd-sep"></div>
           <button class="ddi"><span class="dd-ico">📋</span>Cloner</button>
           <button class="ddi"><span class="dd-ico">⏸</span>Dépublier</button>
           <div class="dd-sep"></div>
-          <button class="ddi danger" onclick="showResetModal('Sécurité & culture de sûreté')"><span class="dd-ico">⚠️</span>Réinitialiser les stats</button>
+          <button class="ddi danger" onclick="showReset('Sécurité & culture de sûreté')"><span class="dd-ico">⚠️</span>Réinitialiser les stats</button>
         </div>
       </div>
 
@@ -141,22 +166,26 @@
           <div class="adi">
             <div class="adn">Quel est mon niveau de compréhension des risques cyber ?</div>
             <div class="adm">4 chapitres · 20 questions · 488 passations · publié il y a 6 j</div>
+            <div class="ad-tags">
+              <span class="ad-tag">Cybersécurité</span>
+            </div>
           </div>
           <span class="bdg bon">Publié</span>
           <div class="row-acts">
             <button class="btn-sm btn-voir">Voir en ligne</button>
             <button class="btn-sm btn-res">Résultats</button>
-            <button class="btn-dots" onclick="openMenu(2,event)">···</button>
+            <button class="btn-dots" onclick="openMenu('p2',event)">···</button>
           </div>
         </div>
-        <div class="dd" id="dd-2">
+        <div class="dd" id="dd-p2">
           <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
           <button class="ddi"><span class="dd-ico">🔗</span>Voir en ligne</button>
+          <button class="ddi"><span class="dd-ico">📊</span>Résultats</button>
           <div class="dd-sep"></div>
           <button class="ddi"><span class="dd-ico">📋</span>Cloner</button>
           <button class="ddi"><span class="dd-ico">⏸</span>Dépublier</button>
           <div class="dd-sep"></div>
-          <button class="ddi danger" onclick="showResetModal('Quel est mon niveau de compréhension des risques cyber ?')"><span class="dd-ico">⚠️</span>Réinitialiser les stats</button>
+          <button class="ddi danger" onclick="showReset('Quel est mon niveau de compréhension des risques cyber ?')"><span class="dd-ico">⚠️</span>Réinitialiser les stats</button>
         </div>
       </div>
 
@@ -167,14 +196,18 @@
           <div class="adi">
             <div class="adn">Changer sans se crisper : mes réflexes face aux transformations</div>
             <div class="adm">5 chapitres · 25 questions · non publié · modifié il y a 2 sem</div>
+            <div class="ad-tags">
+              <span class="ad-tag">Transformation</span>
+              <span class="ad-tag">Management</span>
+            </div>
           </div>
           <span class="bdg bdr">Brouillon</span>
           <div class="row-acts">
             <button class="btn-sm btn-pub">Publier</button>
-            <button class="btn-dots" onclick="openMenu(3,event)">···</button>
+            <button class="btn-dots" onclick="openMenu('b1',event)">···</button>
           </div>
         </div>
-        <div class="dd" id="dd-3">
+        <div class="dd" id="dd-b1">
           <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
           <button class="ddi"><span class="dd-ico">🚀</span>Publier</button>
           <div class="dd-sep"></div>
@@ -191,14 +224,18 @@
           <div class="adi">
             <div class="adn">Suis-je acteur de ma sobriété énergétique au quotidien ?</div>
             <div class="adm">2 chapitres · 10 questions · non publié · modifié il y a 3 sem</div>
+            <div class="ad-tags">
+              <span class="ad-tag">Énergie</span>
+              <span class="ad-tag">RSE</span>
+            </div>
           </div>
           <span class="bdg bdr">Brouillon</span>
           <div class="row-acts">
             <button class="btn-sm btn-pub">Publier</button>
-            <button class="btn-dots" onclick="openMenu(4,event)">···</button>
+            <button class="btn-dots" onclick="openMenu('b2',event)">···</button>
           </div>
         </div>
-        <div class="dd" id="dd-4">
+        <div class="dd" id="dd-b2">
           <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
           <button class="ddi"><span class="dd-ico">🚀</span>Publier</button>
           <div class="dd-sep"></div>
@@ -214,22 +251,27 @@
           <div class="sbar sc"></div>
           <div class="adi">
             <div class="adn">Et si mon quotidien m'exposait aux risques psychosociaux ?</div>
-            <div class="adm">3 chapitres · 15 questions · 0 passation · clôturé il y a 1 mois</div>
+            <div class="adm">3 chapitres · 15 questions · 198 passations · clôturé il y a 1 mois</div>
+            <div class="ad-tags">
+              <span class="ad-tag">RPS</span>
+              <span class="ad-tag">QVT</span>
+            </div>
           </div>
           <span class="bdg bcl">Clôturé</span>
           <div class="row-acts">
             <button class="btn-sm btn-voir">Voir en ligne</button>
             <button class="btn-sm btn-res">Résultats</button>
-            <button class="btn-dots" onclick="openMenu(5,event)">···</button>
+            <button class="btn-dots" onclick="openMenu('c1',event)">···</button>
           </div>
         </div>
-        <div class="dd" id="dd-5">
+        <div class="dd" id="dd-c1">
           <button class="ddi"><span class="dd-ico">🔗</span>Voir en ligne</button>
+          <button class="ddi"><span class="dd-ico">📊</span>Résultats</button>
           <button class="ddi"><span class="dd-ico">🚀</span>Republier</button>
           <div class="dd-sep"></div>
           <button class="ddi"><span class="dd-ico">📋</span>Cloner</button>
           <div class="dd-sep"></div>
-          <button class="ddi danger" onclick="showResetModal('Et si mon quotidien m\'exposait aux risques psychosociaux ?')"><span class="dd-ico">⚠️</span>Réinitialiser les stats</button>
+          <button class="ddi danger" onclick="showReset('Et si mon quotidien m\'exposait aux risques psychosociaux ?')"><span class="dd-ico">⚠️</span>Réinitialiser les stats</button>
           <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
         </div>
       </div>
@@ -237,17 +279,14 @@
     </div>
   </div>
 
-  <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
-    <div class="modal">
-      <div class="modal-top">
-        <div class="modal-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <h3>Réinitialiser les statistiques</h3>
-          <div class="modal-ad-name" id="modal-name"></div>
-        </div>
+  <!-- Modale -->
+  <div class="overlay" id="overlay" onclick="handleOverlay(event)">
+    <div class="modal" id="modal">
+      <div class="modal-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+      <h3>Réinitialiser les statistiques</h3>
+      <div class="modal-ad" id="modal-name"></div>
       <p>Toutes les passations enregistrées sur cet autodiagnostic seront définitivement supprimées. Les résultats ne seront plus consultables.</p>
       <div class="modal-warn">⚠️ Cette action est irréversible. Les données ne pourront pas être récupérées.</div>
       <div class="modal-acts">
@@ -259,16 +298,34 @@
 </div>
 
 <script>
-function openMenu(id,e){e.stopPropagation();closeAllMenus();document.getElementById('dd-'+id).classList.add('open')}
-function closeAllMenus(){document.querySelectorAll('.dd').forEach(d=>d.classList.remove('open'))}
-function showResetModal(name){closeAllMenus();document.getElementById('modal-name').textContent=name;document.getElementById('overlay').classList.add('open')}
-function closeModal(){document.getElementById('overlay').classList.remove('open')}
-function handleOverlayClick(e){if(e.target===document.getElementById('overlay'))closeModal()}
-function filterAds(status){
-  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('tab-'+status).classList.add('on');
-  document.querySelectorAll('.adw').forEach(c=>{c.style.display=(status==='tous'||c.dataset.status===status)?'':'none'});
+function openMenu(id, e) {
+  e.stopPropagation();
+  closeAllMenus();
+  document.getElementById('dd-' + id).classList.add('open');
+}
+function closeAllMenus() {
+  document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+}
+function showReset(name) {
+  closeAllMenus();
+  document.getElementById('modal-name').textContent = name;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+}
+function handleOverlay(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+function filter(status) {
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('on'));
+  document.getElementById('tab-' + status).classList.add('on');
+  document.querySelectorAll('.adw').forEach(r => {
+    r.style.display = (status === 'tous' || r.dataset.status === status) ? '' : 'none';
+  });
   closeAllMenus();
 }
-document.addEventListener('click',function(e){if(!e.target.closest('.btn-dots')&&!e.target.closest('.dd'))closeAllMenus()});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.btn-dots') && !e.target.closest('.dd')) closeAllMenus();
+});
 </script>
