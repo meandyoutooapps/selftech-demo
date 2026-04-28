@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créer un autodiagnostic — Selftech</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px}
+.logo{display:flex;align-items:stretch}
+.logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
+.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
+.logo-tech span{font-size:8px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:0.5px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
+
+/* ── SUBNAV ── */
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;font-family:'Asap',sans-serif;transition:all 0.12s}
+.sn.on{background:#18375d;color:#fff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+
+/* ── PAGE ── */
+.page{max-width:860px;margin:0 auto;padding:36px 24px 60px}
+
+/* Titre */
+.page-title{font-size:22px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;margin-bottom:8px}
+.page-sub{font-size:14px;color:#64748b;font-family:'Asap',sans-serif;line-height:1.6;max-width:640px;margin-bottom:22px}
+
+/* Bandeau pack */
+.pack-banner{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #d8e0ea;border-radius:10px;padding:11px 16px;margin-bottom:30px}
+.pack-icon{width:34px;height:34px;border-radius:8px;background:#edf1f7;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.pack-body{flex:1;min-width:0}
+.pack-label{font-size:12px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif}
+.pack-detail{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;margin-top:2px}
+.pack-bar-wrap{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.pack-bar{width:90px;height:5px;background:#edf1f7;border-radius:3px;overflow:hidden}
+.pack-bar-fill{height:100%;border-radius:3px;background:#eb6366;width:20%}
+.pack-pct{font-size:11px;font-weight:700;color:#eb6366;font-family:'Asap',sans-serif;white-space:nowrap}
+
+/* Cartes choix */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+@media(max-width:700px){.cards-grid{grid-template-columns:1fr}}
+
+.choice-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:24px 22px;display:flex;flex-direction:column;gap:14px;transition:border-color 0.15s,box-shadow 0.15s}
+.choice-card:hover{border-color:#18375d;box-shadow:0 4px 16px rgba(24,55,93,0.1)}
+.card-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.card-title{font-size:15px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;line-height:1.3}
+.card-text{font-size:13px;color:#64748b;font-family:'Asap',sans-serif;line-height:1.5}
+.card-list{display:flex;flex-direction:column;gap:6px;flex:1}
+.card-list li{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#475569;font-family:'Asap',sans-serif;line-height:1.4;list-style:none}
+.card-list li::before{content:'';display:block;width:5px;height:5px;border-radius:50%;background:#007883;flex-shrink:0;margin-top:5px}
+.btn-card{width:100%;padding:10px 14px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.15s;text-align:center}
+.btn-primary{background:#eb6366;color:#fff}
+.btn-primary:hover{background:#d4474a}
+.btn-secondary{background:#18375d;color:#fff}
+.btn-secondary:hover{background:#122a47}
+.btn-outline{background:#fff;color:#18375d;border:1.5px solid #18375d}
+.btn-outline:hover{background:#edf1f7}
+
+/* Étapes */
+.steps-section{margin-bottom:36px}
+.steps-title{font-size:14px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif;margin-bottom:18px}
+.steps-row{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding-bottom:4px}
+.steps-row::-webkit-scrollbar{display:none}
+.step-item{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:110px;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;top:18px;left:calc(50% + 18px);right:calc(-50% + 18px);height:2px;background:#e2e8f0}
+.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Asap',sans-serif;flex-shrink:0;z-index:1;position:relative}
+.step-circle.active{background:#18375d;color:#fff}
+.step-circle.upcoming{background:#edf1f7;color:#94a3b8}
+.step-label{font-size:11px;font-weight:600;color:#475569;font-family:'Asap',sans-serif;text-align:center;line-height:1.3;padding:0 4px}
+.step-label.active{color:#18375d}
+.step-label.upcoming{color:#94a3b8}
+.step-note{background:#fff9ec;border:1px solid #ffedb8;border-radius:8px;padding:10px 14px;margin-top:16px;display:flex;align-items:flex-start;gap:9px}
+.step-note-ico{font-size:14px;flex-shrink:0;margin-top:1px}
+.step-note-text{font-size:12px;color:#7a5f00;font-family:'Asap',sans-serif;line-height:1.5}
+
+/* Bouton retour */
+.back-row{display:flex;justify-content:center}
+.btn-back{background:#fff;color:#64748b;border:1px solid #d8e0ea;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.12s}
+.btn-back:hover{background:#f7f9fc;border-color:#b8c4d4;color:#18375d}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo">
+    <span class="logo-self">SELF</span>
+    <div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div>
+  </div>
+  <div class="tb-sp"></div>
+  <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
+  <button class="sn" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
+  <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
+  <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
+  <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
+  <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <h1 class="page-title">Créer un autodiagnostic</h1>
+  <p class="page-sub">Choisissez un point de départ. Vous pourrez ensuite valider les questions, rédiger l'introduction, définir les données socio-démo utiles à l'analyse, puis préparer le lancement.</p>
+
+  <!-- Bandeau pack -->
+  <div class="pack-banner">
+    <div class="pack-icon">🎟</div>
+    <div class="pack-body">
+      <div class="pack-label">Pack entreprise · Sonora RH</div>
+      <div class="pack-detail">200 passations restantes sur 1 000 · mutualisées pour tous les autodiagnostics de votre compte</div>
+    </div>
+    <div class="pack-bar-wrap">
+      <div class="pack-bar"><div class="pack-bar-fill"></div></div>
+      <span class="pack-pct">200 restantes</span>
+    </div>
+  </div>
+
+  <!-- 3 cartes -->
+  <div class="cards-grid">
+
+    <!-- Carte 1 -->
+    <div class="choice-card">
+      <div class="card-icon" style="background:#edf1f7">📚</div>
+      <div>
+        <div class="card-title">Partir de ma bibliothèque</div>
+        <p class="card-text" style="margin-top:6px">Utilisez un thème déjà créé ou déjà copié dans la bibliothèque de votre entreprise.</p>
+      </div>
+      <ul class="card-list">
+        <li>Thèmes personnalisables</li>
+        <li>Questions et profils déjà structurés</li>
+        <li>Idéal pour lancer rapidement un nouvel autodiagnostic</li>
+      </ul>
+      <button class="btn-card btn-outline" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Choisir dans ma bibliothèque</button>
+    </div>
+
+    <!-- Carte 2 -->
+    <div class="choice-card">
+      <div class="card-icon" style="background:#e5f4f5">🌐</div>
+      <div>
+        <div class="card-title">Partir de la bibliothèque partagée</div>
+        <p class="card-text" style="margin-top:6px">Sélectionnez un modèle de thème disponible dans la bibliothèque commune, puis ajoutez-le à votre espace pour l'adapter.</p>
+      </div>
+      <ul class="card-list">
+        <li>Modèles prêts à l'emploi</li>
+        <li>Badges de niveau de validation</li>
+        <li>Copie dans la bibliothèque de l'entreprise avant personnalisation</li>
+      </ul>
+      <button class="btn-card btn-secondary" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Explorer la bibliothèque partagée</button>
+    </div>
+
+    <!-- Carte 3 -->
+    <div class="choice-card">
+      <div class="card-icon" style="background:#fceaea">✦</div>
+      <div>
+        <div class="card-title">Créer un nouveau thème avec l'IA</div>
+        <p class="card-text" style="margin-top:6px">Décrivez le sujet souhaité et générez une première structure de thème à retravailler.</p>
+      </div>
+      <ul class="card-list">
+        <li>Proposition de chapitres</li>
+        <li>Questions et réponses générées</li>
+        <li>Validation humaine nécessaire avant lancement</li>
+      </ul>
+      <button class="btn-card btn-primary" onclick="window.location.href='2-selftech_creer_theme_ia.html'">Créer avec l'IA</button>
+    </div>
+
+  </div>
+
+  <!-- Étapes -->
+  <div class="steps-section">
+    <div class="steps-title">Les prochaines étapes</div>
+    <div class="steps-row">
+
+      <div class="step-item">
+        <div class="step-circle active">1</div>
+        <div class="step-label active">Choisir ou créer un thème</div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle upcoming">2</div>
+        <div class="step-label upcoming">Valider les questions</div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle upcoming">3</div>
+        <div class="step-label upcoming">Rédiger l'introduction</div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle upcoming">4</div>
+        <div class="step-label upcoming">Définir les données socio-démo</div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle upcoming">5</div>
+        <div class="step-label upcoming">Préparer le lancement</div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle upcoming">6</div>
+        <div class="step-label upcoming">Suivre les résultats</div>
+      </div>
+
+    </div>
+
+    <div class="step-note">
+      <span class="step-note-ico">💡</span>
+      <span class="step-note-text"><strong>Étape 4 — Données socio-démo :</strong> les données socio-démographiques servent à analyser les résultats par segment (équipe, ancienneté, site…). Il faut limiter les critères lorsque les équipes sont petites afin de préserver l'anonymat des répondants.</span>
+    </div>
+  </div>
+
+  <!-- Retour -->
+  <div class="back-row">
+    <button class="btn-back" onclick="window.location.href='index.html'">← Retour au dashboard</button>
+  </div>
+
+</div>
+</body>
+</html>
