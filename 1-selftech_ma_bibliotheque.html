@@ -1,0 +1,333 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.shell{font-family:'Asap',sans-serif;border-radius:14px;border:1px solid #cdd5e0;background:#fff;position:relative}
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;border-radius:14px 14px 0 0}
+.logo{display:flex;align-items:stretch}
+.logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
+.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
+.logo-tech span{font-size:8px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:0.5px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;transition:all 0.12s;font-family:'Asap',sans-serif}
+.sn.on{background:#18375d;color:#fff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+.content{padding:20px 24px;background:#fff;min-height:420px}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.page-title{font-size:17px;font-weight:600;color:#18375d}
+.btn-p{background:#eb6366;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-p:hover{background:#d4474a}
+.btn-sec{background:#edf1f7;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-sec:hover{background:#dde3ed}
+.head-actions{display:flex;gap:8px}
+
+/* Onglets internes */
+.inner-tabs{display:flex;border-bottom:1px solid #e2e8f0;margin-bottom:20px;gap:0}
+.itab{padding:9px 20px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;color:#94a3b8;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.12s}
+.itab.on{color:#18375d;border-bottom-color:#18375d}
+.itab:not(.on):hover{color:#475569}
+
+/* Thèmes */
+.theme-grid{display:flex;flex-direction:column;gap:8px}
+.theme-row{background:#fff;border:1px solid #d8e0ea;border-radius:12px;display:flex;align-items:center;gap:12px;padding:14px 16px;transition:border-color 0.12s;position:relative}
+.theme-row:hover{border-color:#b8c4d4}
+.tbar{width:4px;height:40px;border-radius:2px;flex-shrink:0;background:#18375d;opacity:0.25}
+.tbar.used{background:#007883;opacity:1}
+.ti{flex:1;min-width:0}
+.tn{font-size:13px;font-weight:600;color:#18375d;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tm{font-size:11px;color:#94a3b8}
+.t-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.btn-use{background:#18375d;color:#fff;border:none;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;white-space:nowrap}
+.btn-use:hover{background:#122a47}
+.btn-dots{width:32px;height:32px;border-radius:7px;border:1px solid #d8e0ea;background:#fff;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700;letter-spacing:1px;font-family:'Asap',sans-serif;line-height:1}
+.btn-dots:hover{background:#eef1f6;border-color:#b8c4d4}
+
+/* Tags */
+.tags-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.tags-desc{font-size:13px;color:#64748b;margin-bottom:16px;line-height:1.5}
+.tag-table{width:100%;border-collapse:collapse}
+.tag-table th{text-align:left;font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;padding:8px 14px;border-bottom:1px solid #e2e8f0;font-family:'Asap',sans-serif}
+.tag-table th.r{text-align:right}
+.tag-table td{padding:11px 14px;border-bottom:1px solid #f0f4f8;font-family:'Asap',sans-serif;vertical-align:middle}
+.tag-table tr:last-child td{border-bottom:none}
+.tag-table tr{transition:background 0.1s;cursor:default;position:relative}
+.tag-table tr:hover td{background:#f7f9fc}
+.tag-name{font-size:13px;font-weight:500;color:#18375d}
+.tag-count{font-size:13px;color:#64748b;text-align:right}
+.tag-zero{color:#c5ccd5}
+.td-dots{width:40px;text-align:right}
+
+/* Dropdown */
+.adw{position:relative}
+.dd{position:absolute;right:16px;top:calc(100% - 4px);background:#fff;border:1px solid #d8e0ea;border-radius:10px;z-index:50;min-width:200px;overflow:hidden;display:none;box-shadow:0 8px 24px rgba(24,55,93,0.13)}
+.dd.open{display:block}
+.ddi{padding:10px 16px;font-size:13px;font-family:'Asap',sans-serif;color:#18375d;cursor:pointer;display:flex;align-items:center;gap:9px;font-weight:500;border:none;background:#fff;width:100%;text-align:left;transition:background 0.1s}
+.ddi:hover{background:#f7f9fc}
+.ddi.danger{color:#eb6366}
+.ddi.danger:hover{background:#fceaea}
+.dd-sep{height:1px;background:#edf1f6;margin:3px 0}
+.dd-ico{font-size:14px;width:18px;text-align:center}
+
+/* Panels */
+.panel{display:none}
+.panel.on{display:block}
+
+.empty-hint{text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px;font-family:'Asap',sans-serif}
+.empty-hint strong{display:block;color:#18375d;font-size:14px;margin-bottom:6px}
+</style>
+
+<div class="shell" id="shell">
+  <div class="topbar">
+    <div class="logo">
+      <span class="logo-self">SELF</span>
+      <div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div>
+    </div>
+    <div class="tb-sp"></div>
+    <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
+  </div>
+
+  <div class="subnav">
+    <button class="sn">Dashboard</button>
+    <button class="sn">Mes autodiagnostics</button>
+    <button class="sn on">Ma bibliothèque</button>
+    <button class="sn">Bibliothèque partagée</button>
+    <button class="sn">Résultats</button>
+    <button class="sn">Paramètres</button>
+  </div>
+
+  <div class="content">
+    <div class="page-head">
+      <span class="page-title">Ma bibliothèque</span>
+      <div class="head-actions" id="head-actions-themes">
+        <button class="btn-p" onclick="sendPrompt('Faisons la maquette Créer un autodiagnostic — choisir un thème ou créer un nouveau thème')">
+          <svg width="13" height="13" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><line x1="6" y1="1" x2="6" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          Nouveau thème
+        </button>
+      </div>
+      <div class="head-actions" id="head-actions-tags" style="display:none">
+        <button class="btn-sec" onclick="">
+          <svg width="13" height="13" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><line x1="6" y1="1" x2="6" y2="11" stroke="#18375d" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#18375d" stroke-width="2" stroke-linecap="round"/></svg>
+          Ajouter un tag
+        </button>
+      </div>
+    </div>
+
+    <!-- Onglets internes -->
+    <div class="inner-tabs">
+      <button class="itab on" id="itab-themes" onclick="switchTab('themes')">Thèmes</button>
+      <button class="itab" id="itab-tags" onclick="switchTab('tags')">Tags</button>
+    </div>
+
+    <!-- PANEL THÈMES -->
+    <div class="panel on" id="panel-themes">
+      <div class="theme-grid">
+
+        <div class="adw">
+          <div class="theme-row">
+            <div class="tbar used"></div>
+            <div class="ti">
+              <div class="tn">Sécurité & culture de sûreté</div>
+              <div class="tm">3 chapitres · 15 questions · utilisé 2 fois</div>
+            </div>
+            <div class="t-actions">
+              <button class="btn-use">Utiliser ce thème</button>
+              <button class="btn-dots" onclick="openMenu('t1',event)">···</button>
+            </div>
+          </div>
+          <div class="dd" id="dd-t1">
+            <button class="ddi"><span class="dd-ico">👁</span>Aperçu</button>
+            <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+            <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
+            <div class="dd-sep"></div>
+            <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+          </div>
+        </div>
+
+        <div class="adw">
+          <div class="theme-row">
+            <div class="tbar used"></div>
+            <div class="ti">
+              <div class="tn">Quel est mon niveau de compréhension des risques cyber ?</div>
+              <div class="tm">4 chapitres · 20 questions · utilisé 1 fois</div>
+            </div>
+            <div class="t-actions">
+              <button class="btn-use">Utiliser ce thème</button>
+              <button class="btn-dots" onclick="openMenu('t2',event)">···</button>
+            </div>
+          </div>
+          <div class="dd" id="dd-t2">
+            <button class="ddi"><span class="dd-ico">👁</span>Aperçu</button>
+            <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+            <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
+            <div class="dd-sep"></div>
+            <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+          </div>
+        </div>
+
+        <div class="adw">
+          <div class="theme-row">
+            <div class="tbar"></div>
+            <div class="ti">
+              <div class="tn">Changer sans se crisper : mes réflexes face aux transformations</div>
+              <div class="tm">5 chapitres · 25 questions · jamais utilisé</div>
+            </div>
+            <div class="t-actions">
+              <button class="btn-use">Utiliser ce thème</button>
+              <button class="btn-dots" onclick="openMenu('t3',event)">···</button>
+            </div>
+          </div>
+          <div class="dd" id="dd-t3">
+            <button class="ddi"><span class="dd-ico">👁</span>Aperçu</button>
+            <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+            <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
+            <div class="dd-sep"></div>
+            <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+          </div>
+        </div>
+
+        <div class="adw">
+          <div class="theme-row">
+            <div class="tbar"></div>
+            <div class="ti">
+              <div class="tn">Suis-je acteur de ma sobriété énergétique au quotidien ?</div>
+              <div class="tm">2 chapitres · 10 questions · jamais utilisé</div>
+            </div>
+            <div class="t-actions">
+              <button class="btn-use">Utiliser ce thème</button>
+              <button class="btn-dots" onclick="openMenu('t4',event)">···</button>
+            </div>
+          </div>
+          <div class="dd" id="dd-t4">
+            <button class="ddi"><span class="dd-ico">👁</span>Aperçu</button>
+            <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+            <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
+            <div class="dd-sep"></div>
+            <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PANEL TAGS -->
+    <div class="panel" id="panel-tags">
+      <p class="tags-desc">Les tags permettent de classer les questions et de les retrouver au moment d'en ajouter dans un chapitre.</p>
+      <table class="tag-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th class="r">Nombre de questions</th>
+            <th style="width:40px"></th>
+          </tr>
+        </thead>
+        <tbody id="tag-tbody">
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">Sécurité incendie</td>
+            <td class="tag-count">7</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag1',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag1">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">Gestes & postures</td>
+            <td class="tag-count">5</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag2',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag2">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">EPI</td>
+            <td class="tag-count">4</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag3',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag3">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">Phishing</td>
+            <td class="tag-count">4</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag4',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag4">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">Mots de passe</td>
+            <td class="tag-count">3</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag5',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag5">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">Charge de travail</td>
+            <td class="tag-count">2</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag6',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag6">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+          <tr class="adw" style="position:relative">
+            <td class="tag-name">Transformation digitale</td>
+            <td class="tag-count class="tag-zero"">0</td>
+            <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag7',event)" style="margin-left:auto">···</button></td>
+            <div class="dd" id="dd-tag7">
+              <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
+              <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
+              <div class="dd-sep"></div>
+              <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.itab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.getElementById('itab-' + tab).classList.add('on');
+  document.getElementById('panel-' + tab).classList.add('on');
+  document.getElementById('head-actions-themes').style.display = tab === 'themes' ? 'flex' : 'none';
+  document.getElementById('head-actions-tags').style.display = tab === 'tags' ? 'flex' : 'none';
+  closeAllMenus();
+}
+function openMenu(id, e) {
+  e.stopPropagation();
+  closeAllMenus();
+  document.getElementById('dd-' + id).classList.add('open');
+}
+function closeAllMenus() {
+  document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.btn-dots') && !e.target.closest('.dd')) closeAllMenus();
+});
+</script>
