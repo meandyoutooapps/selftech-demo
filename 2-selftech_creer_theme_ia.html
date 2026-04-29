@@ -217,9 +217,9 @@ textarea.inp{resize:vertical;min-height:56px;line-height:1.5}
     Régénérer
   </button>
 
-  <button class="btn-validate" onclick="window.location.href='3-selftech_editeur_questions.html'">
-    Valider et ajouter les questions →
-  </button>
+<button class="btn-validate" onclick="goToEditor()">
+  Valider et ajouter les questions →
+</button>
 </div>
       </div>
     </div>
@@ -228,6 +228,12 @@ textarea.inp{resize:vertical;min-height:56px;line-height:1.5}
 
 <script>
 let themeTags = [];
+  function goToEditor() {
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get('mode') || 'theme';
+
+  window.location.href = '3-selftech_editeur_questions.html?mode=' + mode;
+}
 
 function handleTagKey(e) {
   const inp = document.getElementById('tag-inp');
