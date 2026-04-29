@@ -388,20 +388,18 @@ const chapters = [
       {id:'q1',type:'likert',prov:'AI',text:"Dans mon travail quotidien, j'identifie les situations susceptibles de présenter un risque.",tags:[{t:'Risque',ai:false},{t:'Quotidien',ai:true},{t:'Vigilance',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
       {id:'q2',type:'choix',prov:'AI',text:"Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?",tags:[{t:'Réaction',ai:false},{t:'Signalement',ai:true}],answers:[
         {l:"Je continue, ça passera probablement",s:0},
-        {l:"Je ralentis et j'observe un peu, sans rien changer",s:1},
         {l:"J'en parle à un collègue pour avoir son avis",s:1},
         {l:"Je m'arrête, j'évalue et je remonte l'info à mon responsable",s:2},
       ]},
       {id:'q3',type:'choix',prov:'AI',text:"Un collègue vous demande où se trouvent les EPI pour une tâche inhabituelle. Vous…",tags:[{t:'EPI',ai:false},{t:'Connaissance',ai:true}],answers:[
         {l:"Je lui dis que je ne sais pas vraiment",s:0},
         {l:"Je lui indique vaguement où chercher",s:1},
-        {l:"Je lui montre l'emplacement sans vérifier que c'est le bon",s:1},
+        {l:"Je lui montre l'emplacement sans vérifier que c'est le bon EPI",s:1},
         {l:"Je l'accompagne et l'aide à identifier l'équipement adapté",s:2},
       ]},
       {id:'q4',type:'choix',prov:'AI',text:"Comment décririez-vous votre niveau de connaissance des consignes de sécurité sur votre site ?",tags:[{t:'Consignes',ai:true},{t:'Connaissance',ai:true}],answers:[
         {l:"Je ne les connais pas vraiment",s:0},
-        {l:"J'en connais quelques-unes, les plus basiques",s:1},
-        {l:"Je les connais globalement mais pas dans le détail",s:1},
+        {l:"J'en connais les grandes lignes mais pas dans le détail",s:1},
         {l:"Je les connais et suis capable de les expliquer à quelqu'un",s:2},
       ]},
       {id:'q5',type:'choix',prov:'AI',text:"Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?",tags:[{t:'Signalement',ai:false},{t:'Proactivité',ai:true}],answers:[
@@ -419,10 +417,9 @@ const chapters = [
     seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]
   },
   { id:2, name:"Adopter les bons réflexes",       desc:"Mettre en pratique les comportements préventifs.",        questions:[
-    {id:'q6',type:'choix',prov:'AI',text:"Vous êtes sur le point de commencer une tâche et réalisez que vous n'avez pas vos EPI avec vous. Vous êtes à 5 minutes de les récupérer.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[
+    {id:'q6',type:'choix',prov:'AI',text:"Vous êtes sur le point de commencer une tâche et réalisez que vous n'avez pas vos EPI. Vous êtes à 5 minutes de les récupérer.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[
       {l:"Je commence quand même, je serai prudent",s:0},
-      {l:"Je fais une partie de la tâche sans EPI et j'irai les chercher ensuite",s:0},
-      {l:"Je demande à un collègue de me prêter les siens",s:1},
+      {l:"Je fais une partie sans EPI et j'irai les chercher ensuite",s:0},
       {l:"Je vais les chercher avant de commencer, sans exception",s:2},
     ]},
     {id:'q7',type:'choix',prov:'AI',text:"Lorsque vous découvrez un équipement défectueux, que faites-vous ?",tags:[{t:'Équipement',ai:true},{t:'Signalement',ai:false}],answers:[
@@ -826,7 +823,6 @@ function addOneAI() {
        {l:"Je n'interviens pas, ce n'est pas mon rôle de le relancer",s:0},
        {l:"Je l'encourage à en parler, sans aller plus loin",s:1},
        {l:"Je lui suggère de le signaler et propose de l'accompagner si besoin",s:2},
-       {l:"Je signale moi-même l'anomalie au responsable après la réunion",s:1},
      ]},
     {type:'choix', text:"Une procédure de sécurité vous semble inadaptée à votre réalité terrain. Que faites-vous ?",
      tags:[{t:'Procédure',ai:true},{t:'Proactivité',ai:true}],
@@ -840,17 +836,16 @@ function addOneAI() {
      tags:[{t:'Réflexe',ai:true},{t:'Collectif',ai:true}],
      answers:[
        {l:"Je le laisse, quelqu'un s'en occupera demain",s:0},
-       {l:"Je préviens un collègue encore présent pour qu'il s'en occupe",s:1},
        {l:"Je le signale par message à mon responsable avant de partir",s:1},
        {l:"Je prends 2 minutes pour le ranger correctement avant de partir",s:2},
      ]},
-    {type:'choix', text:"Lors d'une tâche habituelle, vous ressentez une légère douleur que vous n'avez pas l'habitude d'avoir. Que faites-vous ?",
+    {type:'choix', text:"Lors d'une tâche habituelle, vous ressentez une légère douleur inhabituelle. Que faites-vous ?",
      tags:[{t:'Vigilance',ai:true},{t:'Réaction',ai:true}],
      answers:[
        {l:"Je continue, ça passera probablement",s:0},
        {l:"Je ralentis mais je finis la tâche avant d'en parler",s:1},
-       {l:"J'arrête la tâche et j'en parle à mon responsable",s:2},
        {l:"Je cherche d'abord si quelqu'un d'autre a déjà eu ce problème",s:1},
+       {l:"J'arrête la tâche et j'en parle à mon responsable",s:2},
      ]},
   ];
   const existingCount = chapters[activeChap].questions.length;
