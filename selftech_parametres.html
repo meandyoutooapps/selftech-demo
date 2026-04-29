@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paramètres du compte — Selftech</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18375d}
+
+/* ── TOPBAR ── */
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:stretch}
+.logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
+.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
+.logo-tech span{font-size:8px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:0.5px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
+
+/* ── SUBNAV ── */
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;font-family:'Asap',sans-serif;transition:all 0.12s}
+.sn.on{background:#18375d;color:#fff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+
+/* ── LAYOUT ── */
+.page-wrap{max-width:1060px;margin:0 auto;padding:28px 24px 60px}
+.page-head{margin-bottom:24px}
+.page-title{font-size:20px;font-weight:700;color:#18375d}
+.page-sub{font-size:13px;color:#94a3b8;margin-top:4px}
+
+.settings-layout{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:start}
+@media(max-width:760px){.settings-layout{grid-template-columns:1fr}}
+
+/* ── TABS NAV ── */
+.tabs-nav{background:#fff;border:1px solid #d8e0ea;border-radius:12px;overflow:hidden;position:sticky;top:70px}
+.tab-item{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'Asap',sans-serif;transition:all 0.12s;border-left:3px solid transparent}
+.tab-item:not(:last-child){border-bottom:1px solid #f0f4f8}
+.tab-item:hover{background:#f7f9fc}
+.tab-item.on{background:#edf1f7;border-left-color:#18375d}
+.tab-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all 0.12s}
+.tab-item.on .tab-icon{background:#18375d}
+.tab-item:not(.on) .tab-icon{background:#edf1f7}
+.tab-text{flex:1;min-width:0}
+.tab-label{font-size:12px;font-weight:600;color:#18375d;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab-item.on .tab-label{color:#18375d}
+.tab-item:not(.on) .tab-label{color:#64748b}
+.tab-badge{font-size:10px;font-weight:700;padding:1px 6px;border-radius:20px;background:#edf1f7;color:#64748b;flex-shrink:0}
+
+/* ── PANELS ── */
+.panel{display:none}
+.panel.on{display:block}
+
+/* ── CARDS ── */
+.card{background:#fff;border:1px solid #d8e0ea;border-radius:12px;padding:22px 24px;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:700;color:#18375d;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
+.card-sub{font-size:12px;color:#94a3b8;margin-bottom:18px;line-height:1.5}
+.divider{height:1px;background:#f0f4f8;margin:16px 0}
+
+/* ── FIELDS ── */
+.field{margin-bottom:13px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:10px;font-weight:700;color:#18375d;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.inp{width:100%;padding:9px 13px;border:1px solid #d8e0ea;border-radius:8px;font-size:13px;color:#18375d;font-family:'Asap',sans-serif;outline:none;transition:border-color 0.15s;background:#fff}
+.inp:focus{border-color:#18375d}
+.inp::placeholder{color:#c5ccd5;font-weight:400}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.inp-row{grid-template-columns:1fr}}
+select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+/* Secteur chips */
+.secteurs{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.secteur-chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:1.5px solid #d8e0ea;background:#fff;color:#64748b;transition:all 0.12s;user-select:none}
+.secteur-chip:hover{border-color:#b0c0d4}
+.secteur-chip.on{border-color:#18375d;background:#18375d;color:#fff}
+
+/* Logo upload */
+.logo-upload{border:2px dashed #d8e0ea;border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:all 0.15s;background:#fafbfc;position:relative}
+.logo-upload:hover{border-color:#18375d;background:#f0f4f8}
+.logo-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.lu-icon{font-size:28px;margin-bottom:8px}
+.lu-label{font-size:13px;font-weight:600;color:#18375d}
+.lu-hint{font-size:11px;color:#94a3b8;margin-top:3px}
+.logo-preview{display:flex;align-items:center;gap:14px;padding:14px;background:#f7f9fc;border:1px solid #d8e0ea;border-radius:10px}
+.logo-img{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,#18375d,#007883);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-img-text{font-size:16px;font-weight:700;color:#fff}
+.logo-info{flex:1}
+.logo-filename{font-size:13px;font-weight:600;color:#18375d}
+.logo-filesize{font-size:11px;color:#94a3b8;margin-top:2px}
+.btn-logo-del{font-size:11px;font-weight:600;color:#eb6366;background:none;border:none;cursor:pointer;padding:0;font-family:'Asap',sans-serif}
+.btn-logo-del:hover{text-decoration:underline}
+
+/* BUTTONS */
+.btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;border:none}
+.btn-primary{background:#18375d;color:#fff}
+.btn-primary:hover{background:#122a47}
+.btn-secondary{background:#fff;color:#18375d;border:1px solid #c5cfdc}
+.btn-secondary:hover{background:#edf1f7}
+.btn-danger{background:#fceaea;color:#c0392b;border:1px solid #ffd6d4}
+.btn-danger:hover{background:#f8d5d6}
+.btn-ghost{background:transparent;color:#94a3b8;border:1px solid #e2e8f0}
+.btn-ghost:hover{background:#f7f9fc;color:#64748b}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.btn-nonfonc{opacity:0.5;cursor:not-allowed!important}
+.nonfonc-badge{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;background:#edf1f7;color:#94a3b8;margin-left:4px;vertical-align:middle}
+
+/* Passation preview */
+.passation-preview{border:1px solid #d8e0ea;border-radius:12px;overflow:hidden;max-width:380px;margin-top:14px}
+.pp-hero{height:80px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 20px}
+.pp-logo{height:36px;max-width:120px;object-fit:contain}
+.pp-logo-placeholder{width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+.pp-body{background:#fff;padding:14px 16px}
+.pp-title{font-size:14px;font-weight:700;color:#18375d;margin-bottom:4px}
+.pp-sub{font-size:11px;color:#94a3b8}
+.pp-progress{height:4px;background:#edf1f7;border-radius:2px;margin-top:12px}
+
+/* Médiathèque */
+.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:560px){.media-grid{grid-template-columns:repeat(2,1fr)}}
+.media-item{border:1px solid #d8e0ea;border-radius:10px;overflow:hidden;background:#fff;transition:border-color 0.12s}
+.media-item:hover{border-color:#b0c0d4}
+.media-thumb{height:80px;background:#edf1f7;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative}
+.media-thumb.img{background:linear-gradient(135deg,#e0e8f0,#cdd8e6)}
+.media-thumb.vid{background:linear-gradient(135deg,#1a3550,#007883)}
+.media-type-badge{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;letter-spacing:0.05em}
+.media-type-badge.img{background:rgba(255,255,255,0.9);color:#18375d}
+.media-type-badge.vid{background:rgba(24,55,93,0.8);color:#fff}
+.media-info{padding:8px 10px}
+.media-name{font-size:11px;font-weight:600;color:#18375d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.media-size{font-size:10px;color:#94a3b8;margin-top:1px}
+.media-actions{display:flex;gap:5px;margin-top:6px}
+.ma-btn{flex:1;padding:4px;border:1px solid #e2e8f0;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;text-align:center;background:#fff;color:#64748b;transition:all 0.12s}
+.ma-btn:hover{background:#f7f9fc}
+.ma-btn.del:hover{background:#fceaea;color:#eb6366;border-color:#ffd6d4}
+.media-add-slot{border:2px dashed #d8e0ea;border-radius:10px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:all 0.12s;background:#fafbfc;color:#94a3b8}
+.media-add-slot:hover{border-color:#007883;background:#e5f4f5;color:#007883}
+.mas-icon{font-size:22px}
+.mas-label{font-size:11px;font-weight:600}
+
+/* Membres */
+.member-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f4f8}
+.member-row:last-child{border-bottom:none}
+.member-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.member-info{flex:1;min-width:0}
+.member-name{font-size:13px;font-weight:600;color:#18375d}
+.member-meta{font-size:11px;color:#94a3b8;margin-top:1px}
+.role-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0}
+.role-admin{background:#edf1f7;color:#18375d;border:1px solid #c5cfdc}
+.role-editor{background:#e5f4f5;color:#007883;border:1px solid #b8dfe0}
+.role-expert{background:#f5f0ff;color:#6d28d9;border:1px solid #c4b5fd}
+.invite-box{background:#fafbfc;border:1px solid #d8e0ea;border-radius:10px;padding:14px 16px;margin-top:12px}
+.invite-title{font-size:12px;font-weight:700;color:#18375d;margin-bottom:10px}
+.invite-row{display:flex;gap:8px}
+.roles-table{margin-top:16px}
+.rt-title{font-size:12px;font-weight:700;color:#18375d;margin-bottom:10px}
+.rt-row{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start;padding:8px 0;border-bottom:1px solid #f0f4f8}
+.rt-row:last-child{border-bottom:none}
+.rt-role{font-size:12px;font-weight:700;color:#18375d}
+.rt-desc{font-size:12px;color:#64748b;line-height:1.5}
+
+/* Sécurité */
+.security-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f0f4f8;gap:12px;flex-wrap:wrap}
+.security-row:last-child{border-bottom:none}
+.sec-info{flex:1;min-width:0}
+.sec-label{font-size:13px;font-weight:600;color:#18375d}
+.sec-desc{font-size:12px;color:#94a3b8;margin-top:2px;line-height:1.4}
+.toggle-wrap{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.toggle{width:40px;height:22px;border-radius:11px;background:#d8e0ea;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0}
+.toggle.on{background:#007883}
+.toggle-dot{position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.toggle.on .toggle-dot{transform:translateX(18px)}
+.toggle-label{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
+
+/* Save toast */
+.save-toast{position:fixed;bottom:24px;right:24px;background:#18375d;color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(24,55,93,0.3);transform:translateY(80px);transition:transform 0.3s;z-index:100}
+.save-toast.show{transform:translateY(0)}
+
+/* FAQ accordion */
+.faq-item{border-bottom:1px solid #f0f4f8}
+.faq-item:last-child{border-bottom:none}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;cursor:pointer;user-select:none}
+.faq-q-text{font-size:13px;font-weight:600;color:#18375d;line-height:1.4;flex:1}
+.faq-chevron{font-size:14px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s}
+.faq-item.open .faq-chevron{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 0 14px;font-size:13px;color:#475569;line-height:1.7}
+.faq-item.open .faq-a{display:block}
+.faq-a strong{color:#18375d}
+.faq-a ul{margin:8px 0 0 16px;display:flex;flex-direction:column;gap:4px}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo"><span class="logo-self">SELF</span><div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div></div>
+  <div class="tb-sp"></div>
+  <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
+  <button class="sn" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
+  <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
+  <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
+  <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
+  <button class="sn on" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
+</div>
+
+<!-- PAGE -->
+<div class="page-wrap">
+  <div class="page-head">
+    <h1 class="page-title">Paramètres du compte</h1>
+    <p class="page-sub">Gérez les informations de votre organisation, votre profil, vos médias et vos accès.</p>
+  </div>
+
+  <div class="settings-layout">
+
+    <!-- TABS NAV -->
+    <nav class="tabs-nav">
+      <button class="tab-item on" onclick="showTab('organisation')">
+        <div class="tab-icon">🏢</div>
+        <div class="tab-text"><span class="tab-label">Organisation</span></div>
+      </button>
+      <button class="tab-item" onclick="showTab('compte')">
+        <div class="tab-icon">👤</div>
+        <div class="tab-text"><span class="tab-label">Mon compte</span></div>
+      </button>
+      <button class="tab-item" onclick="showTab('passation')">
+        <div class="tab-icon">🎨</div>
+        <div class="tab-text"><span class="tab-label">Passation répondants</span></div>
+      </button>
+      <button class="tab-item" onclick="showTab('mediatheque')">
+        <div class="tab-icon">🗂</div>
+        <div class="tab-text"><span class="tab-label">Médiathèque</span></div>
+        <span class="tab-badge">6</span>
+      </button>
+      <button class="tab-item" onclick="showTab('acces')">
+        <div class="tab-icon">👥</div>
+        <div class="tab-text"><span class="tab-label">Gestion des accès</span></div>
+        <span class="tab-badge">2</span>
+      </button>
+      <button class="tab-item" onclick="showTab('securite')">
+        <div class="tab-icon">🔐</div>
+        <div class="tab-text"><span class="tab-label">Accès & sécurité</span></div>
+      </button>
+      <button class="tab-item" onclick="showTab('faq')">
+        <div class="tab-icon">💬</div>
+        <div class="tab-text"><span class="tab-label">FAQ</span></div>
+      </button>
+    </nav>
+
+    <!-- PANELS -->
+    <div>
+
+      <!-- ── ORGANISATION ── -->
+      <div id="panel-organisation" class="panel on">
+        <div class="card">
+          <div class="card-title">Profil de l'organisation</div>
+          <div class="card-sub">Ces informations sont utilisées dans les exports et les communications liées à vos autodiagnostics.</div>
+
+          <div class="field">
+            <label>Nom de l'organisation</label>
+            <input class="inp" value="Sonora RH" placeholder="Nom de votre entreprise">
+          </div>
+          <div class="field">
+            <label>Email de contact</label>
+            <input class="inp" type="email" value="contact@sonora-rh.fr" placeholder="email@entreprise.fr">
+          </div>
+          <div class="field">
+            <label>Secteur d'activité</label>
+            <div class="secteurs" id="secteurs-list"></div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="showToast()">Enregistrer</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Logo de l'organisation</div>
+          <div class="card-sub">Utilisé dans vos exports PDF et dans la page de passation si vous activez le branding.</div>
+
+          <div id="logo-org-wrap">
+            <div class="logo-preview">
+              <div class="logo-img"><span class="logo-img-text">SR</span></div>
+              <div class="logo-info">
+                <div class="logo-filename">sonora-rh-logo.png</div>
+                <div class="logo-filesize">PNG · 24 Ko · 320×80 px</div>
+              </div>
+              <button class="btn-logo-del" onclick="removeLogo('logo-org-wrap')">Supprimer</button>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:#94a3b8">Format recommandé : PNG ou SVG, fond transparent, max 2 Mo.</div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="showToast()">Changer de logo</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MON COMPTE ── -->
+      <div id="panel-compte" class="panel">
+        <div class="card">
+          <div class="card-title">Mon profil</div>
+          <div class="card-sub">Ces informations sont associées à votre compte utilisateur.</div>
+
+          <div class="inp-row">
+            <div class="field">
+              <label>Prénom</label>
+              <input class="inp" value="Carole" placeholder="Prénom">
+            </div>
+            <div class="field">
+              <label>Nom</label>
+              <input class="inp" value="Michelon" placeholder="Nom">
+            </div>
+          </div>
+          <div class="field">
+            <label>Fonction</label>
+            <input class="inp" value="Fondatrice & DG" placeholder="Votre fonction dans l'organisation">
+          </div>
+          <div class="inp-row">
+            <div class="field">
+              <label>Email</label>
+              <input class="inp" type="email" value="cmichelon@meandyoutoo.app" placeholder="email@entreprise.fr">
+            </div>
+            <div class="field">
+              <label>Téléphone</label>
+              <input class="inp" type="tel" value="+33 6 00 00 00 00" placeholder="+33 6 ...">
+            </div>
+          </div>
+          <div class="field">
+            <label>Rôle</label>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+              <span class="role-badge role-admin">Admin</span>
+              <span style="font-size:12px;color:#94a3b8">Accès complet à l'ensemble du compte.</span>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="showToast()">Enregistrer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PASSATION RÉPONDANTS ── -->
+      <div id="panel-passation" class="panel">
+        <div class="card">
+          <div class="card-title">Logo affiché sur la page de passation</div>
+          <div class="card-sub">Ce logo apparaît dans l'en-tête de la page que voient vos répondants. Il peut être différent du logo de votre organisation.</div>
+
+          <div id="logo-passation-wrap">
+            <div class="logo-preview">
+              <div class="logo-img"><span class="logo-img-text">SR</span></div>
+              <div class="logo-info">
+                <div class="logo-filename">sonora-rh-logo.png</div>
+                <div class="logo-filesize">PNG · 24 Ko · 320×80 px</div>
+              </div>
+              <button class="btn-logo-del" onclick="removeLogo('logo-passation-wrap')">Supprimer</button>
+            </div>
+          </div>
+
+          <div style="margin-top:14px">
+            <div style="font-size:12px;font-weight:700;color:#18375d;margin-bottom:10px">Aperçu de la page de passation</div>
+            <div class="passation-preview">
+              <div class="pp-hero" style="background:linear-gradient(135deg,#18375d,#007883)" id="pp-hero">
+                <div class="pp-logo-placeholder" id="pp-logo">SR</div>
+                <div style="flex:1">
+                  <div style="font-size:13px;font-weight:700;color:#fff;opacity:0.95">Sonora RH</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px">Autodiagnostic</div>
+                </div>
+              </div>
+              <div class="pp-body">
+                <div class="pp-title">Sécurité & culture de sûreté</div>
+                <div class="pp-sub">4 chapitres · environ 12 min</div>
+                <div class="pp-progress"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="showToast()">Changer le logo passation</button>
+            <button class="btn btn-ghost" onclick="showToast()">Utiliser le logo organisation</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MÉDIATHÈQUE ── -->
+      <div id="panel-mediatheque" class="panel">
+        <div class="card">
+          <div class="card-title">
+            Médiathèque
+            <span style="font-size:11px;font-weight:500;color:#94a3b8">6 fichiers · 2,4 Mo utilisés</span>
+          </div>
+          <div class="card-sub">Ces médias sont disponibles pour illustrer les profils de résultats de vos autodiagnostics. Images et vidéos acceptées.</div>
+
+          <div class="media-grid">
+
+            <div class="media-item">
+              <div class="media-thumb img">
+                <span>🏗</span>
+                <span class="media-type-badge img">IMG</span>
+              </div>
+              <div class="media-info">
+                <div class="media-name">equipe-terrain-securite.jpg</div>
+                <div class="media-size">JPG · 340 Ko</div>
+                <div class="media-actions">
+                  <button class="ma-btn">Utiliser</button>
+                  <button class="ma-btn del">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="media-item">
+              <div class="media-thumb vid">
+                <span>▶</span>
+                <span class="media-type-badge vid">VID</span>
+              </div>
+              <div class="media-info">
+                <div class="media-name">intro-reflexes-secu.mp4</div>
+                <div class="media-size">MP4 · 8,2 Mo</div>
+                <div class="media-actions">
+                  <button class="ma-btn">Utiliser</button>
+                  <button class="ma-btn del">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="media-item">
+              <div class="media-thumb img" style="background:linear-gradient(135deg,#d4e8d4,#a8d4a8)">
+                <span>🌿</span>
+                <span class="media-type-badge img">IMG</span>
+              </div>
+              <div class="media-info">
+                <div class="media-name">profil-bon-niveau.png</div>
+                <div class="media-size">PNG · 128 Ko</div>
+                <div class="media-actions">
+                  <button class="ma-btn">Utiliser</button>
+                  <button class="ma-btn del">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="media-item">
+              <div class="media-thumb img" style="background:linear-gradient(135deg,#ffedb8,#ffc744)">
+                <span>⚠️</span>
+                <span class="media-type-badge img">IMG</span>
+              </div>
+              <div class="media-info">
+                <div class="media-name">profil-progression.png</div>
+                <div class="media-size">PNG · 114 Ko</div>
+                <div class="media-actions">
+                  <button class="ma-btn">Utiliser</button>
+                  <button class="ma-btn del">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="media-item">
+              <div class="media-thumb vid" style="background:linear-gradient(135deg,#2d1b4e,#6b35a0)">
+                <span>▶</span>
+                <span class="media-type-badge vid">VID</span>
+              </div>
+              <div class="media-info">
+                <div class="media-name">temoignage-manager.mp4</div>
+                <div class="media-size">MP4 · 12 Mo</div>
+                <div class="media-actions">
+                  <button class="ma-btn">Utiliser</button>
+                  <button class="ma-btn del">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="media-item">
+              <div class="media-thumb img" style="background:linear-gradient(135deg,#ffd6d4,#ff847e)">
+                <span>🚨</span>
+                <span class="media-type-badge img">IMG</span>
+              </div>
+              <div class="media-info">
+                <div class="media-name">profil-debutant.png</div>
+                <div class="media-size">PNG · 98 Ko</div>
+                <div class="media-actions">
+                  <button class="ma-btn">Utiliser</button>
+                  <button class="ma-btn del">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="media-add-slot" onclick="showToast()">
+              <span class="mas-icon">+</span>
+              <span class="mas-label">Ajouter un fichier</span>
+            </div>
+
+          </div>
+          <p style="font-size:11px;color:#94a3b8;margin-top:12px">Formats acceptés : JPG, PNG, SVG, GIF, MP4, MOV. Taille max par fichier : 50 Mo.</p>
+        </div>
+      </div>
+
+      <!-- ── GESTION DES ACCÈS ── -->
+      <div id="panel-acces" class="panel">
+        <div class="card">
+          <div class="card-title">Membres du compte</div>
+          <div class="card-sub">Les membres ont accès au dashboard Selftech de votre organisation selon leur rôle. Les experts externes sont invités sur un autodiagnostic spécifique uniquement.</div>
+
+          <div>
+            <div class="member-row">
+              <div class="member-av" style="background:#18375d">CM</div>
+              <div class="member-info">
+                <div class="member-name">Carole Michelon</div>
+                <div class="member-meta">cmichelon@meandyoutoo.app · Vous</div>
+              </div>
+              <span class="role-badge role-admin">Admin</span>
+            </div>
+            <div class="member-row">
+              <div class="member-av" style="background:#eb6366">SB</div>
+              <div class="member-info">
+                <div class="member-name">Sophie Bernaud</div>
+                <div class="member-meta">s.bernaud@sonora-rh.fr · Invitée le 3 janv. 2025</div>
+              </div>
+              <span class="role-badge role-admin">Admin</span>
+              <button class="btn btn-ghost btn-nonfonc" style="margin-left:8px;font-size:11px;padding:5px 10px">Modifier <span class="nonfonc-badge">démo</span></button>
+            </div>
+            <div class="member-row">
+              <div class="member-av" style="background:#007883">AL</div>
+              <div class="member-info">
+                <div class="member-name">Alex Lambert</div>
+                <div class="member-meta">a.lambert@sonora-rh.fr · Invité le 12 mars 2025</div>
+              </div>
+              <span class="role-badge role-reader">Lecteur résultats</span>
+              <button class="btn btn-ghost btn-nonfonc" style="margin-left:8px;font-size:11px;padding:5px 10px">Modifier <span class="nonfonc-badge">démo</span></button>
+            </div>
+            <div class="member-row">
+              <div class="member-av" style="background:#6d28d9">MV</div>
+              <div class="member-info">
+                <div class="member-name">Marc Vidal</div>
+                <div class="member-meta">m.vidal@conseil-rh.fr · Expert externe · Accès limité à "Sécurité & culture de sûreté"</div>
+              </div>
+              <span class="role-badge role-expert">Expert externe</span>
+              <button class="btn btn-ghost btn-nonfonc" style="margin-left:8px;font-size:11px;padding:5px 10px">Modifier <span class="nonfonc-badge">démo</span></button>
+            </div>
+          </div>
+
+          <div class="invite-box">
+            <div class="invite-title">Inviter un membre ou un expert <span class="nonfonc-badge">non fonctionnel dans la démo</span></div>
+            <div class="invite-row" style="flex-wrap:wrap;gap:8px">
+              <input class="inp" type="email" placeholder="email@entreprise.fr" style="flex:1;min-width:160px">
+              <select class="inp" id="invite-role" style="width:180px;flex-shrink:0" onchange="toggleExpertScope(this.value)">
+                <option>Admin</option>
+                <option>Éditeur</option>
+                <option>Lecteur résultats</option>
+                <option>Expert externe</option>
+              </select>
+              <button class="btn btn-primary btn-nonfonc">Inviter</button>
+            </div>
+            <div id="expert-scope-row" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #f0f4f8">
+              <label style="font-size:10px;font-weight:700;color:#6d28d9;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:5px">Autodiagnostic accessible par l'expert</label>
+              <select class="inp" style="max-width:340px">
+                <option>Sécurité & culture de sûreté</option>
+                <option>Risques cyber au quotidien</option>
+                <option>Réflexes sobriété énergétique</option>
+              </select>
+              <div style="font-size:11px;color:#94a3b8;margin-top:5px;font-family:'Asap',sans-serif">L'expert peut consulter et modifier les chapitres, questions et profils de cet autodiagnostic. Il n'a pas accès aux résultats, aux données socio-démo ni au reste du compte.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Rôles disponibles</div>
+          <div class="card-sub">Chaque rôle définit ce qu'un membre peut voir et faire sur le compte.</div>
+
+          <div class="roles-table">
+            <div class="rt-row">
+              <div><span class="role-badge role-admin">Admin</span></div>
+              <div class="rt-desc">Accès complet : créer et modifier des autodiagnostics, gérer les membres, consulter tous les résultats, modifier les paramètres du compte.</div>
+            </div>
+            <div class="rt-row">
+              <div><span class="role-badge role-editor">Éditeur</span></div>
+              <div class="rt-desc">Peut créer et modifier des autodiagnostics, consulter les résultats. Ne peut pas gérer les membres ni modifier les paramètres du compte.</div>
+            </div>
+            <div class="rt-row">
+              <div><span class="role-badge role-reader">Lecteur résultats</span></div>
+              <div class="rt-desc">Accès en lecture seule aux résultats des autodiagnostics publiés. Ne peut pas créer ni modifier de contenu.</div>
+            </div>
+            <div class="rt-row">
+              <div><span class="role-badge role-expert">Expert externe</span></div>
+              <div class="rt-desc">Invité sur un autodiagnostic spécifique uniquement. Peut consulter et modifier les chapitres, questions et profils. <strong>N'a pas accès aux résultats, aux données socio-démo, au dashboard ni aux autres autodiagnostics du compte.</strong> Idéal pour un prestataire ou consultant mandaté pour concevoir le contenu.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-color:#c4b5fd;background:linear-gradient(135deg,#faf8ff,#f5f0ff)">
+          <div class="card-title" style="color:#6d28d9">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#6d28d9" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Faire appel à un expert externe
+          </div>
+          <div style="font-size:13px;color:#475569;line-height:1.65;margin-bottom:14px">Vous pouvez inviter un consultant, un prestataire RH ou un expert métier pour concevoir ou relire le contenu de vos autodiagnostics. L'expert travaille directement dans l'éditeur Selftech, sur le périmètre que vous lui accordez — sans jamais accéder à vos données ou résultats.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#fff;border:1px solid #c4b5fd;border-radius:9px;padding:12px 14px">
+              <div style="font-size:11px;font-weight:700;color:#6d28d9;margin-bottom:4px">✓ Ce que l'expert peut faire</div>
+              <ul style="font-size:12px;color:#475569;line-height:1.6;margin-left:14px">
+                <li>Consulter et modifier les chapitres</li>
+                <li>Rédiger ou affiner les questions</li>
+                <li>Ajuster les réponses et les scores</li>
+                <li>Construire les profils de résultat</li>
+              </ul>
+            </div>
+            <div style="background:#fff;border:1px solid #ffd6d4;border-radius:9px;padding:12px 14px">
+              <div style="font-size:11px;font-weight:700;color:#c0392b;margin-bottom:4px">✕ Ce que l'expert ne voit pas</div>
+              <ul style="font-size:12px;color:#475569;line-height:1.6;margin-left:14px">
+                <li>Les résultats et données des passations</li>
+                <li>Les données socio-démo des répondants</li>
+                <li>Le dashboard et les analyses</li>
+                <li>Les autres autodiagnostics du compte</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ACCÈS & SÉCURITÉ ── -->
+      <div id="panel-securite" class="panel">
+        <div class="card">
+          <div class="card-title">Mot de passe <span class="nonfonc-badge">non fonctionnel dans la démo</span></div>
+          <div class="card-sub">Mettez à jour le mot de passe associé à votre compte.</div>
+
+          <div class="field">
+            <label>Mot de passe actuel</label>
+            <input class="inp" type="password" placeholder="••••••••••••">
+          </div>
+          <div class="inp-row">
+            <div class="field">
+              <label>Nouveau mot de passe</label>
+              <input class="inp" type="password" placeholder="••••••••••••">
+            </div>
+            <div class="field">
+              <label>Confirmer le nouveau mot de passe</label>
+              <input class="inp" type="password" placeholder="••••••••••••">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-nonfonc">Changer le mot de passe</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Sécurité du compte</div>
+          <div class="card-sub">Ces options renforcent la protection de votre compte. <span class="nonfonc-badge">non fonctionnel dans la démo</span></div>
+
+          <div class="security-row">
+            <div class="sec-info">
+              <div class="sec-label">Double authentification (2FA)</div>
+              <div class="sec-desc">Renforcez la sécurité de votre connexion avec un code envoyé par email ou via une application d'authentification.</div>
+            </div>
+            <div class="toggle-wrap">
+              <div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div>
+            </div>
+          </div>
+
+          <div class="security-row">
+            <div class="sec-info">
+              <div class="sec-label">Sessions actives</div>
+              <div class="sec-desc">Aucune autre session active détectée.</div>
+            </div>
+            <button class="btn btn-danger btn-nonfonc" style="font-size:11px;padding:6px 12px">Déconnecter toutes les sessions</button>
+          </div>
+
+          <div class="security-row">
+            <div class="sec-info">
+              <div class="sec-label">Journal des connexions</div>
+              <div class="sec-desc">Dernière connexion : aujourd'hui, Paris · Chrome · Mac</div>
+            </div>
+            <button class="btn btn-ghost btn-nonfonc" style="font-size:11px;padding:6px 12px">Voir l'historique</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="color:#c0392b">Zone critique</div>
+          <div class="card-sub">Ces actions sont irréversibles. Contactez Selftech pour toute demande de clôture ou de suppression de données.</div>
+
+          <div class="security-row">
+            <div class="sec-info">
+              <div class="sec-label">Demander la suppression des données</div>
+              <div class="sec-desc">Pour supprimer vos données ou fermer votre compte, contactez notre équipe. Nous traitons votre demande sous 72h ouvrées.</div>
+            </div>
+            <a href="mailto:cmichelon@meandyoutoo.app?subject=Demande%20de%20suppression%20de%20données%20—%20Sonora%20RH" class="btn btn-danger" style="text-decoration:none;font-size:11px;padding:6px 12px">Contacter Selftech</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FAQ ── -->
+      <div id="panel-faq" class="panel">
+
+        <div class="card">
+          <div class="card-title">Questions fréquentes</div>
+          <div class="card-sub">Tout ce qu'il faut savoir pour utiliser Selftech efficacement.</div>
+          <div id="faq-list"></div>
+        </div>
+
+        <div class="card" style="background:linear-gradient(135deg,#18375d,#0d4c72);border:none">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">✉️</div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px">Vous ne trouvez pas votre réponse ?</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.4">Notre équipe répond sous 24h ouvrées. Décrivez votre besoin et nous revenons vers vous rapidement.</div>
+            </div>
+            <a href="mailto:cmichelon@meandyoutoo.app?subject=Question%20Selftech" class="btn" style="background:#eb6366;color:#fff;text-decoration:none;flex-shrink:0">Nous écrire</a>
+          </div>
+        </div>
+
+      </div>
+  </div><!-- end layout -->
+</div>
+
+<!-- Toast -->
+<div class="save-toast" id="save-toast">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5 10L12 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Modifications enregistrées
+</div>
+
+<script>
+// ── SECTEURS ─────────────────────────────────────────────────────────────────
+const SECTEURS = ['Industrie','Nucléaire','Énergie','Santé','Aviation','Chimie','Pharma','BTP','Banque / Finance','Assurance','Retail','Transport','Logistique','IT / Tech','RH / Formation','Consulting','Autre'];
+let secteursSel = ['Industrie','RH / Formation'];
+
+function renderSecteurs() {
+  document.getElementById('secteurs-list').innerHTML = SECTEURS.map(s => `
+    <span class="secteur-chip ${secteursSel.includes(s)?'on':''}" onclick="toggleSecteur('${s}')">${s}</span>
+  `).join('');
+}
+
+function toggleSecteur(s) {
+  if (secteursSel.includes(s)) secteursSel = secteursSel.filter(x => x !== s);
+  else secteursSel.push(s);
+  renderSecteurs();
+}
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const FAQ = [
+  { cat:"Comprendre Selftech", items:[
+    { q:"Qu'est-ce qu'un autodiagnostic Selftech ?",
+      a:"Un autodiagnostic Selftech est un questionnaire comportemental anonyme déployé auprès d'un groupe de collaborateurs.<br><br>Il ne s'agit pas d'un test de connaissances théoriques. L'objectif est de proposer des situations concrètes du quotidien professionnel pour aider chaque répondant à prendre conscience de ses réflexes, de ses pratiques et de ses axes de progression.<br><br>À la fin du parcours, le répondant obtient un résultat individuel, formulé de manière bienveillante et non culpabilisante. L'organisation accède à une analyse agrégée dans le dashboard, par chapitre et, si elle le souhaite, par segments socio-démographiques configurés au lancement." },
+    { q:"Quelle est la différence entre un thème et un autodiagnostic ?",
+      a:"Un <strong>thème</strong> est un modèle réutilisable. Il contient la structure pédagogique de base : les chapitres, les questions, les réponses, les scores et les profils de résultat.<br><br>Un <strong>autodiagnostic</strong> est une campagne déployée à partir d'un thème. Il comprend une URL de passation, une introduction, des données socio-démo éventuelles, des messages de fin, des ressources complémentaires et des résultats associés.<br><br>Un même thème peut donc servir à créer plusieurs autodiagnostics différents, pour plusieurs campagnes ou plusieurs contextes." },
+    { q:"À quoi sert un autodiagnostic comportemental ?",
+      a:"Un autodiagnostic comportemental sert à provoquer une prise de conscience individuelle à partir de situations concrètes. Contrairement à une enquête classique, il ne demande pas seulement aux répondants de donner leur avis. Il les place face à des situations réalistes et leur propose plusieurs façons de réagir.<br><br>L'intérêt est double :<ul><li>Pour le répondant : mieux comprendre ses propres réflexes.</li><li>Pour l'organisation : identifier les sujets à travailler, les écarts entre populations et les priorités d'action.</li></ul>" },
+    { q:"Est-ce que Selftech remplace une enquête interne ?",
+      a:"Non. Selftech ne remplace pas nécessairement une enquête interne : il répond à un autre objectif.<br><br>Une enquête interne mesure souvent une opinion, une perception ou un niveau de satisfaction. Un autodiagnostic Selftech mesure des réflexes comportementaux à partir de mises en situation. Il permet aussi de donner immédiatement quelque chose au répondant : un profil individuel, des conseils, des ressources ou des pistes de progression.<br><br>Selftech peut donc compléter une enquête interne, ou être utilisé seul lorsqu'on souhaite sensibiliser, engager et mesurer des pratiques." },
+  ]},
+  { cat:"Création des thèmes et contenus", items:[
+    { q:"Qui crée le contenu d'un autodiagnostic ?",
+      a:"Le contenu peut être créé de plusieurs manières :<ul><li>par le client lui-même ;</li><li>avec l'aide de l'IA comme base de travail ;</li><li>à partir d'un thème déjà disponible dans une bibliothèque ;</li><li>avec l'aide d'un expert externe mandaté par le client ;</li><li>à partir d'une contribution partagée par une autre organisation.</li></ul>Dans tous les cas, les contenus doivent être relus, adaptés et validés par le client avant publication." },
+    { q:"L'IA peut-elle générer les questions et les profils ?",
+      a:"Oui. L'IA peut proposer une base de travail : chapitres, questions, réponses, scores et profils.<br><br>Cependant, cette génération n'est pas une validation métier. Les contenus produits par l'IA doivent toujours être relus, ajustés et validés par le client avant diffusion. L'IA aide à gagner du temps, à structurer une première version et à proposer des formulations. Elle ne remplace pas l'expertise métier ni la validation finale du contenu." },
+    { q:"Peut-on faire appel à un expert externe pour concevoir l'autodiagnostic ?",
+      a:"Oui. Le client peut inviter un expert externe sur un autodiagnostic spécifique via le rôle <strong>Expert externe</strong>. Cet expert peut travailler sur la structure, les situations, les réponses, les scores et les profils — sans avoir accès aux résultats, aux données socio-démo ni au reste du compte.<br><br>L'expert n'a pas besoin d'accéder aux données internes du client pour concevoir le contenu. L'accès aux résultats et au dashboard reste entièrement sous le contrôle du client." },
+    { q:"Selftech est-il responsable du contenu des autodiagnostics ?",
+      a:"Non. Selftech fournit l'outil technique permettant de créer, déployer et analyser des autodiagnostics.<br><br>Le client reste responsable du contenu qu'il publie : choix des thèmes, formulation des questions, réponses proposées, scoring, profils de résultat, messages, ressources et données socio-démo collectées.<br><br>Selftech n'est pas responsable de l'exactitude métier, juridique, scientifique, sociale ou pédagogique des contenus publiés par le client." },
+    { q:"Que signifient les badges de provenance ?",
+      a:"<strong>🤖 Base assistée par IA</strong> — contenu généré avec l'aide de l'intelligence artificielle. Doit être relu, corrigé et validé avant publication.<br><br><strong>⭐ Conçu par expert·e</strong> — contenu qualifié et mis à disposition par Selftech dans la bibliothèque partagée.<br><br><strong>🤝 Contribution client anonymisée</strong> — contenu partagé volontairement par un client dans la bibliothèque communautaire. Ne doit contenir aucune information confidentielle ou nominative. Le client qui le réutilise reste responsable de sa validation avant lancement.<br><br>Dans tous les cas, ces badges indiquent une base de travail — pas une validation finale." },
+    { q:"Peut-on partager son thème avec la communauté ?",
+      a:"Oui. Lorsqu'un client décide de partager son thème dans la bibliothèque communautaire, il contribue à enrichir les ressources disponibles pour toutes les organisations utilisatrices de Selftech.<br><br><strong>En échange, il reçoit automatiquement 50 passations gratuites créditées sur son pack.</strong><br><br>Le partage est peer-to-peer : Selftech n'est pas garant du contenu partagé. Chaque organisation qui réutilise un thème reste responsable de sa relecture et de sa validation avant lancement." },
+    { q:"Peut-on réutiliser un thème existant ?",
+      a:"Oui. Un thème existant peut être réutilisé pour créer un nouvel autodiagnostic. Le client peut le modifier, ajouter ou supprimer des questions, ajuster les profils, adapter le vocabulaire et personnaliser l'introduction ou les ressources.<br><br>La réutilisation d'un thème permet de gagner du temps, mais ne dispense pas de la validation finale." },
+  ]},
+  { cat:"Questions, réponses, profils et scoring", items:[
+    { q:"Comment fonctionne le scoring des réponses ?",
+      a:"Chaque réponse est associée à un score comportemental. Dans le modèle standard :<ul><li><strong>0</strong> — posture fragile, évitement, contournement ou réaction peu constructive ;</li><li><strong>1</strong> — intention positive mais partielle, maladroite ou incomplète ;</li><li><strong>2</strong> — posture constructive, claire, responsable ou alignée avec l'objectif du chapitre.</li></ul>Le score moyen est calculé par chapitre, puis associé à un profil de résultat." },
+    { q:"Peut-on utiliser des questions avec une échelle de 1 à 5 ?",
+      a:"Oui. Les questions Likert (1 à 5) peuvent être utilisées. Elles sont normalisées sur la même échelle que les mises en situation :<ul><li>1 = 0</li><li>2 = 0,5</li><li>3 = 1</li><li>4 = 1,5</li><li>5 = 2</li></ul>Cette normalisation permet de calculer une moyenne cohérente par chapitre, en mélangeant les deux types de questions." },
+    { q:"Peut-on mélanger des questions Likert et des mises en situation ?",
+      a:"Oui. Les mises en situation à choix comportemental constituent généralement la valeur principale de l'autodiagnostic, car elles obligent le répondant à se positionner dans un contexte concret. Les questions Likert peuvent être utilisées ponctuellement pour mesurer une fréquence, une perception ou un degré d'accord.<br><br>Les deux formats sont calculés ensemble dans la moyenne du chapitre." },
+    { q:"Pourquoi les réponses ne doivent-elles pas être trop évidentes ?",
+      a:"Si les réponses sont trop évidentes, les répondants risquent de choisir la 'bonne réponse' attendue au lieu de se positionner sincèrement.<br><br>Un bon autodiagnostic doit proposer des réponses crédibles, réalistes et nuancées. L'objectif n'est pas de piéger les répondants, mais de les amener à réfléchir à leurs réflexes réels. Les options doivent représenter des comportements plausibles dans le quotidien professionnel." },
+    { q:"Qu'est-ce qu'un profil de résultat ?",
+      a:"Un profil de résultat est le retour affiché au répondant à la fin d'un chapitre. Il dépend du score obtenu et doit être formulé de manière bienveillante, claire et actionnable — jamais culpabilisant.<br><br>Un profil peut contenir : un titre évocateur, une phrase de synthèse, une description détaillée, des mots clés, une image, une vidéo et des ressources complémentaires." },
+    { q:"Combien de profils faut-il prévoir ?",
+      a:"Le modèle standard repose sur <strong>trois profils par chapitre</strong> :<ul><li>Un profil en développement (score 0 → 0,7)</li><li>Un profil intermédiaire ou en progression (score 0,7 → 1,7)</li><li>Un profil avancé ou ancré (score 1,7 → 2,1)</li></ul>Le client peut ajuster les seuils si nécessaire, mais doit veiller à garder une logique simple et compréhensible." },
+  ]},
+  { cat:"Anonymat et données", items:[
+    { q:"Les répondants ont-ils besoin d'un compte ?",
+      a:"Non. La passation est conçue pour être anonyme. Les répondants accèdent directement à l'autodiagnostic via une URL de passation. <strong>Aucun login, aucun mot de passe, aucun cookie, aucun suivi d'adresse IP.</strong><br><br>C'est précisément ce cadre d'anonymat qui permet d'obtenir des réponses sincères : le répondant n'a aucune raison de chercher la 'bonne réponse'." },
+    { q:"Les données socio-démo peuvent-elles remettre en cause l'anonymat ?",
+      a:"Oui, si elles sont trop nombreuses ou trop précises. Le risque d'identification ne vient pas seulement d'un critère isolé, mais du croisement de plusieurs critères.<br><br>Par exemple, croiser un service, un niveau hiérarchique et une ancienneté peut créer des petits groupes de une ou deux personnes seulement.<br><br>C'est pourquoi Selftech calcule automatiquement le groupe croisé estimé et affiche des alertes dès que le risque devient réel." },
+    { q:"Comment préserver l'anonymat dans les données socio-démo ?",
+      a:"Pour préserver l'anonymat, il est recommandé de :<ul><li>limiter le nombre de critères socio-démo ;</li><li>éviter les catégories trop fines ;</li><li>regrouper les petites populations ;</li><li>ne pas utiliser de critères inutiles à l'analyse ;</li><li>vérifier la taille des groupes avant lancement ;</li><li>éviter les croisements qui pourraient isoler une personne.</li></ul>" },
+    { q:"Qui peut voir les résultats ?",
+      a:"Les résultats sont visibles uniquement par les membres du compte ayant le rôle Admin, Éditeur ou Lecteur résultats.<br><br>Les experts externes n'ont pas accès aux résultats ni aux données socio-démo — uniquement à l'éditeur de contenu.<br><br>Selftech ne donne pas accès aux résultats à des tiers non autorisés." },
+    { q:"Les résultats sont-ils individuels ou collectifs ?",
+      a:"Il existe deux niveaux :<ul><li>Le <strong>répondant</strong> voit son propre résultat individuel à la fin de son parcours.</li><li>L'<strong>organisation</strong> consulte des résultats agrégés dans le dashboard.</li></ul>L'organisation ne voit pas les résultats individuels nominatifs. Le dashboard sert à analyser les tendances collectives et les écarts entre segments." },
+  ]},
+  { cat:"Dashboard et analyse des résultats", items:[
+    { q:"À quoi sert le dashboard ?",
+      a:"Le dashboard permet de suivre les résultats agrégés d'un autodiagnostic. Il aide l'organisation à identifier : les chapitres les mieux maîtrisés, les sujets les plus fragiles, les écarts entre segments, les priorités d'action et les besoins de sensibilisation ou de formation.<br><br>L'objectif n'est pas de contrôler les individus, mais de piloter une démarche collective." },
+    { q:"Peut-on filtrer les résultats par population ?",
+      a:"Oui, si des données socio-démo ont été configurées au lancement. Le client peut analyser les résultats par service, type de poste ou ancienneté, selon les critères définis.<br><br>Ces critères doivent être choisis avec prudence : s'ils créent des groupes trop petits, ils augmentent le risque d'identification indirecte." },
+  ]},
+  { cat:"Pack de passations", items:[
+    { q:"Qu'est-ce qu'une passation ?",
+      a:"Une passation correspond à un parcours complété dans un autodiagnostic. Elle n'est pas nominative : Selftech ne cherche pas à identifier les personnes qui répondent.<br><br>Si une même personne complète deux fois le même autodiagnostic, cela compte comme deux passations. Le pack mesure donc un volume d'usages complétés, et non un nombre de collaborateurs uniques." },
+    { q:"Le pack est-il lié à un seul autodiagnostic ?",
+      a:"Non. Le pack de passations est mutualisé entre tous les autodiagnostics d'un même compte. Cela permet de lancer plusieurs campagnes ou plusieurs thèmes au cours d'une période donnée, sans acheter un volume séparé pour chaque autodiagnostic." },
+    { q:"Comment obtenir des passations gratuites ?",
+      a:"Lorsqu'un client partage son thème dans la bibliothèque communautaire Selftech, <strong>50 passations gratuites sont automatiquement créditées sur son pack.</strong><br><br>Le partage est peer-to-peer : Selftech n'est pas garant du contenu partagé. Chaque organisation qui réutilise un thème reste responsable de sa propre validation avant lancement." },
+    { q:"Comment recharger son pack ?",
+      a:"Contactez notre équipe à <strong>cmichelon@meandyoutoo.app</strong> pour acquérir des passations supplémentaires. Nous vous répondons sous 24h ouvrées." },
+  ]},
+  { cat:"Lancement et communication", items:[
+    { q:"Comment lancer un autodiagnostic ?",
+      a:"Une fois le thème validé et le paramétrage terminé, le client peut lancer l'autodiagnostic en partageant son URL de passation. Cette URL peut être diffusée par email, intranet, outil collaboratif, QR code, affiche ou tout autre canal interne adapté." },
+    { q:"Que doit contenir le message de lancement ?",
+      a:"Le message doit expliquer : l'objectif de l'autodiagnostic, le temps estimé, l'intérêt pour les collaborateurs, le caractère anonyme de la démarche, la date limite de participation et le lien de passation.<br><br>Le message doit être simple, engageant et rassurant." },
+    { q:"Peut-on ajouter des ressources à la fin de l'autodiagnostic ?",
+      a:"Oui. Le client peut ajouter des ressources complémentaires à la fin du parcours : documents internes, vidéos, liens intranet, modules de formation, guides ou fiches pratiques.<br><br>L'objectif est de transformer la prise de conscience en action concrète." },
+  ]},
+  { cat:"Responsabilités et bonnes pratiques", items:[
+    { q:"Qui est responsable de la validation finale avant lancement ?",
+      a:"Le client est responsable de la validation finale. Avant publication, il doit vérifier : le contenu des questions, les réponses proposées, le scoring, les profils, l'introduction, les données socio-démo, les ressources et la cohérence globale de l'autodiagnostic.<br><br>Selftech fournit l'outil de création, de déploiement et d'analyse, mais ne se substitue pas à la validation métier du client." },
+    { q:"Peut-on modifier un autodiagnostic après lancement ?",
+      a:"Il est préférable d'éviter de modifier les questions, réponses ou scores une fois la campagne lancée, car cela peut rendre les résultats moins comparables.<br><br>Si une modification importante est nécessaire, il est recommandé d'en mesurer l'impact sur l'analyse des résultats avant de procéder." },
+    { q:"Que faire si un contenu généré par IA paraît inadapté ?",
+      a:"Il faut le modifier ou le supprimer. L'IA peut produire des formulations imprécises, trop générales ou mal adaptées au contexte. Le client doit relire chaque élément généré et l'ajuster avant lancement.<br><br>Aucun contenu généré automatiquement ne doit être publié sans validation humaine." },
+  ]},
+];
+
+function renderFAQ() {
+  const container = document.getElementById('faq-list');
+  if (!container) return;
+  container.innerHTML = FAQ.map(section => `
+    <div style="margin-bottom:6px">
+      <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;padding:14px 0 6px;font-family:'Asap',sans-serif">${section.cat}</div>
+      ${section.items.map((item,i) => `
+        <div class="faq-item" id="faq-${section.cat}-${i}">
+          <div class="faq-q" onclick="toggleFAQ('faq-${section.cat}-${i}')">
+            <span class="faq-q-text">${item.q}</span>
+            <span class="faq-chevron">▾</span>
+          </div>
+          <div class="faq-a">${item.a}</div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function toggleFAQ(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── TABS ─────────────────────────────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab-item').forEach(t => {
+    t.classList.remove('on');
+    t.querySelector('.tab-icon').style.background = '#edf1f7';
+  });
+  document.getElementById('panel-' + id).classList.add('on');
+  const labels = ['organisation','compte','passation','mediatheque','acces','securite','faq'];
+  const idx = labels.indexOf(id);
+  if (idx >= 0) {
+    const tabs = document.querySelectorAll('.tab-item');
+    tabs[idx].classList.add('on');
+    tabs[idx].querySelector('.tab-icon').style.background = '#18375d';
+  }
+}
+
+// ── LOGO ─────────────────────────────────────────────────────────────────────
+function removeLogo(wrapId) {
+  const wrap = document.getElementById(wrapId);
+  wrap.innerHTML = `
+    <div class="logo-upload" onclick="showToast()">
+      <input type="file" accept="image/*" disabled>
+      <div class="lu-icon">🖼</div>
+      <div class="lu-label">Cliquez pour uploader un logo</div>
+      <div class="lu-hint">PNG, SVG ou JPG · max 2 Mo · fond transparent recommandé</div>
+    </div>`;
+}
+
+function toggleExpertScope(val) {
+  const row = document.getElementById('expert-scope-row');
+  if (row) row.style.display = val === 'Expert externe' ? 'block' : 'none';
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('save-toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderSecteurs();
+renderFAQ();
+// Set active tab icon on load
+document.querySelector('.tab-item.on .tab-icon').style.background = '#18375d';
+</script>
+</body>
+</html>
