@@ -228,7 +228,8 @@ textarea.inp{resize:vertical;min-height:56px;line-height:1.5}
 
 <script>
 let themeTags = [];
-  function goToEditor() {
+
+function goToEditor() {
   const params = new URLSearchParams(window.location.search);
   const mode = params.get('mode') || 'theme';
 
@@ -238,16 +239,21 @@ let themeTags = [];
 function handleTagKey(e) {
   const inp = document.getElementById('tag-inp');
   const val = inp.value.trim();
+
   if ((e.key === 'Enter' || e.key === ',') && val) {
     e.preventDefault();
+
     if (themeTags.length >= 3) return;
+
     if (!themeTags.includes(val)) {
       themeTags.push(val);
       renderTags();
     }
+
     inp.value = '';
     updateTagHint();
   }
+
   if (e.key === 'Backspace' && !inp.value && themeTags.length > 0) {
     themeTags.pop();
     renderTags();
@@ -257,17 +263,17 @@ function handleTagKey(e) {
 
 function renderTags() {
   const wrap = document.getElementById('tags-wrap');
-  // Supprimer les tags existants
   wrap.querySelectorAll('.theme-tag').forEach(t => t.remove());
+
   const inp = document.getElementById('tag-inp');
-  // Réinsérer les tags avant l'input
+
   themeTags.forEach((t, i) => {
     const span = document.createElement('span');
     span.className = 'theme-tag';
     span.innerHTML = `${t}<span class="theme-tag-x" onclick="removeThemeTag(${i})">×</span>`;
     wrap.insertBefore(span, inp);
   });
-  // Masquer l'input si max atteint
+
   inp.placeholder = themeTags.length >= 3 ? '' : 'Ajouter un tag…';
   inp.style.display = themeTags.length >= 3 ? 'none' : '';
 }
@@ -289,7 +295,6 @@ function updateSlider(v) {
   document.getElementById('slider-val').textContent = v;
 }
 
-const chapModels = [
 function getChapModels(themeName) {
   const sujet = themeName.trim() || "ce sujet";
   const t = sujet.toLowerCase();
@@ -359,25 +364,27 @@ function getChapModels(themeName) {
     {name:"Ancrer des pratiques durables", desc:"Transformer la prise de conscience en comportements concrets et réguliers dans le quotidien professionnel."}
   ];
 }
+
 function generate() {
- function generate() {
   const name = document.getElementById('inp-name').value.trim() || 'Sécurité & culture de sûreté';
   const chapModels = getChapModels(name);
   const nb = parseInt(document.getElementById('inp-nb').value);
+
   document.getElementById('empty-state').style.display = 'none';
   document.getElementById('chap-result').classList.remove('on');
   document.getElementById('loading').classList.add('on');
 
-  document.getElementById('sc1').className='sc done';document.getElementById('sl1').className='sl done';
-  document.getElementById('conn').className='connector done';
-  document.getElementById('sc2').className='sc on';document.getElementById('sl2').className='sl on';
+  document.getElementById('sc1').className = 'sc done';
+  document.getElementById('sl1').className = 'sl done';
+  document.getElementById('conn').className = 'connector done';
+  document.getElementById('sc2').className = 'sc on';
+  document.getElementById('sl2').className = 'sl on';
 
   setTimeout(() => {
     document.getElementById('loading').classList.remove('on');
     document.getElementById('result-name').textContent = name;
     document.getElementById('result-count').textContent = nb + ' chapitre' + (nb > 1 ? 's' : '') + ' générés';
 
-    // Afficher les tags du thème dans le résultat
     const rTags = document.getElementById('result-tags');
     rTags.innerHTML = themeTags.length
       ? themeTags.map(t => `<span class="res-tag">${t}</span>`).join('')
@@ -385,13 +392,15 @@ function generate() {
 
     const list = document.getElementById('chap-list');
     list.innerHTML = '';
+
     for (let i = 0; i < nb; i++) {
-      const c = chapModels[i] || {name:`Chapitre ${i+1}`, desc:'Description à compléter.'};
+      const c = chapModels[i] || {name:`Chapitre ${i + 1}`, desc:'Description à compléter.'};
+
       list.innerHTML += `
         <div class="chap-item">
           <div class="chap-left">
             <div class="chap-tag-lbl">Chap.</div>
-            <div class="chap-num">${i+1}</div>
+            <div class="chap-num">${i + 1}</div>
           </div>
           <div class="chap-body">
             <div class="chap-name" contenteditable="true">${c.name}</div>
@@ -399,6 +408,7 @@ function generate() {
           </div>
         </div>`;
     }
+
     document.getElementById('chap-result').classList.add('on');
   }, 1600);
 }
