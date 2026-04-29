@@ -135,7 +135,7 @@
               <div class="tm">3 chapitres · 15 questions · utilisé 2 fois</div>
             </div>
             <div class="t-actions">
-        <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=securite-culture-surete'">
+        <button class="btn-use" onclick="startAutodiagFromLibrary('securite-culture-surete')">
   Créer un autodiagnostic
 </button>
               <button class="btn-dots" onclick="openMenu('t1',event)">···</button>
@@ -158,7 +158,7 @@
               <div class="tm">4 chapitres · 20 questions · utilisé 1 fois</div>
             </div>
             <div class="t-actions">
-           <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=cyber'">
+         <button class="btn-use" onclick="startAutodiagFromLibrary('cyber')">
   Créer un autodiagnostic
 </button>
               <button class="btn-dots" onclick="openMenu('t2',event)">···</button>
@@ -181,7 +181,7 @@
               <div class="tm">5 chapitres · 25 questions · jamais utilisé</div>
             </div>
             <div class="t-actions">
-         <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=transformation'">
+         <button class="btn-use" onclick="startAutodiagFromLibrary('transformation')">
   Créer un autodiagnostic
 </button>
               <button class="btn-dots" onclick="openMenu('t3',event)">···</button>
@@ -204,7 +204,7 @@
               <div class="tm">2 chapitres · 10 questions · jamais utilisé</div>
             </div>
             <div class="t-actions">
-       <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=sobriete'">
+     <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=sobriete'">
   Créer un autodiagnostic
 </button>
               <button class="btn-dots" onclick="openMenu('t4',event)">···</button>
@@ -318,6 +318,69 @@
 </div>
 
 <script>
+function getLibraryTheme(slug) {
+  const themes = {
+    "securite-culture-surete": {
+      name: "Sécurité & culture de sûreté",
+      chapters: [
+        {id:1, name:"Connaître les risques", desc:"Identifier les principaux risques du poste de travail."},
+        {id:2, name:"Adopter les bons réflexes", desc:"Mettre en pratique les comportements préventifs."},
+        {id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l’impact des comportements collectifs."}
+      ]
+    },
+
+    "cyber": {
+      name: "Quel est mon niveau de compréhension des risques cyber ?",
+      chapters: [
+        {id:1, name:"Comprendre les risques cyber du quotidien", desc:"Identifier les situations courantes qui exposent l’entreprise, ses outils ou ses données à un risque numérique."},
+        {id:2, name:"Reconnaître les signaux d’alerte", desc:"Repérer les indices d’un message suspect, d’une demande inhabituelle ou d’une tentative de phishing."},
+        {id:3, name:"Protéger ses accès et ses données", desc:"Analyser ses pratiques autour des mots de passe, des outils partagés et des fichiers sensibles."},
+        {id:4, name:"Réagir en cas de doute ou d’incident", desc:"Savoir quoi faire, qui prévenir et comment limiter les risques lorsqu’une situation semble suspecte."}
+      ]
+    },
+
+    "transformation": {
+      name: "Changer sans se crisper : mes réflexes face aux transformations",
+      chapters: [
+        {id:1, name:"Comprendre ses réactions face au changement", desc:"Identifier ses réflexes spontanés lorsqu’une nouvelle organisation, un outil ou une méthode apparaît."},
+        {id:2, name:"Gérer l’incertitude sans se crisper", desc:"Observer sa manière de réagir lorsque les repères changent ou que les informations sont incomplètes."},
+        {id:3, name:"Coopérer dans une période de transition", desc:"Analyser la manière dont on partage l’information, écoute les autres et contribue au collectif."},
+        {id:4, name:"Expérimenter et ajuster ses pratiques", desc:"Identifier les comportements qui permettent de tester, apprendre et progresser dans un contexte mouvant."},
+        {id:5, name:"Ancrer de nouveaux réflexes", desc:"Transformer progressivement le changement en pratiques durables."}
+      ]
+    },
+
+    "sobriete": {
+      name: "Suis-je acteur de ma sobriété énergétique au quotidien ?",
+      chapters: [
+        {id:1, name:"Comprendre ses usages quotidiens", desc:"Identifier les gestes, habitudes et situations qui influencent la consommation d’énergie."},
+        {id:2, name:"Agir concrètement au quotidien", desc:"Repérer les leviers simples permettant de contribuer à une sobriété énergétique collective."}
+      ]
+    }
+  };
+
+  return themes[slug];
+}
+
+function startAutodiagFromLibrary(slug) {
+  const theme = getLibraryTheme(slug);
+
+  if (!theme) {
+    alert("Thème introuvable dans la démo.");
+    return;
+  }
+
+  localStorage.removeItem('selftechDraftTheme');
+
+  localStorage.setItem('selftechDraftTheme', JSON.stringify({
+    name: theme.name,
+    chapters: theme.chapters
+  }));
+
+  window.location.href =
+    '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(theme.name);
+}
+
 function switchTab(tab) {
   document.querySelectorAll('.itab').forEach(t => t.classList.remove('on'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
@@ -327,14 +390,17 @@ function switchTab(tab) {
   document.getElementById('head-actions-tags').style.display = tab === 'tags' ? 'flex' : 'none';
   closeAllMenus();
 }
+
 function openMenu(id, e) {
   e.stopPropagation();
   closeAllMenus();
   document.getElementById('dd-' + id).classList.add('open');
 }
+
 function closeAllMenus() {
   document.querySelectorAll('.dd').forEach(d => d.classList.remove('open'));
 }
+
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.btn-dots') && !e.target.closest('.dd')) closeAllMenus();
 });
