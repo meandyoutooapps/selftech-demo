@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -25,14 +24,10 @@
 .btn-sec{background:#edf1f7;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;white-space:nowrap}
 .btn-sec:hover{background:#dde3ed}
 .head-actions{display:flex;gap:8px}
-
-/* Onglets internes */
 .inner-tabs{display:flex;border-bottom:1px solid #e2e8f0;margin-bottom:20px;gap:0}
 .itab{padding:9px 20px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;color:#94a3b8;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.12s}
 .itab.on{color:#18375d;border-bottom-color:#18375d}
 .itab:not(.on):hover{color:#475569}
-
-/* Thèmes */
 .theme-grid{display:flex;flex-direction:column;gap:8px}
 .theme-row{background:#fff;border:1px solid #d8e0ea;border-radius:12px;display:flex;align-items:center;gap:12px;padding:14px 16px;transition:border-color 0.12s;position:relative}
 .theme-row:hover{border-color:#b8c4d4}
@@ -46,8 +41,6 @@
 .btn-use:hover{background:#122a47}
 .btn-dots{width:32px;height:32px;border-radius:7px;border:1px solid #d8e0ea;background:#fff;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700;letter-spacing:1px;font-family:'Asap',sans-serif;line-height:1}
 .btn-dots:hover{background:#eef1f6;border-color:#b8c4d4}
-
-/* Tags */
 .tags-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .tags-desc{font-size:13px;color:#64748b;margin-bottom:16px;line-height:1.5}
 .tag-table{width:100%;border-collapse:collapse}
@@ -61,22 +54,26 @@
 .tag-count{font-size:13px;color:#64748b;text-align:right}
 .tag-zero{color:#c5ccd5}
 .td-dots{width:40px;text-align:right}
-
-/* Dropdown */
 .adw{position:relative}
-.dd{position:absolute;right:16px;top:calc(100% - 4px);background:#fff;border:1px solid #d8e0ea;border-radius:10px;z-index:50;min-width:200px;overflow:hidden;display:none;box-shadow:0 8px 24px rgba(24,55,93,0.13)}
+.dd{position:absolute;right:16px;top:calc(100% - 4px);background:#fff;border:1px solid #d8e0ea;border-radius:10px;z-index:50;min-width:240px;overflow:hidden;display:none;box-shadow:0 8px 24px rgba(24,55,93,0.13)}
 .dd.open{display:block}
 .ddi{padding:10px 16px;font-size:13px;font-family:'Asap',sans-serif;color:#18375d;cursor:pointer;display:flex;align-items:center;gap:9px;font-weight:500;border:none;background:#fff;width:100%;text-align:left;transition:background 0.1s}
 .ddi:hover{background:#f7f9fc}
 .ddi.danger{color:#eb6366}
 .ddi.danger:hover{background:#fceaea}
+.ddi.share{color:#6d28d9}
+.ddi.share:hover{background:#f5f0ff}
+.ddi.shared-note{color:#94a3b8;cursor:default;font-size:11px;pointer-events:none}
+.ddi.shared-note:hover{background:#fff}
 .dd-sep{height:1px;background:#edf1f6;margin:3px 0}
-.dd-ico{font-size:14px;width:18px;text-align:center}
-
-/* Panels */
+.dd-ico{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+/* Tags sur les thèmes */
+.th-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.th-tag{display:inline-flex;align-items:center;background:#edf1f7;border:1px solid #c5cfdc;border-radius:20px;padding:1px 8px;font-size:10px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif;cursor:default}
+.th-tag-add{display:inline-flex;align-items:center;background:transparent;border:1px dashed #c5cfdc;border-radius:20px;padding:1px 8px;font-size:10px;font-weight:600;color:#94a3b8;font-family:'Asap',sans-serif;cursor:pointer;transition:all 0.12s}
+.th-tag-add:hover{border-color:#18375d;color:#18375d;background:#edf1f7}
 .panel{display:none}
 .panel.on{display:block}
-
 .empty-hint{text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px;font-family:'Asap',sans-serif}
 .empty-hint strong{display:block;color:#18375d;font-size:14px;margin-bottom:6px}
 </style>
@@ -97,7 +94,7 @@
     <button class="sn on" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
     <button class="sn">Bibliothèque partagée</button>
     <button class="sn">Résultats</button>
-    <button class="sn"onclick="window.location.href='selftech_parametres.html'">Paramètres</button> 
+    <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
   </div>
 
   <div class="content">
@@ -117,7 +114,6 @@
       </div>
     </div>
 
-    <!-- Onglets internes -->
     <div class="inner-tabs">
       <button class="itab on" id="itab-themes" onclick="switchTab('themes')">Thèmes</button>
       <button class="itab" id="itab-tags" onclick="switchTab('tags')">Tags de questions</button>
@@ -127,17 +123,21 @@
     <div class="panel on" id="panel-themes">
       <div class="theme-grid">
 
+        <!-- T1 — original, partageable -->
         <div class="adw">
           <div class="theme-row">
             <div class="tbar used"></div>
             <div class="ti">
               <div class="tn">Sécurité & culture de sûreté</div>
               <div class="tm">3 chapitres · 15 questions · utilisé 2 fois</div>
+              <div class="th-tags">
+                <span class="th-tag">Sécurité</span>
+                <span class="th-tag">Nucléaire</span>
+                <span class="th-tag-add" onclick="addTagToTheme(this)">+ Tag</span>
+              </div>
             </div>
             <div class="t-actions">
-        <button class="btn-use" onclick="startAutodiagFromLibrary('securite-culture-surete')">
-  Créer un autodiagnostic
-</button>
+              <button class="btn-use" onclick="startAutodiagFromLibrary('securite-culture-surete')">Créer un autodiagnostic</button>
               <button class="btn-dots" onclick="openMenu('t1',event)">···</button>
             </div>
           </div>
@@ -146,21 +146,26 @@
             <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
             <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
             <div class="dd-sep"></div>
+            <button class="ddi share" onclick="shareTheme('Sécurité &amp; culture de sûreté')"><span class="dd-ico">🤝</span>Partager avec la communauté <span style="font-size:10px;background:#f5f0ff;border:1px solid #c4b5fd;color:#6d28d9;border-radius:20px;padding:1px 7px;font-weight:700;margin-left:auto;flex-shrink:0">+50 pass.</span></button>
+            <div class="dd-sep"></div>
             <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
           </div>
         </div>
 
+        <!-- T2 — original, partageable -->
         <div class="adw">
           <div class="theme-row">
             <div class="tbar used"></div>
             <div class="ti">
               <div class="tn">Quel est mon niveau de compréhension des risques cyber ?</div>
               <div class="tm">4 chapitres · 20 questions · utilisé 1 fois</div>
+              <div class="th-tags">
+                <span class="th-tag">Cybersécurité</span>
+                <span class="th-tag-add" onclick="addTagToTheme(this)">+ Tag</span>
+              </div>
             </div>
             <div class="t-actions">
-         <button class="btn-use" onclick="startAutodiagFromLibrary('cyber')">
-  Créer un autodiagnostic
-</button>
+              <button class="btn-use" onclick="startAutodiagFromLibrary('cyber')">Créer un autodiagnostic</button>
               <button class="btn-dots" onclick="openMenu('t2',event)">···</button>
             </div>
           </div>
@@ -169,21 +174,27 @@
             <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
             <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
             <div class="dd-sep"></div>
+            <button class="ddi share" onclick="shareTheme('Risques cyber au quotidien')"><span class="dd-ico">🤝</span>Partager avec la communauté <span style="font-size:10px;background:#f5f0ff;border:1px solid #c4b5fd;color:#6d28d9;border-radius:20px;padding:1px 7px;font-weight:700;margin-left:auto;flex-shrink:0">+50 pass.</span></button>
+            <div class="dd-sep"></div>
             <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
           </div>
         </div>
 
+        <!-- T3 — issu de la bibliothèque partagée, NON partageable -->
         <div class="adw">
           <div class="theme-row">
             <div class="tbar"></div>
             <div class="ti">
               <div class="tn">Changer sans se crisper : mes réflexes face aux transformations</div>
               <div class="tm">5 chapitres · 25 questions · jamais utilisé</div>
+              <div class="th-tags">
+                <span class="th-tag">Transformation</span>
+                <span class="th-tag">Management</span>
+                <span class="th-tag-add" onclick="addTagToTheme(this)">+ Tag</span>
+              </div>
             </div>
             <div class="t-actions">
-         <button class="btn-use" onclick="startAutodiagFromLibrary('transformation')">
-  Créer un autodiagnostic
-</button>
+              <button class="btn-use" onclick="startAutodiagFromLibrary('transformation')">Créer un autodiagnostic</button>
               <button class="btn-dots" onclick="openMenu('t3',event)">···</button>
             </div>
           </div>
@@ -192,21 +203,27 @@
             <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
             <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
             <div class="dd-sep"></div>
+            <button class="ddi shared-note"><span class="dd-ico">🌐</span>Issu de la bibliothèque partagée — modifications privées</button>
+            <div class="dd-sep"></div>
             <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
           </div>
         </div>
 
+        <!-- T4 — original, partageable -->
         <div class="adw">
           <div class="theme-row">
             <div class="tbar"></div>
             <div class="ti">
               <div class="tn">Suis-je acteur de ma sobriété énergétique au quotidien ?</div>
               <div class="tm">2 chapitres · 10 questions · jamais utilisé</div>
+              <div class="th-tags">
+                <span class="th-tag">RSE</span>
+                <span class="th-tag">Énergie</span>
+                <span class="th-tag-add" onclick="addTagToTheme(this)">+ Tag</span>
+              </div>
             </div>
             <div class="t-actions">
-     <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=sobriete'">
-  Créer un autodiagnostic
-</button>
+              <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=sobriete'">Créer un autodiagnostic</button>
               <button class="btn-dots" onclick="openMenu('t4',event)">···</button>
             </div>
           </div>
@@ -214,6 +231,8 @@
             <button class="ddi"><span class="dd-ico">👁</span>Aperçu</button>
             <button class="ddi"><span class="dd-ico">✏️</span>Modifier</button>
             <button class="ddi"><span class="dd-ico">📋</span>Dupliquer</button>
+            <div class="dd-sep"></div>
+            <button class="ddi share" onclick="shareTheme('Sobriété énergétique au quotidien')"><span class="dd-ico">🤝</span>Partager avec la communauté <span style="font-size:10px;background:#f5f0ff;border:1px solid #c4b5fd;color:#6d28d9;border-radius:20px;padding:1px 7px;font-weight:700;margin-left:auto;flex-shrink:0">+50 pass.</span></button>
             <div class="dd-sep"></div>
             <button class="ddi danger"><span class="dd-ico">🗑</span>Supprimer</button>
           </div>
@@ -302,7 +321,7 @@
           </tr>
           <tr class="adw" style="position:relative">
             <td class="tag-name">Transformation digitale</td>
-            <td class="tag-count class="tag-zero"">0</td>
+            <td class="tag-count tag-zero">0</td>
             <td class="td-dots"><button class="btn-dots" onclick="openMenu('tag7',event)" style="margin-left:auto">···</button></td>
             <div class="dd" id="dd-tag7">
               <button class="ddi"><span class="dd-ico">👁</span>Voir les questions associées</button>
@@ -325,60 +344,77 @@ function getLibraryTheme(slug) {
       chapters: [
         {id:1, name:"Connaître les risques", desc:"Identifier les principaux risques du poste de travail."},
         {id:2, name:"Adopter les bons réflexes", desc:"Mettre en pratique les comportements préventifs."},
-        {id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l’impact des comportements collectifs."}
+        {id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l'impact des comportements collectifs."}
       ]
     },
-
     "cyber": {
       name: "Quel est mon niveau de compréhension des risques cyber ?",
       chapters: [
-        {id:1, name:"Comprendre les risques cyber du quotidien", desc:"Identifier les situations courantes qui exposent l’entreprise, ses outils ou ses données à un risque numérique."},
-        {id:2, name:"Reconnaître les signaux d’alerte", desc:"Repérer les indices d’un message suspect, d’une demande inhabituelle ou d’une tentative de phishing."},
+        {id:1, name:"Comprendre les risques cyber du quotidien", desc:"Identifier les situations courantes qui exposent l'entreprise, ses outils ou ses données à un risque numérique."},
+        {id:2, name:"Reconnaître les signaux d'alerte", desc:"Repérer les indices d'un message suspect, d'une demande inhabituelle ou d'une tentative de phishing."},
         {id:3, name:"Protéger ses accès et ses données", desc:"Analyser ses pratiques autour des mots de passe, des outils partagés et des fichiers sensibles."},
-        {id:4, name:"Réagir en cas de doute ou d’incident", desc:"Savoir quoi faire, qui prévenir et comment limiter les risques lorsqu’une situation semble suspecte."}
+        {id:4, name:"Réagir en cas de doute ou d'incident", desc:"Savoir quoi faire, qui prévenir et comment limiter les risques lorsqu'une situation semble suspecte."}
       ]
     },
-
     "transformation": {
       name: "Changer sans se crisper : mes réflexes face aux transformations",
       chapters: [
-        {id:1, name:"Comprendre ses réactions face au changement", desc:"Identifier ses réflexes spontanés lorsqu’une nouvelle organisation, un outil ou une méthode apparaît."},
-        {id:2, name:"Gérer l’incertitude sans se crisper", desc:"Observer sa manière de réagir lorsque les repères changent ou que les informations sont incomplètes."},
-        {id:3, name:"Coopérer dans une période de transition", desc:"Analyser la manière dont on partage l’information, écoute les autres et contribue au collectif."},
+        {id:1, name:"Comprendre ses réactions face au changement", desc:"Identifier ses réflexes spontanés lorsqu'une nouvelle organisation, un outil ou une méthode apparaît."},
+        {id:2, name:"Gérer l'incertitude sans se crisper", desc:"Observer sa manière de réagir lorsque les repères changent ou que les informations sont incomplètes."},
+        {id:3, name:"Coopérer dans une période de transition", desc:"Analyser la manière dont on partage l'information, écoute les autres et contribue au collectif."},
         {id:4, name:"Expérimenter et ajuster ses pratiques", desc:"Identifier les comportements qui permettent de tester, apprendre et progresser dans un contexte mouvant."},
         {id:5, name:"Ancrer de nouveaux réflexes", desc:"Transformer progressivement le changement en pratiques durables."}
       ]
     },
-
     "sobriete": {
       name: "Suis-je acteur de ma sobriété énergétique au quotidien ?",
       chapters: [
-        {id:1, name:"Comprendre ses usages quotidiens", desc:"Identifier les gestes, habitudes et situations qui influencent la consommation d’énergie."},
+        {id:1, name:"Comprendre ses usages quotidiens", desc:"Identifier les gestes, habitudes et situations qui influencent la consommation d'énergie."},
         {id:2, name:"Agir concrètement au quotidien", desc:"Repérer les leviers simples permettant de contribuer à une sobriété énergétique collective."}
       ]
     }
   };
-
   return themes[slug];
 }
 
 function startAutodiagFromLibrary(slug) {
   const theme = getLibraryTheme(slug);
-
-  if (!theme) {
-    alert("Thème introuvable dans la démo.");
-    return;
-  }
-
+  if (!theme) { alert("Thème introuvable dans la démo."); return; }
   localStorage.removeItem('selftechDraftTheme');
+  localStorage.setItem('selftechDraftTheme', JSON.stringify({ name: theme.name, chapters: theme.chapters }));
+  window.location.href = '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(theme.name);
+}
 
-  localStorage.setItem('selftechDraftTheme', JSON.stringify({
-    name: theme.name,
-    chapters: theme.chapters
-  }));
+function addTagToTheme(btn) {
+  const tag = prompt('Nom du tag (3 max) :');
+  if (!tag || !tag.trim()) return;
+  const wrap = btn.closest('.th-tags');
+  const existing = wrap.querySelectorAll('.th-tag').length;
+  if (existing >= 3) { alert('Maximum 3 tags par thème.'); return; }
+  const span = document.createElement('span');
+  span.className = 'th-tag';
+  span.textContent = tag.trim();
+  wrap.insertBefore(span, btn);
+  if (existing + 1 >= 3) btn.style.display = 'none';
+}
 
-  window.location.href =
-    '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(theme.name);
+function shareTheme(name) {
+  closeAllMenus();
+  if (!confirm('Partager "' + name + '" avec la bibliothèque communautaire Selftech ?\n\n✓ Vos questions seront visibles par les autres organisations\n✓ 50 passations gratuites seront créditées sur votre pack\n\nSelftech n\'est pas garant du contenu partagé. Votre organisation reste responsable de sa validation.')) return;
+  showShareToast();
+}
+
+function showShareToast() {
+  let t = document.getElementById('share-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'share-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#18375d;color:#fff;padding:12px 18px;border-radius:9px;font-size:13px;font-weight:600;font-family:Asap,sans-serif;display:flex;align-items:center;gap:10px;box-shadow:0 4px 16px rgba(24,55,93,0.3);z-index:200;transform:translateY(80px);transition:transform 0.3s';
+    t.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5 10L12 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Thème partagé · 50 passations créditées sur votre pack';
+    document.body.appendChild(t);
+  }
+  t.style.transform = 'translateY(0)';
+  setTimeout(() => t.style.transform = 'translateY(80px)', 3000);
 }
 
 function switchTab(tab) {
