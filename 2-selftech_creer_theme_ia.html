@@ -233,7 +233,31 @@ function goToEditor() {
   const params = new URLSearchParams(window.location.search);
   const mode = params.get('mode') || 'theme';
 
-  window.location.href = '3-selftech_editeur_questions.html?mode=' + mode;
+  const themeName =
+    document.getElementById('result-name')?.textContent.trim()
+    || document.getElementById('inp-name').value.trim()
+    || 'Nouveau thème';
+
+  const generatedChapters = Array.from(document.querySelectorAll('#chap-list .chap-item')).map((item, index) => {
+    return {
+      id: index + 1,
+      name: item.querySelector('.chap-name')?.textContent.trim() || `Chapitre ${index + 1}`,
+      desc: item.querySelector('.chap-desc')?.textContent.trim() || ''
+    };
+  });
+
+  if (generatedChapters.length === 0) {
+    alert("Générez d’abord la structure du thème avant de continuer.");
+    return;
+  }
+
+  localStorage.setItem('selftechDraftTheme', JSON.stringify({
+    name: themeName,
+    chapters: generatedChapters
+  }));
+
+  window.location.href =
+    '3-selftech_editeur_questions.html?mode=' + mode + '&theme=' + encodeURIComponent(themeName);
 }
 
 function handleTagKey(e) {
