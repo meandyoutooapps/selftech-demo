@@ -460,45 +460,74 @@ let resources = [
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 function init() {
-  // Charger depuis localStorage si disponible
   try {
     const raw = localStorage.getItem(LS_KEY);
+
     if (raw) {
       const stored = JSON.parse(raw);
-       if (stored.meta.nom)    document.getElementById('nom').value    = stored.meta.nom;
 
-  // On ne pré-remplit pas le titre visible : il doit être rédigé par l'utilisateur
-  document.getElementById('titre').value = '';
+      if (stored.meta) {
+        if (stored.meta.nom) {
+          document.getElementById('nom').value = stored.meta.nom;
+        }
 
-  if (stored.meta.desc)   document.getElementById('desc').value   = stored.meta.desc;
-  if (stored.meta.slug)   document.getElementById('slug').value   = stored.meta.slug;
-}
+        // On ne pré-remplit pas le titre visible : il doit être rédigé par l'utilisateur
+        document.getElementById('titre').value = '';
+
+        if (stored.meta.desc) {
+          document.getElementById('desc').value = stored.meta.desc;
+        }
+
+        if (stored.meta.slug) {
+          document.getElementById('slug').value = stored.meta.slug;
+        }
       }
-      if (stored.intro)   document.getElementById('intro').value    = stored.intro;
+
+      if (stored.intro) {
+        document.getElementById('intro').value = stored.intro;
+      }
+
       if (stored.fin) {
-        if (stored.fin.message)    document.getElementById('msg-fin').value   = stored.fin.message;
-        if (stored.fin.btn_titre)  document.getElementById('btn-titre').value = stored.fin.btn_titre;
-        if (stored.fin.btn_url)    document.getElementById('btn-url').value   = stored.fin.btn_url;
+        if (stored.fin.message) {
+          document.getElementById('msg-fin').value = stored.fin.message;
+        }
+        if (stored.fin.btn_titre) {
+          document.getElementById('btn-titre').value = stored.fin.btn_titre;
+        }
+        if (stored.fin.btn_url) {
+          document.getElementById('btn-url').value = stored.fin.btn_url;
+        }
       }
-      if (stored.sociodemo && stored.sociodemo.length) sociodemo = stored.sociodemo;
-      if (stored.resources && stored.resources.length) resources = stored.resources;
-      // Sidebar from theme
+
+      if (stored.sociodemo && stored.sociodemo.length) {
+        sociodemo = stored.sociodemo;
+      }
+
+      if (stored.resources && stored.resources.length) {
+        resources = stored.resources;
+      }
+
       if (stored.theme) {
         const th = stored.theme;
+
         if (th.title) {
           document.getElementById('sb-theme').textContent = th.title;
-         
         }
+
         if (th.chapters) {
           document.getElementById('sb-chap').textContent = th.chapters.length;
-          const totalQ = th.chapters.reduce((a,c)=>a+(c.questions||[]).length,0);
+
+          const totalQ = th.chapters.reduce((a, c) => a + (c.questions || []).length, 0);
           document.getElementById('sb-q').textContent = totalQ;
-          const totalP = th.chapters.reduce((a,c)=>a+((c.profils||[]).length),0);
+
+          const totalP = th.chapters.reduce((a, c) => a + ((c.profils || []).length), 0);
           document.getElementById('sb-profils').textContent = totalP;
         }
       }
     }
-  } catch(e) {}
+  } catch(e) {
+    console.warn('Impossible de charger le paramétrage', e);
+  }
 
   renderSociodemo();
   renderResources();
