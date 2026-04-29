@@ -235,7 +235,7 @@ function goToEditor() {
 
   const themeName =
     document.getElementById('result-name')?.textContent.trim()
-    || document.getElementById('inp-name').value.trim()
+    || document.getElementById('inp-name')?.value.trim()
     || 'Nouveau thème';
 
   const generatedChapters = Array.from(document.querySelectorAll('#chap-list .chap-item')).map((item, index) => {
