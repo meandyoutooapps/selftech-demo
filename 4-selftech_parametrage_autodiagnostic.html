@@ -243,37 +243,38 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
         <div class="block-sub">Ces informations servent à identifier l'autodiagnostic dans votre espace et à configurer son URL de passation.</div>
 
         <div class="inp-row">
-          <div class="field">
-            <label>Nom de l'autodiagnostic<span class="req">*</span></label>
-            <input class="inp" id="nom" type="text" value="Autodiagnostic sécurité &amp; culture de sûreté" oninput="save();updateSidebar()">
-          </div>
-        <div class="field">
-  <label>Titre visible par les répondants<span class="req">*</span></label>
-  <input 
-    class="inp" 
-    id="titre" 
-    type="text" 
-    placeholder="Rédigez un titre engageant pour le collaborateur"
-    value=""
-    oninput="save()"
-  >
+  <div class="field">
+    <label>Nom de l'autodiagnostic<span class="req">*</span></label>
+    <input class="inp" id="nom" type="text" value="Autodiagnostic sécurité &amp; culture de sûreté" oninput="save();updateSidebar()">
+  </div>
+
+  <div class="field">
+    <label>Titre visible par les répondants<span class="req">*</span></label>
+    <input 
+      class="inp" 
+      id="titre" 
+      type="text" 
+      placeholder="Rédigez un titre engageant pour le collaborateur"
+      value=""
+      oninput="save()"
+    >
+  </div>
 </div>
 
-        <div class="field">
-          <label>Description interne</label>
-          <input class="inp" id="desc" type="text" value="Campagne interne Sonora RH sur les réflexes sécurité du quotidien." oninput="save()">
-        </div>
+<div class="field">
+  <label>Description interne</label>
+  <input class="inp" id="desc" type="text" value="Campagne interne Sonora RH sur les réflexes sécurité du quotidien." oninput="save()">
+</div>
 
-        <div class="field">
-          <label>Slug de l'URL<span class="req">*</span></label>
-          <input class="inp" id="slug" type="text" value="securite-culture-surete" oninput="updateSlug()" placeholder="ex: securite-culture-surete">
-          <div class="url-preview">
-            <span class="url-label">URL</span>
-            <span class="url-val" id="url-preview">app.selftech.app/sonora-rh/securite-culture-surete</span>
-          </div>
-          <div class="url-note">Le slug compose l'adresse de passation. Il doit être court, lisible et sans espace.</div>
-        </div>
-      </div>
+<div class="field">
+  <label>Slug de l'URL<span class="req">*</span></label>
+  <input class="inp" id="slug" type="text" value="securite-culture-surete" oninput="updateSlug()" placeholder="ex: securite-culture-surete">
+  <div class="url-preview">
+    <span class="url-label">URL</span>
+    <span class="url-val" id="url-preview">app.selftech.app/sonora-rh/securite-culture-surete</span>
+  </div>
+  <div class="url-note">Le slug compose l'adresse de passation. Il doit être court, lisible et sans espace.</div>
+</div>
 
       <!-- BLOC 2 — Introduction -->
       <div class="block">
