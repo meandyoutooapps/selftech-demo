@@ -457,6 +457,55 @@ let openCards = {};
 let activeFilterTag = '';
 let activeLib = 'ma';
 let likertInfoOpen = false;
+// ── MODE ÉDITEUR : thème seul OU création d'autodiagnostic ───────────────────
+const urlParams = new URLSearchParams(window.location.search);
+const editorMode = urlParams.get('mode') || 'theme';
+
+function updateEditorModeUI() {
+  const saveBtn = document.getElementById('btn-save');
+  const breadcrumb = document.querySelector('.breadcrumb');
+  const navButtons = document.querySelectorAll('.subnav .sn');
+
+  if (editorMode === 'autodiag') {
+    if (saveBtn) saveBtn.textContent = 'Continuer vers le paramétrage';
+
+    if (breadcrumb) {
+      breadcrumb.innerHTML = `
+        <span class="bc-link" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</span>
+        <span class="bc-sep">›</span>
+        <span class="bc-link" onclick="window.location.href='selftech_creer_autodiagnostic.html'">Créer un autodiagnostic</span>
+        <span class="bc-sep">›</span>
+        <span class="bc-cur" id="bc-cur">Questions — Connaître les risques</span>
+      `;
+    }
+
+    navButtons.forEach(b => b.classList.remove('on'));
+    if (navButtons[1]) navButtons[1].classList.add('on'); // Mes autodiagnostics
+  } else {
+    if (saveBtn) saveBtn.textContent = 'Enregistrer dans ma bibliothèque';
+
+    if (breadcrumb) {
+      breadcrumb.innerHTML = `
+        <span class="bc-link" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</span>
+        <span class="bc-sep">›</span>
+        <span class="bc-link" onclick="window.location.href='2-selftech_creer_theme_ia.html?mode=theme'">Sécurité & culture de sûreté</span>
+        <span class="bc-sep">›</span>
+        <span class="bc-cur" id="bc-cur">Questions — Connaître les risques</span>
+      `;
+    }
+
+    navButtons.forEach(b => b.classList.remove('on'));
+    if (navButtons[2]) navButtons[2].classList.add('on'); // Ma bibliothèque
+  }
+}
+
+function goNextAfterSave() {
+  if (editorMode === 'autodiag') {
+    window.location.href = '4-selftech_parametrage_autodiagnostic.html';
+  } else {
+    window.location.href = '1-selftech_ma_bibliotheque.html';
+  }
+}
 
 // ── SVGs ─────────────────────────────────────────────────────────────────────
 const icoRegen = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 .49-4.95L1 10" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -989,6 +1038,13 @@ function updateSaveButton() {
   const incomplete = chapters.filter(c => c.questions.length < 4);
   const btn = document.getElementById('btn-save');
   const hint = document.getElementById('btn-save-hint');
+
+  if (editorMode === 'autodiag') {
+    btn.disabled = false;
+    hint.classList.remove('visible');
+    return;
+  }
+
   if (incomplete.length === 0) {
     btn.disabled = false;
     hint.classList.remove('visible');
@@ -997,7 +1053,6 @@ function updateSaveButton() {
     hint.classList.add('visible');
   }
 }
-
 function trySave() {
   const incomplete = chapters.filter(c => c.questions.length < 4);
   if (incomplete.length > 0) {
@@ -1014,8 +1069,8 @@ function trySave() {
     document.getElementById('modal-save-blocked').classList.add('on');
     return;
   }
-  // Tout bon → simuler sauvegarde
-  alert('Thème enregistré avec succès !');
+ // Tout bon → continuer selon le mode
+goNextAfterSave();
 }
 
 function closeSaveModal() {
@@ -1023,6 +1078,7 @@ function closeSaveModal() {
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
+updateEditorModeUI();
 renderNav();
 renderMain();
 updateSaveButton();
