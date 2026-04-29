@@ -627,7 +627,11 @@ function saveCurrentAutodiagDraft() {
 function goNextAfterSave() {
   if (editorMode === 'autodiag') {
     saveCurrentAutodiagDraft();
-    window.location.href = '4-selftech_parametrage_autodiagnostic.html';
+
+    const themeName = getCurrentThemeName();
+    window.location.href =
+      '4-selftech_parametrage_autodiagnostic.html?themeName=' + encodeURIComponent(themeName);
+
   } else {
     window.location.href = '1-selftech_ma_bibliotheque.html';
   }
