@@ -117,6 +117,18 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
 .q-card.open .q-num{background:#18375d;color:#fff}
 .q-main{flex:1;min-width:0}
 .q-text{font-size:13px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif;line-height:1.4;margin-bottom:7px}
+  .editable-q{
+  outline:none;
+  border-radius:6px;
+  padding:2px 4px;
+  margin-left:-4px;
+  min-height:18px;
+  cursor:text;
+}
+.editable-q:focus{
+  background:#edf1f7;
+  box-shadow:0 0 0 1px #d8e0ea inset;
+}
 .q-tags-row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
 
 /* Tags de provenance */
@@ -569,7 +581,8 @@ const icoTrash = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><p
 const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>`;
 
 // ── RENDER NAV ────────────────────────────────────────────────────────────────
-function renderNav() {
+
+  function renderNav() {
   const nav = document.getElementById('chap-nav');
   nav.innerHTML = '';
   chapters.forEach((c, i) => {
@@ -728,7 +741,10 @@ function toggleLikertInfo() {
   if (el) el.style.display = likertInfoOpen ? 'inline' : 'none';
   if (btn) btn.textContent = likertInfoOpen ? 'Réduire' : 'Voir plus';
 }
-
+function updateQuestionText(qid, value) {
+  const q = chapters[activeChap].questions.find(q => q.id === qid);
+  if (q) q.text = value;
+}
 function renderCard(q, qi) {
   const open = openCards[q.id];
   const p = PROV[q.prov] || {};
@@ -773,7 +789,14 @@ function renderCard(q, qi) {
       <div class="q-header" onclick="toggleCard('${q.id}')">
         <div class="q-num">${qi + 1}</div>
         <div class="q-main">
-          <div class="q-text">${q.text}</div>
+          <div class="q-text editable-q"
+     contenteditable="true"
+     spellcheck="true"
+     onclick="event.stopPropagation()"
+     onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();} event.stopPropagation();"
+     oninput="updateQuestionText('${q.id}', this.innerText)">
+  ${q.text}
+</div>
           <div class="q-tags-row">${provHTML}${tagsHTML}${addBtn}</div>
         </div>
         <div class="q-right" onclick="event.stopPropagation()">
