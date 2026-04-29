@@ -814,8 +814,109 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, 'et')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function applyThemeFromEditor() {
+  const raw = localStorage.getItem('selftech_current_ad');
+  if (!raw) return;
+
+  try {
+    const stored = JSON.parse(raw);
+
+    const themeName =
+      stored.theme?.title ||
+      stored.meta?.nom?.replace(/^Autodiagnostic\s+/i, '') ||
+      'Nouveau thème';
+
+    const slug = slugify(themeName) || 'mon-autodiagnostic';
+
+    // Champs principaux
+    const nomEl = document.getElementById('nom');
+    const titreEl = document.getElementById('titre');
+    const descEl = document.getElementById('desc');
+    const slugEl = document.getElementById('slug');
+
+    if (nomEl) nomEl.value = `Autodiagnostic ${themeName}`;
+
+    // Important : on laisse le titre visible vide avec seulement la consigne
+    if (titreEl) {
+      titreEl.value = '';
+      titreEl.placeholder = 'Rédigez un titre engageant pour le collaborateur';
+    }
+
+    if (descEl) descEl.value = `Campagne interne Sonora RH sur ${themeName}.`;
+    if (slugEl) slugEl.value = slug;
+
+    // Sidebar
+    const sbTheme = document.getElementById('sb-theme');
+    if (sbTheme) sbTheme.textContent = themeName;
+
+    if (stored.theme?.chapters) {
+      const chapters = stored.theme.chapters;
+
+      const sbChap = document.getElementById('sb-chap');
+      const sbQ = document.getElementById('sb-q');
+      const sbProfils = document.getElementById('sb-profils');
+
+      if (sbChap) sbChap.textContent = chapters.length;
+
+      if (sbQ) {
+        const totalQ = chapters.reduce((a, c) => a + ((c.questions || []).length), 0);
+        sbQ.textContent = totalQ;
+      }
+
+      if (sbProfils) {
+        const totalP = chapters.reduce((a, c) => a + ((c.profils || []).length), 0);
+        sbProfils.textContent = totalP;
+      }
+    }
+
+    // Introduction dynamique si elle n'est pas déjà adaptée au thème
+    const introEl = document.getElementById('intro');
+    if (introEl) {
+      const storedIntro = stored.intro || '';
+      const introLooksRelevant = storedIntro.toLowerCase().includes(themeName.toLowerCase());
+
+      introEl.value = introLooksRelevant
+        ? storedIntro
+        : `Bienvenue dans cet autodiagnostic consacré à ${themeName}. Il vous propose des situations concrètes du quotidien professionnel pour vous aider à identifier vos réflexes, vos points d'appui et vos axes de progression. Il ne s'agit pas d'une évaluation individuelle ni d'un contrôle de performance. Cet autodiagnostic est entièrement anonyme : aucun login, aucun mot de passe, aucun cookie, aucun suivi d'adresse IP. Personne ne pourra associer vos réponses à votre identité. Vous avez donc tout intérêt à répondre sincèrement — et aucune raison de chercher la "bonne réponse". Les résultats seront analysés de manière agrégée afin d'aider l'entreprise à mieux cibler ses actions de sensibilisation et d'accompagnement. Temps estimé : 5 à 7 minutes.`;
+    }
+
+    // URL
+    const url = `app.selftech.app/sonora-rh/${slug}`;
+    const urlPreview = document.getElementById('url-preview');
+    const sbUrl = document.getElementById('sb-url');
+
+    if (urlPreview) urlPreview.textContent = url;
+    if (sbUrl) sbUrl.textContent = url;
+
+    // On réécrit le stockage proprement pour la suite
+    stored.meta = {
+      ...(stored.meta || {}),
+      nom: `Autodiagnostic ${themeName}`,
+      titre: '',
+      desc: `Campagne interne Sonora RH sur ${themeName}.`,
+      slug: slug
+    };
+
+    localStorage.setItem('selftech_current_ad', JSON.stringify(stored));
+
+  } catch (e) {
+    console.warn('Impossible de récupérer le thème depuis l’éditeur', e);
+  }
+}
+
 // ── DÉMARRAGE ─────────────────────────────────────────────────────────────────
 init();
-</script>
-</body>
-</html>
+applyThemeFromEditor();
+updateSlug();
+checkContinue();
+updatePreview();
