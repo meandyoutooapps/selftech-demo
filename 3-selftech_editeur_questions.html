@@ -470,6 +470,8 @@ let activeFilterTag = '';
 let activeLib = 'ma';
 let likertInfoOpen = false;
   function applyDraftThemeFromStorage() {
+      const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
+  if (themeFromUrl) return;
   const raw = localStorage.getItem('selftechDraftTheme');
   if (!raw) return;
 
@@ -507,6 +509,24 @@ const urlParams = new URLSearchParams(window.location.search);
 const editorMode = urlParams.get('mode') || 'theme';
 
 function getCurrentThemeName() {
+  const themeFromUrl = urlParams.get('theme');
+
+  // 1. Si on arrive depuis la bibliothèque avec un thème dans l'URL,
+  // on utilise ce thème en priorité.
+  if (themeFromUrl) {
+    const themeMap = {
+      'securite-culture-surete': 'Sécurité & culture de sûreté',
+      'cyber': 'Quel est mon niveau de compréhension des risques cyber ?',
+      'transformation': 'Changer sans se crisper : mes réflexes face aux transformations',
+      'sobriete': 'Suis-je acteur de ma sobriété énergétique au quotidien ?',
+      'qualite-vie-travail': 'Qualité de vie au travail',
+      'qvt': 'Qualité de vie au travail'
+    };
+
+    return themeMap[themeFromUrl] || decodeURIComponent(themeFromUrl);
+  }
+
+  // 2. Sinon, si on vient de la page "Nouveau thème", on lit le brouillon généré.
   const raw = localStorage.getItem('selftechDraftTheme');
 
   if (raw) {
@@ -517,9 +537,6 @@ function getCurrentThemeName() {
       console.warn('Nom du thème non récupérable', e);
     }
   }
-
-  const themeFromUrl = urlParams.get('theme');
-  if (themeFromUrl) return decodeURIComponent(themeFromUrl);
 
   return 'Nouveau thème';
 }
