@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sécurité & culture de sûreté — Autodiagnostic Selftech</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Asap',sans-serif;background:#eef0f4;min-height:100vh;color:#18375d}
+.hbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:11px 24px;text-align:center;position:sticky;top:0;z-index:10}
+.hbar-title{font-size:13px;font-weight:600;color:#64748b}
+.page{max-width:600px;margin:0 auto;padding:20px 16px 56px}
+.card{background:#fff;border-radius:14px;padding:22px 20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:12px}
+
+/* ── HERO ── */
+.hero-wrap{border-radius:14px;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:12px}
+.hero-img{height:180px;background:linear-gradient(135deg,#18375d 0%,#0d4c72 50%,#007883 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-img-bg{position:absolute;inset:0;opacity:0.08}
+.hero-icon{z-index:1;text-align:center}
+.hero-icon-svg{width:72px;height:72px;opacity:0.9}
+.hero-body{background:#fff;padding:22px 20px;text-align:center}
+.hero-sup{font-size:12px;color:#94a3b8;margin-bottom:8px;font-weight:500}
+.hero-title{font-size:22px;font-weight:700;color:#18375d;margin-bottom:20px;line-height:1.3}
+.hero-stats{display:flex;align-items:center;justify-content:center;gap:0}
+.hero-stat{flex:1;text-align:center}
+.hero-stat-val{font-size:22px;font-weight:700;color:#007883;line-height:1}
+.hero-stat-lbl{font-size:12px;color:#64748b;margin-top:3px}
+.hero-divider{width:1px;height:44px;background:#e2e8f0}
+
+/* ── BUTTONS ── */
+.btn{width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.15s;margin-top:4px}
+.btn-primary{background:#18375d;color:#fff}
+.btn-primary:hover{background:#122a47}
+.btn-primary:disabled{background:#b8c4d4;cursor:not-allowed}
+.btn-secondary{background:#fff;color:#18375d;border:1.5px solid #18375d}
+.btn-secondary:hover{background:#edf1f7}
+.anon-note{text-align:center;font-size:11px;color:#94a3b8;padding:8px 0}
+
+/* ── SOCIO-DEMO ── */
+.socio-q{margin-bottom:20px}
+.socio-label{font-size:14px;font-weight:600;color:#18375d;margin-bottom:10px;display:flex;align-items:center;gap:4px}
+.req{color:#eb6366}
+.socio-option{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:9px;cursor:pointer;margin-bottom:6px;transition:all 0.15s;background:#fff}
+.socio-option:last-child{margin-bottom:0}
+.socio-option:hover{border-color:#b0c0d4;background:#f7f9fc}
+.socio-option.sel{border-color:#18375d;background:#edf1f7}
+.socio-radio{width:18px;height:18px;border-radius:50%;border:2px solid #c5ccd5;flex-shrink:0;transition:all 0.15s;display:flex;align-items:center;justify-content:center}
+.socio-option.sel .socio-radio{border-color:#18375d;background:#18375d}
+.socio-radio-dot{width:7px;height:7px;border-radius:50%;background:#fff;display:none}
+.socio-option.sel .socio-radio-dot{display:block}
+.socio-text{font-size:13px;color:#18375d}
+
+/* ── PROGRESS BAR ── */
+.prog-card{background:#fff;border-radius:12px;padding:14px 18px;margin-bottom:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
+.prog-meta{display:flex;justify-content:space-between;margin-bottom:8px}
+.prog-label{font-size:12px;color:#64748b;font-weight:500}
+.prog-label strong{color:#18375d}
+.prog-pct{font-size:12px;font-weight:700;color:#18375d}
+.prog-bar{display:flex;gap:4px}
+.pb-seg{flex:1;height:6px;border-radius:3px;background:#e2e8f0;overflow:hidden;position:relative}
+.pb-fill{height:100%;border-radius:3px;background:#18375d;transition:width 0.4s}
+
+/* ── QUESTION ── */
+.q-card{background:#fff;border-radius:14px;padding:22px 20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:12px}
+.q-text{font-size:15px;font-weight:700;color:#18375d;line-height:1.5;margin-bottom:20px}
+.answers{display:flex;flex-direction:column;gap:8px}
+.ans{display:flex;align-items:flex-start;gap:13px;padding:13px 15px;border:1.5px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:all 0.15s;background:#fff;user-select:none}
+.ans:hover{border-color:#b0c0d4;background:#f7f9fc}
+.ans.sel{border-color:#18375d;background:#edf1f7}
+.ans-num{width:30px;height:30px;border-radius:8px;background:#edf1f7;color:#18375d;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;margin-top:1px}
+.ans.sel .ans-num{background:#18375d;color:#fff}
+.ans-text{font-size:14px;color:#18375d;line-height:1.5;padding-top:5px}
+/* Likert */
+.likert-answers{display:flex;flex-direction:column;gap:6px}
+.lik-ans{display:flex;align-items:center;gap:12px;padding:12px 15px;border:1.5px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:all 0.15s;background:#fff}
+.lik-ans:hover{border-color:#b0c0d4;background:#f7f9fc}
+.lik-ans.sel{border-color:#18375d;background:#edf1f7}
+.lik-circle{width:20px;height:20px;border-radius:50%;border:2px solid #c5ccd5;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.lik-ans.sel .lik-circle{border-color:#18375d;background:#18375d}
+.lik-dot{width:8px;height:8px;border-radius:50%;background:#fff;display:none}
+.lik-ans.sel .lik-dot{display:block}
+.lik-text{font-size:14px;color:#18375d}
+
+/* ── CHAPTER END ── */
+.chap-end-hero{border-radius:14px;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:12px}
+.chap-end-top{height:140px;display:flex;align-items:center;justify-content:center;position:relative}
+.chap-end-body{background:#fff;padding:20px;text-align:center}
+.chap-end-check{font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px}
+.chap-end-title{font-size:20px;font-weight:700;color:#18375d;line-height:1.3}
+.profil-detail{border-radius:14px;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:12px;border-left:4px solid}
+.profil-detail-body{background:#fff;padding:18px 20px}
+.profil-phrase{font-size:13px;color:#64748b;font-style:italic;margin-bottom:12px;line-height:1.5}
+.profil-desc{font-size:13px;color:#475569;line-height:1.65;margin-bottom:14px}
+.mots{display:flex;flex-wrap:wrap;gap:5px}
+.mot{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid}
+
+/* ── FINAL ── */
+.final-thanks{text-align:center}
+.final-merci{font-size:12px;color:#94a3b8;margin-bottom:6px}
+.final-title{font-size:20px;font-weight:700;color:#18375d;margin-bottom:0}
+.radar-card{text-align:center}
+.radar-title{font-size:13px;font-weight:700;color:#18375d;margin-bottom:14px}
+.radar-legend{display:flex;justify-content:center;gap:18px;margin-top:10px}
+.rl{display:flex;align-items:center;gap:6px;font-size:11px;color:#64748b}
+.rl-line{width:24px;height:2px;border-radius:1px}
+.recap-item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:10px}
+.recap-head{padding:16px 18px;border-left:4px solid}
+.recap-chapnum{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px}
+.recap-ptitle{font-size:16px;font-weight:700;color:#18375d;margin-bottom:4px;line-height:1.3}
+.recap-phrase{font-size:12px;color:#64748b;font-style:italic;margin-bottom:8px;line-height:1.4}
+.coll-btn{width:100%;padding:12px 18px;border:none;background:#f7f9fc;color:#18375d;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;border-top:1px solid #f0f4f8;display:flex;justify-content:space-between;align-items:center;transition:background 0.12s}
+.coll-btn:hover{background:#edf1f7}
+.coll-body{display:none;padding:16px 18px;border-top:1px solid #f0f4f8;background:#fafbfc}
+.coll-body.open{display:block}
+.coll-pct{font-size:28px;font-weight:700;color:#18375d}
+.coll-lbl{font-size:12px;color:#64748b;margin-top:2px;margin-bottom:14px;line-height:1.4}
+.coll-bars{display:flex;flex-direction:column;gap:7px}
+.coll-row{display:flex;align-items:center;gap:8px}
+.coll-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.coll-bar-w{flex:1;height:6px;background:#e8edf4;border-radius:3px;overflow:hidden}
+.coll-bar-f{height:100%;border-radius:3px}
+.coll-bar-p{font-size:11px;color:#64748b;min-width:28px;text-align:right;font-weight:600}
+.coll-bar-n{font-size:11px;color:#64748b;min-width:160px;line-height:1.3}
+.doc-section{border-radius:14px;padding:18px 20px;box-shadow:0 1px 8px rgba(0,0,0,0.06);margin-bottom:12px;background:#fff}
+.doc-title{font-size:13px;font-weight:700;color:#18375d;margin-bottom:12px}
+.doc-btn{width:100%;padding:11px 14px;border:1px solid #d8e0ea;border-radius:8px;background:#fafbfc;color:#18375d;font-size:13px;font-weight:500;font-family:'Asap',sans-serif;text-align:left;display:flex;align-items:center;gap:10px;margin-bottom:7px;cursor:default}
+.doc-btn:last-child{margin-bottom:0}
+.doc-ico{font-size:16px;flex-shrink:0}
+.pdf-btn{background:#18375d;color:#fff;border:none;border-radius:10px;padding:14px;width:100%;font-size:14px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;margin-bottom:8px}
+.pdf-btn:hover{background:#122a47}
+.fermer-btn{background:#fff;color:#64748b;border:1px solid #d8e0ea;border-radius:10px;padding:12px;width:100%;font-size:13px;font-weight:500;cursor:pointer;font-family:'Asap',sans-serif}
+.fermer-btn:hover{background:#f7f9fc}
+
+/* Profile color classes */
+.c-rouge{color:#c0392b}.c-jaune{color:#b7840a}.c-vert{color:#27823a}
+.border-rouge{border-color:#ff847e}.border-jaune{border-color:#ffc744}.border-vert{border-color:#77cd8a}
+.tint-rouge{background:#fff0ef}.tint-jaune{background:#fff9ec}.tint-vert{background:#f0fbf2}
+.mk-rouge{background:#fff0ef;color:#c0392b;border-color:#ffd6d4}
+.mk-jaune{background:#fff9ec;color:#b7840a;border-color:#ffedb8}
+.mk-vert{background:#f0fbf2;color:#27823a;border-color:#b8e8c0}
+.dot-rouge{background:#ff847e}.dot-jaune{background:#ffc744}.dot-vert{background:#77cd8a}
+.bar-rouge{background:#ff847e}.bar-jaune{background:#ffc744}.bar-vert{background:#77cd8a}
+.top-rouge{background:linear-gradient(135deg,#ffb3b0,#ff847e)}
+.top-jaune{background:linear-gradient(135deg,#ffe49a,#ffc744)}
+.top-vert{background:linear-gradient(135deg,#a8e6b4,#77cd8a)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const SOCIO = [
+  { id:'anciennete', q:"Quelle est votre ancienneté dans l'organisation ?", req:true,
+    opts:["Moins d'1 an","De 1 à 5 ans","De 5 à 10 ans","Plus de 10 ans"] },
+  { id:'categorie', q:"Quelle est votre catégorie professionnelle ?", req:true,
+    opts:["Opérateur·rice / Agent de production","Technicien·ne / Agent de maîtrise","Cadre / Ingénieur·e","Direction / Management"] },
+  { id:'site', q:"Sur quel site travaillez-vous ?", req:true,
+    opts:["Site A","Site B","Site C","Siège social","Autre"] },
+];
+
+const PROFIL_CFG = [
+  {nom:"En développement", bg:"top-rouge", border:"border-rouge", tint:"tint-rouge", c:"c-rouge", mk:"mk-rouge", dot:"dot-rouge", bar:"bar-rouge", hex:"#ff847e", check:"#c0392b"},
+  {nom:"En progression",    bg:"top-jaune", border:"border-jaune", tint:"tint-jaune", c:"c-jaune", mk:"mk-jaune", dot:"dot-jaune", bar:"bar-jaune", hex:"#ffc744", check:"#b7840a"},
+  {nom:"Ancré",             bg:"top-vert",  border:"border-vert",  tint:"tint-vert",  c:"c-vert",  mk:"mk-vert",  dot:"dot-vert",  bar:"bar-vert",  hex:"#77cd8a", check:"#27823a"},
+];
+
+const AD = {
+  title: "Sécurité & culture de sûreté",
+  duration: "environ 12 min.",
+  intro: [
+    "Cet autodiagnostic vous propose des situations concrètes du quotidien professionnel pour interroger vos réflexes en matière de sécurité au travail. Il ne vise pas à tester des connaissances théoriques, mais à vous aider à prendre du recul sur vos pratiques réelles.",
+    "Pour chaque situation, choisissez la réponse la plus proche de votre réaction spontanée. Il n'y a pas de bonne réponse évidente : chaque option reflète une manière possible d'agir dans un contexte professionnel réel.",
+    "Les résultats sont structurés autour de quatre dimensions : identifier les risques, adopter les bons réflexes, contribuer à la sécurité collective, réagir et signaler.",
+  ],
+  chapters: [
+    {
+      title: "Connaître les risques",
+      desc: "Identifier les signaux de risque dans votre environnement.",
+      questions: [
+        { type:'likert', text:"Dans mon travail quotidien, j'identifie les situations susceptibles de présenter un risque.",
+          opts:["Jamais","Rarement","Parfois","Souvent","Toujours"], scores:[0,0.5,1,1.5,2] },
+        { type:'choix', text:"Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?",
+          opts:["Je continue, ça passera probablement","J'en parle à un collègue pour avoir son avis","Je m'arrête, j'évalue et je remonte l'info à mon responsable"],
+          scores:[0,1,2] },
+        { type:'choix', text:"Un collègue vous demande où se trouvent les EPI pour une tâche inhabituelle. Vous…",
+          opts:["Je lui dis que je ne sais pas vraiment","Je lui indique vaguement où chercher","Je lui montre l'emplacement sans vérifier que c'est le bon EPI","Je l'accompagne et l'aide à identifier l'équipement adapté"],
+          scores:[0,1,1,2] },
+        { type:'choix', text:"Comment décririez-vous votre niveau de connaissance des consignes de sécurité sur votre site ?",
+          opts:["Je ne les connais pas vraiment","J'en connais les grandes lignes mais pas dans le détail","Je les connais et suis capable de les expliquer à quelqu'un"],
+          scores:[0,1,2] },
+        { type:'choix', text:"Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?",
+          opts:["Je n'en fais rien, pas de dommage, pas de problème","J'y repense mais je ne le signale pas formellement","J'en parle à un collègue mais sans remonter officiellement","Je le signale formellement, même sans conséquence visible"],
+          scores:[0,0,1,2] },
+      ],
+      seuils:[0, 0.7, 1.7, 2.1],
+      profils:[
+        { titre:"La vigilance s'invite rarement dans votre quotidien",
+          phrase:"Vous naviguez souvent en automatique — les signaux de risque passent facilement inaperçus.",
+          desc:"Au quotidien, vous évoluez dans une forme d'habitude professionnelle qui laisse peu de place à la vigilance active. Ce n'est pas un manque d'intention : c'est souvent l'exposition progressive aux risques qui les rend invisibles. La bonne nouvelle est que cette prise de conscience est déjà un premier pas concret vers un regard plus aiguisé sur votre environnement.",
+          mots:["Automatisme","Vigilance à développer"],
+          pct_meme:14, dist:[{pct:14,lbl:"La vigilance s'invite rarement",lvl:0},{pct:42,lbl:"L'œil mais pas encore le réflexe",lvl:1},{pct:44,lbl:"Vigilance ancrée",lvl:2}] },
+        { titre:"Vous avez l'œil, mais pas encore le réflexe",
+          phrase:"Votre sensibilité aux risques existe — elle s'exprime encore de façon irrégulière.",
+          desc:"Vous percevez les risques dans certaines situations, mais cela reste souvent lié au contexte ou à votre état d'attention du moment. Ce qui se construit encore, c'est la constance du regard. Vous êtes à un stade charnière : chaque situation traitée avec attention renforce peu à peu ce réflexe de vigilance.",
+          mots:["Irrégulier","En construction"],
+          pct_meme:42, dist:[{pct:14,lbl:"La vigilance s'invite rarement",lvl:0},{pct:42,lbl:"L'œil mais pas encore le réflexe",lvl:1},{pct:44,lbl:"Vigilance ancrée",lvl:2}] },
+        { titre:"La vigilance fait partie de votre ADN professionnel",
+          phrase:"Vous repérez et traitez les risques avec constance, même quand personne ne regarde.",
+          desc:"Vous avez intégré la vigilance comme une posture naturelle. Vous ne cherchez pas les risques — vous les voyez, presque instinctivement. Ce réflexe est une ressource précieuse pour vous, mais aussi pour les personnes qui travaillent avec vous. Votre façon d'aborder les situations peut inspirer et entraîner vos collègues vers une culture sécurité plus solide.",
+          mots:["Ancré","Ressource collective"],
+          pct_meme:44, dist:[{pct:14,lbl:"La vigilance s'invite rarement",lvl:0},{pct:42,lbl:"L'œil mais pas encore le réflexe",lvl:1},{pct:44,lbl:"Vigilance ancrée",lvl:2}] },
+      ]
+    },
+    {
+      title: "Adopter les bons réflexes",
+      desc: "Mettre en pratique les comportements préventifs au quotidien.",
+      questions: [
+        { type:'choix', text:"Vous êtes sur le point de commencer une tâche et réalisez que vous n'avez pas vos EPI. Vous êtes à 5 minutes de les récupérer.",
+          opts:["Je commence quand même, je serai prudent","Je fais une partie sans EPI et j'irai les chercher ensuite","Je vais les chercher avant de commencer, sans exception"],
+          scores:[0,0,2] },
+        { type:'choix', text:"Lorsque vous découvrez un équipement défectueux, que faites-vous ?",
+          opts:["Je continue à l'utiliser en faisant attention","Je le mets de côté mais sans rien signaler","Je préviens un collègue pour qu'il le signale","Je le mets hors service et le signale immédiatement"],
+          scores:[0,1,1,2] },
+        { type:'choix', text:"Votre responsable vous demande d'accélérer une tâche qui nécessite normalement une vérification sécurité. Vous…",
+          opts:["J'accélère sans poser de question, c'est mon responsable","Je fais la vérification rapidement mais sans tout contrôler","Je fais la vérification complète et explique pourquoi c'est nécessaire"],
+          scores:[0,1,2] },
+        { type:'choix', text:"En prenant votre poste, vous remarquez que votre zone de travail n'est pas dans l'état prévu par les consignes.",
+          opts:["Je commence quand même, ce n'est pas mon rôle de nettoyer","J'ajuste ce qui est évident mais laisse le reste","Je remet en ordre la zone avant de commencer et note l'anomalie","Je signale l'anomalie à mon responsable avant de démarrer"],
+          scores:[0,1,2,2] },
+      ],
+      seuils:[0, 0.7, 1.7, 2.1],
+      profils:[
+        { titre:"Les réflexes préventifs se construisent encore",
+          phrase:"Les automatismes de protection ne sont pas encore pleinement naturels dans votre quotidien.",
+          desc:"Adopter des réflexes préventifs solides demande de la pratique et une exposition répétée aux bonnes décisions. Pour l'instant, certaines pressions — la rapidité, la commodité, l'autorité hiérarchique — prennent parfois le dessus. Ces réflexes se construisent, question de situation en situation.",
+          mots:["À construire","Sous influence"],
+          pct_meme:18, dist:[{pct:18,lbl:"Réflexes en construction",lvl:0},{pct:44,lbl:"Bons gestes dans les situations connues",lvl:1},{pct:38,lbl:"Réflexes naturels",lvl:2}] },
+        { titre:"Vous faites les bons gestes dans les situations connues",
+          phrase:"Il reste quelques angles morts dans les contextes moins habituels ou sous pression.",
+          desc:"Vous avez intégré les comportements préventifs de base et les appliquez dans les situations familières. Ce qui se renforce encore, c'est la capacité à maintenir ces réflexes dans des contextes plus ambigus ou stressants, là où la pression du temps ou de la hiérarchie pourrait pousser à prendre des raccourcis.",
+          mots:["Situationnel","En renforcement"],
+          pct_meme:44, dist:[{pct:18,lbl:"Réflexes en construction",lvl:0},{pct:44,lbl:"Bons gestes dans les situations connues",lvl:1},{pct:38,lbl:"Réflexes naturels",lvl:2}] },
+        { titre:"Prévenir est un réflexe que vous n'avez plus besoin d'activer",
+          phrase:"Vos comportements préventifs sont devenus une seconde nature.",
+          desc:"Vous avez intégré les gestes préventifs à un niveau où ils ne nécessitent plus d'effort conscient. Que la situation soit connue, nouvelle ou sous pression, vous maintenez les mêmes standards. Cette constance est l'un des signes les plus solides d'une culture sécurité réellement ancrée.",
+          mots:["Automatique","Sans exception"],
+          pct_meme:38, dist:[{pct:18,lbl:"Réflexes en construction",lvl:0},{pct:44,lbl:"Bons gestes dans les situations connues",lvl:1},{pct:38,lbl:"Réflexes naturels",lvl:2}] },
+      ]
+    },
+    {
+      title: "Travailler en équipe en sécurité",
+      desc: "Contribuer à la sécurité collective de votre environnement.",
+      questions: [
+        { type:'choix', text:"Vous observez un collègue qui prend un raccourci dangereux pour gagner du temps. Que faites-vous ?",
+          opts:["Je n'interviens pas, c'est son choix","Je lui en parle plus tard, hors contexte","Je l'interpelle calmement sur le moment"],
+          scores:[0,1,2] },
+        { type:'choix', text:"Votre responsable organise une réunion sécurité mais le timing est vraiment mauvais pour vous.",
+          opts:["Je n'y vais pas, j'ai mieux à faire","J'y assiste mais de manière passive","Je propose un autre créneau si vraiment impossible","J'y participe activement et prépare une contribution"],
+          scores:[0,1,1,2] },
+        { type:'choix', text:"Un nouveau collègue commence et ne semble pas avoir reçu de formation sécurité complète.",
+          opts:["Je suppose que ça a été fait, ce n'est pas mon rôle de vérifier","Je lui partage les bases de manière informelle","Je signale le manque à mon responsable pour qu'une formation soit organisée"],
+          scores:[0,1,2] },
+        { type:'choix', text:"Votre équipe traverse une période intense. Vous remarquez des signes de fatigue qui pourraient affecter la vigilance collective.",
+          opts:["Je me dis que ça fait partie du métier","J'en parle discrètement à un ou deux collègues","Je remonte l'observation à mon responsable","J'adapte mon comportement pour compenser la vigilance réduite du groupe"],
+          scores:[0,1,2,1] },
+      ],
+      seuils:[0, 0.7, 1.7, 2.1],
+      profils:[
+        { titre:"La sécurité collective reste encore un sujet personnel pour vous",
+          phrase:"Votre vigilance sécurité s'arrête souvent à vous-même, sans s'étendre à votre entourage.",
+          desc:"Dans un environnement de travail sûr, chacun est à la fois bénéficiaire et contributeur de la culture sécurité. L'observation silencieuse d'une prise de risque par un collègue, ou l'absence de réaction face à un manque de formation, peuvent avoir des conséquences sur l'ensemble du collectif. La sécurité se construit ensemble.",
+          mots:["Individuel","Collectif à construire"],
+          pct_meme:22, dist:[{pct:22,lbl:"Sécurité encore individuelle",lvl:0},{pct:45,lbl:"Contributeur dans les situations évidentes",lvl:1},{pct:33,lbl:"Pilier de la culture sécurité",lvl:2}] },
+        { titre:"Vous contribuez à la sécurité collective dans les situations évidentes",
+          phrase:"Votre sens des responsabilités s'exprime, mais reste parfois en retrait face aux situations ambiguës.",
+          desc:"Vous avez conscience de votre rôle dans la sécurité de l'équipe et l'exprimez dans les situations claires. Ce qui se renforce encore, c'est la capacité à intervenir dans des contextes plus délicats — là où la pression sociale, le manque de temps ou la peur de mal réagir peuvent freiner la bonne décision.",
+          mots:["Intermittent","En conscience"],
+          pct_meme:45, dist:[{pct:22,lbl:"Sécurité encore individuelle",lvl:0},{pct:45,lbl:"Contributeur dans les situations évidentes",lvl:1},{pct:33,lbl:"Pilier de la culture sécurité",lvl:2}] },
+        { titre:"Vous êtes un pilier de la culture sécurité de votre équipe",
+          phrase:"Votre engagement pour la sécurité collective est visible, actif et constant.",
+          desc:"Vous ne vous contentez pas de respecter les règles pour vous-même : vous veillez à ce que votre entourage bénéficie du même niveau de vigilance. Signaler, alerter, encourager, former informellement — cette posture est une contribution rare et précieuse à une culture sécurité durable.",
+          mots:["Ambassadeur·rice","Acteur·rice collectif·ve"],
+          pct_meme:33, dist:[{pct:22,lbl:"Sécurité encore individuelle",lvl:0},{pct:45,lbl:"Contributeur dans les situations évidentes",lvl:1},{pct:33,lbl:"Pilier de la culture sécurité",lvl:2}] },
+      ]
+    },
+    {
+      title: "Réagir et signaler",
+      desc: "Réagir face à l'incident et mobiliser les bons interlocuteurs.",
+      questions: [
+        { type:'choix', text:"Un début d'incendie se déclare dans une pièce adjacente à la vôtre. Votre premier réflexe ?",
+          opts:["J'évalue si je peux l'éteindre moi-même avant d'alerter","J'alerte mes collègues proches et j'attends des instructions","J'active l'alarme et j'évacue immédiatement"],
+          scores:[0,1,2] },
+        { type:'choix', text:"Vous êtes témoin d'un incident sans gravité apparente. Que faites-vous ?",
+          opts:["Je passe, pas de blessé donc pas de problème","J'en parle à un collègue mais n'en fais pas plus","Je le signale à mon responsable avant la fin de la journée","Je rédige un compte-rendu d'incident le plus tôt possible"],
+          scores:[0,0,1,2] },
+        { type:'likert', text:"Je connais la procédure à suivre en cas d'accident sur mon lieu de travail.",
+          opts:["Jamais","Rarement","Parfois","Souvent","Toujours"], scores:[0,0.5,1,1.5,2] },
+        { type:'choix', text:"Un collègue signale une douleur après une tâche physique mais hésite à en parler officiellement.",
+          opts:["Je lui dis que c'est probablement pas grave et de se reposer","Je l'encourage à en parler à son responsable","Je l'accompagne vers son responsable ou le service santé"],
+          scores:[0,1,2] },
+      ],
+      seuils:[0, 0.7, 1.7, 2.1],
+      profils:[
+        { titre:"Face à l'incident, l'hésitation prend le dessus",
+          phrase:"Vos réflexes de réaction et de signalement ne sont pas encore pleinement activés.",
+          desc:"Réagir vite et bien en situation d'incident est une compétence qui s'apprend et s'entraîne. Pour l'instant, l'hésitation ou la minimisation prend parfois le dessus. Ces réflexes peuvent se construire, notamment grâce aux exercices réguliers et à une meilleure connaissance des procédures d'urgence de votre site.",
+          mots:["Hésitation","Réflexes à construire"],
+          pct_meme:15, dist:[{pct:15,lbl:"Hésitation face à l'incident",lvl:0},{pct:42,lbl:"Réaction présente, précision à renforcer",lvl:1},{pct:43,lbl:"Calme, méthode, sans hésitation",lvl:2}] },
+        { titre:"Vous réagissez, mais pas toujours au moment le plus utile",
+          phrase:"Vos intentions sont là — la méthode et la rapidité se renforcent encore.",
+          desc:"Vous avez intégré l'importance de réagir et de signaler, mais la mise en œuvre peut encore manquer de précision ou de rapidité dans certaines situations. Les situations d'urgence requièrent des automatismes : ils se construisent par la pratique, les exercices de simulation et une connaissance solide des procédures.",
+          mots:["Intention positive","Précision à renforcer"],
+          pct_meme:42, dist:[{pct:15,lbl:"Hésitation face à l'incident",lvl:0},{pct:42,lbl:"Réaction présente, précision à renforcer",lvl:1},{pct:43,lbl:"Calme, méthode, sans hésitation",lvl:2}] },
+        { titre:"Vous réagissez avec calme, méthode et sans hésitation",
+          phrase:"Face à l'incident, vous savez quoi faire, quand et comment.",
+          desc:"Vous avez développé des réflexes solides en matière de réaction et de signalement. Votre capacité à agir vite et bien — sans paniquer et sans minimiser — est une ressource précieuse pour vous et pour votre équipe. Continuez à entretenir ces automatismes et à les partager avec vos collègues moins expérimentés.",
+          mots:["Méthode","Calme sous pression","Fiable"],
+          pct_meme:43, dist:[{pct:15,lbl:"Hésitation face à l'incident",lvl:0},{pct:42,lbl:"Réaction présente, précision à renforcer",lvl:1},{pct:43,lbl:"Calme, méthode, sans hésitation",lvl:2}] },
+      ]
+    },
+  ]
+};
+
+const TOTAL_Q = AD.chapters.reduce((a,c) => a + c.questions.length, 0);
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let S = {
+  step: 'home',  // home | socio | question | chap_end | final
+  chap: 0,
+  q: 0,
+  sel: null,
+  answers: {},   // `${ci}_${qi}` -> answer index
+  scores: {},    // `${ci}_${qi}` -> score value
+  chapScores: [],
+  chapProfil: [],
+  socio: {},
+  open: {},      // accordion states
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function completedQ() {
+  let n = 0;
+  for (let ci = 0; ci < S.chap; ci++) n += AD.chapters[ci].questions.length;
+  return n;
+}
+function globalPct() {
+  return Math.max(1, Math.round(completedQ() / TOTAL_Q * 100));
+}
+function calcChapScore(ci) {
+  const ch = AD.chapters[ci];
+  let tot = 0;
+  for (let qi = 0; qi < ch.questions.length; qi++) {
+    tot += (S.scores[`${ci}_${qi}`] || 0);
+  }
+  return tot / ch.questions.length;
+}
+function profilIdx(score, seuils) {
+  if (score < seuils[1]) return 0;
+  if (score < seuils[2]) return 1;
+  return 2;
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── RENDER HOME ───────────────────────────────────────────────────────────────
+function renderHome() {
+  return `
+  <div class="hbar"><div class="hbar-title">${esc(AD.title)}</div></div>
+  <div class="page">
+    <div class="hero-wrap">
+      <div class="hero-img">
+        <svg class="hero-icon-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 8L56 16V36C56 50 40 62 40 62C40 62 24 50 24 36V16L40 8Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
+          <path d="M40 18L50 23V36C50 46 40 54 40 54C40 54 30 46 30 36V23L40 18Z" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+          <path d="M33 36L38 41L48 30" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hero-body">
+        <div class="hero-sup">Autodiagnostic Selftech</div>
+        <div class="hero-title">${esc(AD.title)}</div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-val">${AD.chapters.length} parties</div>
+            <div class="hero-stat-lbl">Ce test comporte</div>
+          </div>
+          <div class="hero-divider"></div>
+          <div class="hero-stat">
+            <div class="hero-stat-val">${AD.duration}</div>
+            <div class="hero-stat-lbl">Ce test durera</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ${AD.intro.map(t => `<div class="card"><p style="font-size:14px;color:#475569;line-height:1.65">${esc(t)}</p></div>`).join('')}
+    <div class="card">
+      <button class="btn btn-primary" onclick="startSocio()">Commencer le test</button>
+      <p style="text-align:center;font-size:11px;color:#94a3b8;margin-top:10px">Pour une meilleure expérience, ouvrez cette page sur Chrome, Safari ou Firefox.</p>
+    </div>
+  </div>`;
+}
+
+// ── RENDER SOCIO-DEMO ─────────────────────────────────────────────────────────
+function renderSocio() {
+  const allAnswered = SOCIO.every(s => S.socio[s.id] !== undefined);
+  return `
+  <div class="hbar"><div class="hbar-title">${esc(AD.title)}</div></div>
+  <div class="page">
+    <div class="card">
+      <h2 style="font-size:18px;font-weight:700;color:#18375d;margin-bottom:6px">Avant de commencer</h2>
+      <p style="font-size:13px;color:#94a3b8">Tous les champs sont requis pour commencer le questionnaire.</p>
+    </div>
+    <div class="card">
+      ${SOCIO.map((s,si) => `
+      <div class="socio-q" style="${si===SOCIO.length-1?'margin-bottom:0':''}">
+        <div class="socio-label">${esc(s.q)} <span class="req">*</span></div>
+        <div>
+          ${s.opts.map((o,oi) => `
+          <div class="socio-option ${S.socio[s.id]===oi?'sel':''}" onclick="socioSelect(${si},${oi})">
+            <div class="socio-radio"><div class="socio-radio-dot"></div></div>
+            <span class="socio-text">${esc(o)}</span>
+          </div>`).join('')}
+        </div>
+      </div>`).join('<hr style="border:none;border-top:1px solid #f0f4f8;margin:18px 0">')}
+    </div>
+    <div class="card">
+      <button class="btn btn-primary" onclick="startQuestions()" ${allAnswered?'':'disabled'}>Étape suivante</button>
+      <p class="anon-note">Données anonymes — non traitées individuellement.</p>
+    </div>
+  </div>`;
+}
+
+// ── RENDER QUESTION ───────────────────────────────────────────────────────────
+function renderQuestion() {
+  const ch = AD.chapters[S.chap];
+  const q = ch.questions[S.q];
+  const chapsDone = S.chap;
+  const qInChapDone = S.q;
+  const totalInChap = ch.questions.length;
+  const pct = globalPct();
+
+  // Build progress bar segments
+  const segs = AD.chapters.map((c,ci) => {
+    let fill = 0;
+    if (ci < S.chap) fill = 100;
+    else if (ci === S.chap) fill = (S.q / c.questions.length) * 100;
+    return `<div class="pb-seg"><div class="pb-fill" style="width:${fill}%"></div></div>`;
+  }).join('');
+
+  const isSelected = S.sel !== null;
+  const qNum = S.q + 1;
+  const totalChapQ = ch.questions.length;
+
+  let answersHTML;
+  if (q.type === 'likert') {
+    answersHTML = `<div class="likert-answers">
+      ${q.opts.map((o,i) => `
+      <div class="lik-ans ${S.sel===i?'sel':''}" onclick="selectAns(${i})">
+        <div class="lik-circle"><div class="lik-dot"></div></div>
+        <span class="lik-text">${esc(o)}</span>
+      </div>`).join('')}
+    </div>`;
+  } else {
+    answersHTML = `<div class="answers">
+      ${q.opts.map((o,i) => `
+      <div class="ans ${S.sel===i?'sel':''}" onclick="selectAns(${i})">
+        <div class="ans-num">${i+1}</div>
+        <span class="ans-text">${esc(o)}</span>
+      </div>`).join('')}
+    </div>`;
+  }
+
+  return `
+  <div class="hbar"><div class="hbar-title">${esc(AD.title)}</div></div>
+  <div class="page">
+    <div class="prog-card">
+      <div class="prog-meta">
+        <span class="prog-label"><strong>Partie ${S.chap+1}/${AD.chapters.length}</strong> · Question ${qNum}/${totalChapQ}</span>
+        <span class="prog-pct">${pct} %</span>
+      </div>
+      <div class="prog-bar">${segs}</div>
+    </div>
+    <div class="q-card">
+      <div class="q-text">${esc(q.text)} <span style="color:#eb6366">*</span></div>
+      ${answersHTML}
+    </div>
+    <div class="card" style="padding:16px 20px">
+      <button class="btn btn-primary" onclick="continueQ()" ${isSelected?'':'disabled'}>Continuer</button>
+    </div>
+  </div>`;
+}
+
+// ── RENDER CHAPTER END ────────────────────────────────────────────────────────
+function renderChapEnd() {
+  const ch = AD.chapters[S.chap];
+  const score = S.chapScores[S.chap];
+  const pi = S.chapProfil[S.chap];
+  const profil = ch.profils[pi];
+  const pc = PROFIL_CFG[pi];
+  const isLast = S.chap === AD.chapters.length - 1;
+
+  return `
+  <div class="hbar"><div class="hbar-title">${esc(AD.title)}</div></div>
+  <div class="page">
+    <div class="chap-end-hero">
+      <div class="chap-end-top ${pc.bg}">
+        <svg width="60" height="60" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="36" fill="rgba(255,255,255,0.25)"/>
+          <path d="M25 40L35 50L55 30" stroke="rgba(255,255,255,0.95)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="chap-end-body">
+        <div class="chap-end-check" style="color:${pc.check}">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5.5 10.5L12 3.5" stroke="${pc.check}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Fin du chapitre ${S.chap+1} — ${esc(ch.title)}
+        </div>
+        <div class="chap-end-title">${esc(profil.titre)}</div>
+      </div>
+    </div>
+    <div class="profil-detail ${pc.border}">
+      <div class="profil-detail-body">
+        <p class="profil-phrase">${esc(profil.phrase)}</p>
+        <p class="profil-desc">${esc(profil.desc)}</p>
+        <div class="mots">
+          ${profil.mots.map(m=>`<span class="mot ${pc.mk}">${esc(m)}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:16px 20px">
+      <button class="btn btn-primary" onclick="${isLast?'showFinal()':'nextChap()'}">
+        ${isLast ? 'Voir mes résultats' : 'Chapitre suivant →'}
+      </button>
+    </div>
+  </div>`;
+}
+
+// ── RENDER FINAL ──────────────────────────────────────────────────────────────
+function renderFinal() {
+  const scores = S.chapScores;
+
+  // Radar SVG
+  const CX=200, CY=200, MAXR=130;
+  const angles = [-Math.PI/2, 0, Math.PI/2, Math.PI];
+  function pts(vals) {
+    return vals.map((v,i)=>{
+      const r=(v/2)*MAXR;
+      return `${CX+r*Math.cos(angles[i])},${CY+r*Math.sin(angles[i])}`;
+    }).join(' ');
+  }
+  // Grille
+  const grid = [0.35,0.7,1.0].map(f=>{
+    const r=f*MAXR;
+    return `<polygon points="${angles.map(a=>`${CX+r*Math.cos(a)},${CY+r*Math.sin(a)}`).join(' ')}" fill="none" stroke="#e2e8f0" stroke-width="1"/>`;
+  }).join('');
+  // Axes
+  const axes = angles.map(a=>`<line x1="${CX}" y1="${CY}" x2="${CX+MAXR*Math.cos(a)}" y2="${CY+MAXR*Math.sin(a)}" stroke="#e2e8f0" stroke-width="1.5"/>`).join('');
+  // User polygon
+  const userPts = pts(scores);
+  // Simulated other polygon (average)
+  const otherScores = [1.18, 1.25, 1.08, 1.32];
+  const otherPts = pts(otherScores);
+  // Labels
+  const labels = [
+    {x:CX,y:CY-MAXR-14,ta:'middle',text:AD.chapters[0].title},
+    {x:CX+MAXR+10,y:CY+4,ta:'start',text:AD.chapters[1].title},
+    {x:CX,y:CY+MAXR+18,ta:'middle',text:AD.chapters[2].title},
+    {x:CX-MAXR-10,y:CY+4,ta:'end',text:AD.chapters[3].title},
+  ];
+  const labelsSVG = labels.map(l=>`<text x="${l.x}" y="${l.y}" text-anchor="${l.ta}" font-size="11" fill="#64748b" font-family="Asap,sans-serif">${esc(l.text)}</text>`).join('');
+
+  const radarSVG = `
+    <svg viewBox="0 0 400 400" style="width:100%;max-width:340px">
+      ${grid}${axes}
+      <polygon points="${otherPts}" fill="rgba(148,163,184,0.1)" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="${userPts}" fill="rgba(24,55,93,0.12)" stroke="#18375d" stroke-width="2"/>
+      ${scores.map((v,i)=>{const r=(v/2)*MAXR;return `<circle cx="${CX+r*Math.cos(angles[i])}" cy="${CY+r*Math.sin(angles[i])}" r="4" fill="#18375d"/>`;}).join('')}
+      ${labelsSVG}
+    </svg>`;
+
+  // Chapter recap cards
+  const recapCards = AD.chapters.map((ch,ci)=>{
+    const pi = S.chapProfil[ci];
+    const profil = ch.profils[pi];
+    const pc = PROFIL_CFG[pi];
+    const isOpen = S.open[`coll_${ci}`];
+    const pct_meme = profil.pct_meme;
+    const dist = profil.dist;
+    return `
+    <div class="recap-item">
+      <div class="recap-head ${pc.border}" style="border-left-width:4px;border-left-style:solid">
+        <div class="recap-chapnum">${ci+1}. ${esc(ch.title)}</div>
+        <div class="recap-ptitle">${esc(profil.titre)}</div>
+        <div class="recap-phrase">${esc(profil.phrase)}</div>
+        <div class="mots">
+          ${profil.mots.map(m=>`<span class="mot ${pc.mk}" style="font-size:11px">${esc(m)}</span>`).join('')}
+        </div>
+      </div>
+      <button class="coll-btn" onclick="toggleColl(${ci})">
+        <span>Afficher le résultat de mes collègues</span>
+        <span>${isOpen?'▲':'▼'}</span>
+      </button>
+      <div class="coll-body ${isOpen?'open':''}">
+        <div class="coll-pct">${pct_meme}%</div>
+        <div class="coll-lbl">de vos collègues ont<br>le même profil que vous</div>
+        <div class="coll-bars">
+          ${dist.map(d=>{
+            const cfg=PROFIL_CFG[d.lvl];
+            return `<div class="coll-row">
+              <div class="coll-dot ${cfg.dot}"></div>
+              <div class="coll-bar-w"><div class="coll-bar-f ${cfg.bar}" style="width:${d.pct}%"></div></div>
+              <div class="coll-bar-p">${d.pct}%</div>
+              <div class="coll-bar-n">${esc(d.lbl)}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="hbar"><div class="hbar-title">${esc(AD.title)}</div></div>
+  <div class="page">
+    <div class="card final-thanks">
+      <div class="final-merci">Merci d'avoir répondu à cet autodiagnostic !</div>
+      <div class="final-title">Récapitulatif de vos résultats</div>
+    </div>
+
+    <div class="card radar-card">
+      <div class="radar-title">${esc(AD.title)}</div>
+      ${radarSVG}
+      <div class="radar-legend">
+        <div class="rl"><div class="rl-line" style="background:#18375d;height:2px"></div>Votre profil</div>
+        <div class="rl"><div class="rl-line" style="background:#94a3b8;height:2px;border-top:1px dashed #94a3b8;background:none;width:24px"></div>Profil des autres répondants</div>
+      </div>
+    </div>
+
+    ${recapCards}
+
+    <div class="doc-section">
+      <div class="doc-title">Pour approfondir</div>
+      <div class="doc-btn"><span class="doc-ico">📄</span>Procédures d'évacuation et plans d'urgence du site</div>
+      <div class="doc-btn"><span class="doc-ico">🦺</span>Guide des équipements de protection individuelle</div>
+      <div class="doc-btn"><span class="doc-ico">💻</span>Module e-learning : Réflexes sécurité au quotidien</div>
+      <div class="doc-btn"><span class="doc-ico">📋</span>Retours d'expérience : incidents fréquents sur notre site</div>
+    </div>
+
+    <div class="card" style="padding:16px 20px">
+      <button class="pdf-btn" onclick="alert('Téléchargement du rapport PDF — fonctionnalité disponible en production.')">Téléchargez ce rapport (PDF)</button>
+      <button class="fermer-btn" onclick="showCloseWarning()">Fermer cette fenêtre</button>
+    </div>
+  </div>`;
+}
+
+// ── EVENTS ────────────────────────────────────────────────────────────────────
+function startSocio() { S.step='socio'; render(); window.scrollTo(0,0); }
+
+function socioSelect(si, oi) {
+  const id = SOCIO[si].id;
+  S.socio[id] = oi;
+  render();
+}
+
+function startQuestions() {
+  S.step='question'; S.chap=0; S.q=0; S.sel=null;
+  render(); window.scrollTo(0,0);
+}
+
+function selectAns(i) {
+  S.sel = i;
+  render();
+}
+
+function continueQ() {
+  if (S.sel === null) return;
+  const ch = AD.chapters[S.chap];
+  const q = ch.questions[S.q];
+  const key = `${S.chap}_${S.q}`;
+  S.answers[key] = S.sel;
+  S.scores[key] = q.scores[S.sel];
+
+  if (S.q < ch.questions.length - 1) {
+    // Next question in same chapter
+    S.q++;
+    S.sel = null;
+    render(); window.scrollTo(0,0);
+  } else {
+    // End of chapter — calculate score
+    const score = calcChapScore(S.chap);
+    S.chapScores[S.chap] = score;
+    S.chapProfil[S.chap] = profilIdx(score, ch.seuils);
+    S.step = 'chap_end';
+    render(); window.scrollTo(0,0);
+  }
+}
+
+function nextChap() {
+  S.chap++;
+  S.q=0; S.sel=null;
+  S.step='question';
+  render(); window.scrollTo(0,0);
+}
+
+function showFinal() {
+  S.step='final';
+  render(); window.scrollTo(0,0);
+}
+
+function toggleColl(ci) {
+  const k = `coll_${ci}`;
+  S.open[k] = !S.open[k];
+  render();
+  // Scroll to card
+  setTimeout(()=>{
+    const el = document.getElementById(`coll-body-${ci}`);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  },100);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function showCloseWarning() {
+  document.getElementById('close-modal').style.display = 'flex';
+}
+
+function render() {
+  let html = '';
+  switch(S.step) {
+    case 'home':     html = renderHome();    break;
+    case 'socio':    html = renderSocio();   break;
+    case 'question': html = renderQuestion(); break;
+    case 'chap_end': html = renderChapEnd(); break;
+    case 'final':    html = renderFinal();   break;
+  }
+  document.getElementById('app').innerHTML = html;
+}
+
+render();
+</script>
+<!-- Modal fermeture -->
+<div id="close-modal" style="display:none;position:fixed;inset:0;background:rgba(15,30,55,0.5);z-index:200;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border-radius:14px;padding:26px;max-width:380px;width:100%;box-shadow:0 12px 32px rgba(0,0,0,0.2)">
+    <div style="font-size:26px;margin-bottom:12px">⚠️</div>
+    <h3 style="font-size:16px;font-weight:700;color:#18375d;margin-bottom:10px;font-family:'Asap',sans-serif">Avant de fermer</h3>
+    <p style="font-size:13px;color:#475569;line-height:1.65;margin-bottom:12px;font-family:'Asap',sans-serif">
+      Cet autodiagnostic est <strong>entièrement anonyme</strong> — aucun cookie, aucun suivi d'adresse IP, aucun compte.
+      Si vous fermez cette fenêtre, <strong>vos résultats seront définitivement perdus</strong> et ne pourront pas être récupérés.
+    </p>
+    <p style="font-size:12px;color:#94a3b8;line-height:1.5;margin-bottom:20px;font-family:'Asap',sans-serif">
+      Si vous souhaitez conserver une trace de vos résultats, téléchargez votre rapport PDF avant de fermer.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button onclick="window.close()" style="padding:12px 16px;border:none;border-radius:9px;background:#eb6366;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;line-height:1.4">
+        Fermer quand même — je comprends que mes résultats seront perdus
+      </button>
+      <button onclick="document.getElementById('close-modal').style.display='none'" style="padding:12px 16px;border:1.5px solid #d8e0ea;border-radius:9px;background:#fff;color:#18375d;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif">
+        ← Retourner à mes résultats
+      </button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
