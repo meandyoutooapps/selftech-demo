@@ -493,7 +493,8 @@ let likertInfoOpen = false;
 // ── MODE ÉDITEUR : thème seul OU création d'autodiagnostic ───────────────────
 const urlParams = new URLSearchParams(window.location.search);
 const editorMode = urlParams.get('mode') || 'theme';
-  function getCurrentThemeName() {
+
+function getCurrentThemeName() {
   const raw = localStorage.getItem('selftechDraftTheme');
 
   if (raw) {
@@ -516,6 +517,7 @@ function updateEditorModeUI() {
   const breadcrumb = document.querySelector('.breadcrumb');
   const navButtons = document.querySelectorAll('.subnav .sn');
   const themeName = getCurrentThemeName();
+  const firstChapterName = chapters[0]?.name || 'Chapitre 1';
 
   if (editorMode === 'autodiag') {
     if (saveBtn) saveBtn.textContent = 'Continuer vers le paramétrage';
@@ -528,12 +530,13 @@ function updateEditorModeUI() {
         <span class="bc-sep">›</span>
         <span class="bc-link" onclick="window.location.href='2-selftech_creer_theme_ia.html?mode=autodiag'">${themeName}</span>
         <span class="bc-sep">›</span>
-        <span class="bc-cur" id="bc-cur">Questions — ${chapters[0]?.name || 'Chapitre 1'}</span>
+        <span class="bc-cur" id="bc-cur">Questions — ${firstChapterName}</span>
       `;
     }
 
     navButtons.forEach(b => b.classList.remove('on'));
     if (navButtons[1]) navButtons[1].classList.add('on'); // Mes autodiagnostics
+
   } else {
     if (saveBtn) saveBtn.textContent = 'Enregistrer dans ma bibliothèque';
 
@@ -543,22 +546,7 @@ function updateEditorModeUI() {
         <span class="bc-sep">›</span>
         <span class="bc-link" onclick="window.location.href='2-selftech_creer_theme_ia.html?mode=theme'">${themeName}</span>
         <span class="bc-sep">›</span>
-        <span class="bc-cur" id="bc-cur">Questions — ${chapters[0]?.name || 'Chapitre 1'}</span>
-      `;
-    }
-
-    navButtons.forEach(b => b.classList.remove('on'));
-    if (navButtons[2]) navButtons[2].classList.add('on'); // Ma bibliothèque
-  }
-}
-
-    if (breadcrumb) {
-      breadcrumb.innerHTML = `
-        <span class="bc-link" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</span>
-        <span class="bc-sep">›</span>
-        <span class="bc-link" onclick="window.location.href='2-selftech_creer_theme_ia.html?mode=theme'">Sécurité & culture de sûreté</span>
-        <span class="bc-sep">›</span>
-        <span class="bc-cur" id="bc-cur">Questions — Connaître les risques</span>
+        <span class="bc-cur" id="bc-cur">Questions — ${firstChapterName}</span>
       `;
     }
 
