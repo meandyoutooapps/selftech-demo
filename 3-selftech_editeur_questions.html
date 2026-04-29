@@ -1175,8 +1175,46 @@ function addFromLib(qid) {
 }
 
 // ── SAVE ──────────────────────────────────────────────────────────────────────
+// ── VALIDATION ────────────────────────────────────────────────────────────────
+function chapProblems(c) {
+  const problems = [];
+
+  // Questions : min 4, chacune min 3 réponses avec tous les scores définis
+  if (c.questions.length < 4) {
+    problems.push({ type:'q', msg:`${c.questions.length} question${c.questions.length!==1?'s':''} — minimum 4 requises`, tab:'questions' });
+  } else {
+    const badQ = c.questions.filter(q =>
+      !q.answers || q.answers.length < 3 ||
+      q.answers.some(a => typeof a.s !== 'number' || isNaN(a.s))
+    );
+    if (badQ.length > 0) {
+      problems.push({ type:'q', msg:`${badQ.length} question${badQ.length>1?'s':''} incomplète${badQ.length>1?'s':''} — minimum 3 réponses et tous les scores requis`, tab:'questions' });
+    }
+  }
+
+  // Profils : titre + résumé + description pour les 3
+  const badP = c.profils.filter(p =>
+    !p.titre || !p.titre.trim() ||
+    !p.phrase || !p.phrase.trim() ||
+    !p.description || !p.description.trim()
+  );
+  if (badP.length > 0) {
+    problems.push({ type:'p', msg:`${badP.length} profil${badP.length>1?'s':''} incomplet${badP.length>1?'s':''} — titre, résumé et description requis pour chacun`, tab:'profils' });
+  }
+
+  // Seuils : valeurs min/max valides sur les 3 profils
+  const badS = c.seuils.some(s =>
+    typeof s.min !== 'number' || typeof s.max !== 'number' ||
+    isNaN(s.min) || isNaN(s.max)
+  );
+  if (badS) {
+    problems.push({ type:'p', msg:`Seuils de scoring invalides — vérifiez les valeurs min/max des 3 profils`, tab:'profils' });
+  }
+
+  return problems;
+}
+
 function updateSaveButton() {
-  const incomplete = chapters.filter(c => c.questions.length < 4);
   const btn = document.getElementById('btn-save');
   const hint = document.getElementById('btn-save-hint');
 
@@ -1186,32 +1224,48 @@ function updateSaveButton() {
     return;
   }
 
-  if (incomplete.length === 0) {
+  const allProblems = chapters.map(c => ({ c, problems: chapProblems(c) })).filter(x => x.problems.length > 0);
+
+  if (allProblems.length === 0) {
     btn.disabled = false;
     hint.classList.remove('visible');
   } else {
     btn.disabled = true;
     hint.classList.add('visible');
+    const hasQ = allProblems.some(x => x.problems.some(p => p.type === 'q'));
+    const hasP = allProblems.some(x => x.problems.some(p => p.type === 'p'));
+    if (hasQ && hasP) {
+      hint.textContent = 'Questions et profils incomplets sur certains chapitres';
+    } else if (hasQ) {
+      hint.textContent = 'Questions ou réponses incomplètes sur certains chapitres';
+    } else {
+      hint.textContent = 'Profils incomplets — titre, résumé et description requis';
+    }
   }
 }
+
 function trySave() {
-  const incomplete = chapters.filter(c => c.questions.length < 4);
-  if (incomplete.length > 0) {
-    // Construire la liste des chapitres incomplets
+  if (editorMode === 'autodiag') { goNextAfterSave(); return; }
+
+  const allProblems = chapters.map(c => ({ c, problems: chapProblems(c) })).filter(x => x.problems.length > 0);
+
+  if (allProblems.length > 0) {
     const list = document.getElementById('modal-save-list');
-    list.innerHTML = incomplete.map(c => `
-      <div style="display:flex;align-items:center;justify-content:space-between;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:9px 14px">
-        <div>
-          <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${c.name}</div>
-          <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;margin-top:2px">${c.questions.length} question${c.questions.length !== 1 ? 's' : ''} — il en faut au moins 4</div>
-        </div>
-        <button onclick="closeSaveModal();setTab(${c.id-1},'questions')" style="background:#eb6366;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Asap,sans-serif">Compléter →</button>
-      </div>`).join('');
+    list.innerHTML = allProblems.map(({ c, problems }) =>
+      problems.map(p => `
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:9px 14px;gap:10px">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${c.name}</div>
+            <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;margin-top:2px;line-height:1.4">${p.msg}</div>
+          </div>
+          <button onclick="closeSaveModal();setTab(${c.id-1},'${p.tab}')" style="background:#eb6366;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Asap,sans-serif;flex-shrink:0">Compléter →</button>
+        </div>`).join('')
+    ).join('');
     document.getElementById('modal-save-blocked').classList.add('on');
     return;
   }
- // Tout bon → continuer selon le mode
-goNextAfterSave();
+
+  goNextAfterSave();
 }
 
 function closeSaveModal() {
