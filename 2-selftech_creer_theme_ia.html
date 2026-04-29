@@ -290,15 +290,79 @@ function updateSlider(v) {
 }
 
 const chapModels = [
-  {name:"Connaître les risques", desc:"Identifier les principaux risques du poste de travail et les situations à risque du quotidien."},
-  {name:"Adopter les bons réflexes", desc:"Mettre en pratique les comportements préventifs adaptés à chaque situation professionnelle."},
-  {name:"Travailler en équipe en sécurité", desc:"Comprendre comment les comportements collectifs influencent la sécurité de l'environnement de travail."},
-  {name:"Réagir et signaler", desc:"Savoir comment réagir face à un incident et mobiliser les bons interlocuteurs."},
-  {name:"Évoluer dans la culture sécurité", desc:"Intégrer la sécurité comme réflexe permanent et vecteur d'amélioration continue."},
-];
+function getChapModels(themeName) {
+  const sujet = themeName.trim() || "ce sujet";
+  const t = sujet.toLowerCase();
 
+  if (t.includes("cyber") || t.includes("cybersécurité") || t.includes("phishing") || t.includes("numérique")) {
+    return [
+      {name:"Comprendre les risques cyber du quotidien", desc:"Identifier les situations courantes qui exposent l’entreprise, ses outils ou ses données à un risque numérique."},
+      {name:"Reconnaître les signaux d’alerte", desc:"Repérer les indices d’un message suspect, d’une demande inhabituelle, d’un lien douteux ou d’une tentative de phishing."},
+      {name:"Protéger ses accès et ses données", desc:"Analyser ses pratiques autour des mots de passe, des outils partagés, des fichiers sensibles et des accès professionnels."},
+      {name:"Réagir en cas de doute ou d’incident", desc:"Savoir quoi faire, qui prévenir et comment limiter les risques lorsqu’une situation semble suspecte."},
+      {name:"Ancrer les bons réflexes numériques", desc:"Transformer la vigilance cyber en habitudes simples, régulières et partagées dans le quotidien professionnel."}
+    ];
+  }
+
+  if (t.includes("sécurité") || t.includes("sûreté") || t.includes("sureté") || t.includes("risque")) {
+    return [
+      {name:"Connaître les risques", desc:"Identifier les principaux risques du poste de travail et les situations à risque du quotidien."},
+      {name:"Adopter les bons réflexes", desc:"Mettre en pratique les comportements préventifs adaptés à chaque situation professionnelle."},
+      {name:"Travailler en équipe en sécurité", desc:"Comprendre comment les comportements collectifs influencent la sécurité de l’environnement de travail."},
+      {name:"Réagir et signaler", desc:"Savoir comment réagir face à un incident, un presqu’accident ou une situation inhabituelle."},
+      {name:"Ancrer une culture de prévention", desc:"Intégrer la sécurité comme un réflexe permanent et un levier d’amélioration continue."}
+    ];
+  }
+
+  if (t.includes("qualité de vie") || t.includes("qvt") || t.includes("vie au travail") || t.includes("bien-être") || t.includes("bien etre")) {
+    return [
+      {name:"Identifier les signaux de charge et de stress", desc:"Repérer les situations du quotidien qui peuvent fragiliser l’équilibre, l’énergie et la qualité du travail."},
+      {name:"Préserver son équilibre dans l’organisation du travail", desc:"Analyser ses réflexes face aux priorités, aux interruptions, aux urgences et aux contraintes de temps."},
+      {name:"Exprimer ses besoins et demander du soutien", desc:"Observer la manière dont on partage ses difficultés, sollicite de l’aide et contribue à un climat de confiance."},
+      {name:"Contribuer à un collectif de travail soutenant", desc:"Comprendre comment les comportements individuels influencent la coopération, la reconnaissance et la prévention des tensions."},
+      {name:"Agir sur ses marges de manœuvre", desc:"Identifier les leviers concrets pour améliorer son quotidien professionnel et préserver la qualité du travail."}
+    ];
+  }
+
+  if (t.includes("feedback")) {
+    return [
+      {name:"Oser demander du feedback", desc:"Identifier les situations où un retour peut aider à progresser et clarifier ses attentes."},
+      {name:"Recevoir un feedback sans se fermer", desc:"Observer ses réactions spontanées face à un retour critique, flou ou inattendu."},
+      {name:"Formuler un feedback utile", desc:"Construire des retours précis, factuels et actionnables dans le quotidien professionnel."},
+      {name:"Installer une culture du feedback", desc:"Faire du feedback un réflexe collectif régulier, utile et sécurisant."}
+    ];
+  }
+
+  if (t.includes("management") || t.includes("manager")) {
+    return [
+      {name:"Clarifier le cadre et les attentes", desc:"Analyser sa manière de poser les priorités, les rôles et les règles de fonctionnement."},
+      {name:"Favoriser l’autonomie", desc:"Identifier les réflexes qui développent la responsabilisation et la capacité d’agir des équipes."},
+      {name:"Réguler les tensions", desc:"Observer sa posture face aux désaccords, aux signaux faibles et aux situations sensibles."},
+      {name:"Reconnaître et soutenir les contributions", desc:"Comprendre comment la reconnaissance, l’écoute et le feedback renforcent l’engagement."}
+    ];
+  }
+
+  if (t.includes("transformation") || t.includes("changement")) {
+    return [
+      {name:"Comprendre ses réactions face au changement", desc:"Identifier ses réflexes spontanés lorsqu’une nouvelle organisation, un outil ou une méthode apparaît."},
+      {name:"Gérer l’incertitude sans se crisper", desc:"Observer sa manière de réagir lorsque les repères changent ou que les informations sont incomplètes."},
+      {name:"Coopérer dans une période de transition", desc:"Analyser la manière dont on partage l’information, écoute les autres et contribue au collectif."},
+      {name:"Expérimenter et ajuster ses pratiques", desc:"Identifier les comportements qui permettent de tester, apprendre et progresser dans un contexte mouvant."}
+    ];
+  }
+
+  return [
+    {name:`Comprendre les enjeux de ${sujet}`, desc:`Identifier les situations du quotidien liées à ${sujet} et comprendre leurs impacts dans le contexte professionnel.`},
+    {name:`Observer ses réflexes face à ${sujet}`, desc:`Repérer ses comportements spontanés, ses habitudes et ses réactions dans des situations concrètes.`},
+    {name:"Agir dans les situations du quotidien", desc:"Identifier les postures et les actions utiles pour progresser face aux situations rencontrées."},
+    {name:"Coopérer avec son environnement professionnel", desc:"Comprendre comment les échanges, les règles collectives et les interactions influencent les pratiques."},
+    {name:"Ancrer des pratiques durables", desc:"Transformer la prise de conscience en comportements concrets et réguliers dans le quotidien professionnel."}
+  ];
+}
 function generate() {
+ function generate() {
   const name = document.getElementById('inp-name').value.trim() || 'Sécurité & culture de sûreté';
+  const chapModels = getChapModels(name);
   const nb = parseInt(document.getElementById('inp-nb').value);
   document.getElementById('empty-state').style.display = 'none';
   document.getElementById('chap-result').classList.remove('on');
