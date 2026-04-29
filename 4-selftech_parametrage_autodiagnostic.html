@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paramétrage — Selftech</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18375d}
+
+/* ── TOPBAR ── */
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:stretch}
+.logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
+.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
+.logo-tech span{font-size:8px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:0.5px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
+
+/* ── SUBNAV ── */
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;font-family:'Asap',sans-serif;transition:all 0.12s}
+.sn.on{background:#18375d;color:#fff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{display:flex;align-items:center;gap:6px;padding:11px 24px;border-bottom:1px solid #f0f4f8;background:#fafbfc;flex-wrap:wrap}
+.bc-link{font-size:12px;color:#007883;cursor:pointer;font-weight:500;font-family:'Asap',sans-serif}
+.bc-link:hover{text-decoration:underline}
+.bc-sep{font-size:12px;color:#c5ccd5}
+.bc-cur{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
+
+/* ── STEPPER ── */
+.stepper-wrap{background:#fff;border-bottom:1px solid #e2e8f0;padding:16px 24px;overflow-x:auto}
+.stepper{display:flex;align-items:center;gap:0;min-width:600px}
+.step{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Asap',sans-serif;flex-shrink:0;transition:all 0.2s}
+.step-circle.done{background:#007883;color:#fff}
+.step-circle.active{background:#18375d;color:#fff}
+.step-circle.todo{background:#edf1f7;color:#94a3b8}
+.step-label{font-size:12px;font-weight:600;font-family:'Asap',sans-serif;white-space:nowrap}
+.step-label.done{color:#007883}
+.step-label.active{color:#18375d}
+.step-label.todo{color:#c5ccd5}
+.step-connector{flex:1;height:2px;margin:0 12px;border-radius:1px;min-width:20px}
+.step-connector.done{background:#007883}
+.step-connector.todo{background:#e2e8f0}
+
+/* ── LAYOUT ── */
+.page-wrap{max-width:1100px;margin:0 auto;padding:24px 24px 60px}
+.page-head{margin-bottom:22px}
+.page-title{font-size:20px;font-weight:700;color:#18375d;margin-bottom:6px}
+.page-sub{font-size:13px;color:#64748b;line-height:1.5;max-width:680px}
+.two-col{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+
+/* ── BLOCKS ── */
+.block{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:22px 24px;margin-bottom:16px}
+.block-title{font-size:15px;font-weight:700;color:#18375d;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.block-sub{font-size:12px;color:#94a3b8;line-height:1.5;margin-bottom:18px}
+.block-divider{height:1px;background:#f0f4f8;margin:16px 0}
+
+/* ── FORM FIELDS ── */
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:10px;font-weight:700;color:#18375d;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.field label .req{color:#eb6366;margin-left:2px}
+.inp{width:100%;padding:9px 13px;border:1px solid #d8e0ea;border-radius:8px;font-size:13px;color:#18375d;font-family:'Asap',sans-serif;outline:none;transition:border-color 0.15s;background:#fff}
+.inp:focus{border-color:#18375d}
+.inp::placeholder{color:#c5ccd5;font-weight:400}
+textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.inp-row{grid-template-columns:1fr}}
+
+/* URL preview */
+.url-preview{margin-top:6px;padding:8px 12px;background:#f0f8f7;border:1px solid #b8dfe0;border-radius:7px;font-size:12px;color:#007883;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.url-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0}
+.url-val{font-weight:600;word-break:break-all}
+.url-note{font-size:11px;color:#94a3b8;margin-top:4px;font-family:'Asap',sans-serif}
+
+/* Obligatoire badge */
+.oblig-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#fceaea;color:#eb6366;border:1px solid #ffd6d4;font-family:'Asap',sans-serif}
+
+/* AI button */
+.btn-ai{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,#18375d,#007883);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:opacity 0.15s;margin-bottom:10px}
+.btn-ai:hover{opacity:0.88}
+.btn-outline{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#18375d;border:1px solid #c5cfdc;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.12s}
+.btn-outline:hover{background:#edf1f7}
+.btn-add{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#007883;border:1px solid #b8dfe0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.12s}
+.btn-add:hover{background:#e5f4f5}
+
+/* Socio-démo cards */
+.socio-card{background:#fafbfc;border:1px solid #d8e0ea;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.socio-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.socio-card-num{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em}
+.btn-del{width:28px;height:28px;border-radius:6px;border:1px solid #f5c0c1;background:#fceaea;color:#eb6366;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;transition:all 0.12s}
+.btn-del:hover{background:#f8d5d6}
+.socio-opts{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.socio-opt-row{display:flex;align-items:center;gap:8px}
+.socio-opt-inp{flex:1;padding:6px 10px;border:1px solid #d8e0ea;border-radius:6px;font-size:12px;color:#18375d;font-family:'Asap',sans-serif;outline:none;transition:border-color 0.15s}
+.socio-opt-inp:focus{border-color:#18375d}
+.btn-del-opt{width:22px;height:22px;border-radius:5px;border:none;background:#f0f2f5;color:#94a3b8;cursor:pointer;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.12s}
+.btn-del-opt:hover{background:#fceaea;color:#eb6366}
+.btn-add-opt{font-size:11px;color:#007883;font-weight:600;font-family:'Asap',sans-serif;background:none;border:none;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:4px;margin-top:3px}
+.btn-add-opt:hover{text-decoration:underline}
+
+/* Alertes anonymat */
+.alert{border-radius:9px;padding:10px 14px;font-size:12px;font-family:'Asap',sans-serif;line-height:1.5;display:flex;align-items:flex-start;gap:8px;margin-top:12px}
+.alert-neutral{background:#f0f8f7;border:1px solid #b8dfe0;color:#007883}
+.alert-warning{background:#fff8ec;border:1px solid #ffd490;color:#b7840a}
+.alert-danger{background:#fceaea;border:1px solid #ffd6d4;color:#c0392b}
+.alert-info{background:#fff8ec;border:1px solid #ffd490;color:#b7840a}
+.alert-ico{font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* Ressources */
+.resource-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.resource-row .inp{font-size:12px;padding:7px 11px}
+.resource-row .inp.url{color:#007883}
+
+/* Preview fin */
+.preview-box{background:#f4f6f9;border:1.5px dashed #d8e0ea;border-radius:12px;padding:18px 20px}
+.preview-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px}
+.preview-msg{font-size:13px;color:#475569;line-height:1.6;margin-bottom:14px}
+.preview-btn{background:#18375d;color:#fff;border:none;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;width:100%;margin-bottom:10px;cursor:default;font-family:'Asap',sans-serif;text-align:left}
+.preview-res{font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+.preview-res-item{display:flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #d8e0ea;border-radius:7px;margin-bottom:5px;background:#fff;font-size:12px;color:#18375d;font-family:'Asap',sans-serif}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:78px}
+.sidebar-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;overflow:hidden;margin-bottom:12px}
+.sidebar-head{background:#18375d;padding:13px 16px}
+.sidebar-head-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px}
+.sidebar-head-val{font-size:14px;font-weight:600;color:#fff}
+.sidebar-body{padding:14px 16px}
+.sidebar-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0f4f8;font-family:'Asap',sans-serif}
+.sidebar-row:last-child{border-bottom:none}
+.sidebar-row-lbl{font-size:12px;color:#64748b}
+.sidebar-row-val{font-size:12px;font-weight:700;color:#18375d}
+.status-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#edf1f7;color:#64748b}
+.sidebar-url{padding:10px 14px;background:#f0f8f7;border-top:1px solid #e2e8f0}
+.sidebar-url-lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.sidebar-url-val{font-size:11px;color:#007883;font-weight:600;word-break:break-all;font-family:'Asap',sans-serif}
+
+/* Pack card */
+.pack-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;overflow:hidden}
+.pack-head{background:#fceaea;padding:10px 14px;border-bottom:1px solid #ffd6d4}
+.pack-head-lbl{font-size:10px;font-weight:700;color:#c0392b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+.pack-head-val{font-size:13px;font-weight:700;color:#c0392b}
+.pack-body{padding:12px 14px}
+.pack-bar-w{height:5px;background:#edf1f7;border-radius:3px;overflow:hidden;margin-bottom:6px}
+.pack-bar-f{height:100%;border-radius:3px;background:#eb6366;width:20%}
+.pack-note{font-size:11px;color:#94a3b8;line-height:1.4;font-family:'Asap',sans-serif}
+
+/* ── BOTTOM ACTIONS ── */
+.bottom-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
+.btn-back{padding:10px 20px;border:1px solid #d8e0ea;border-radius:8px;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.12s}
+.btn-back:hover{background:#f7f9fc}
+.btn-continue{padding:10px 22px;border:none;border-radius:8px;background:#eb6366;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;transition:all 0.15s;display:flex;align-items:center;gap:7px}
+.btn-continue:hover:not(:disabled){background:#d4474a}
+.btn-continue:disabled{background:#f5c0c1;cursor:not-allowed}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo"><span class="logo-self">SELF</span><div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div></div>
+  <div class="tb-sp"></div>
+  <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
+</div>
+
+<!-- SUBNAV -->
+<div class="subnav">
+  <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
+  <button class="sn on" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
+  <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
+  <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
+  <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
+  <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <span class="bc-link" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-link" onclick="window.location.href='selftech_creer_autodiagnostic.html'">Créer un autodiagnostic</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-cur">Paramétrage</span>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper-wrap">
+  <div class="stepper">
+    <div class="step">
+      <div class="step-circle done">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="step-label done">Choisir un thème</span>
+    </div>
+    <div class="step-connector done"></div>
+    <div class="step">
+      <div class="step-circle done">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5 9.5L11 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="step-label done">Valider questions & profils</span>
+    </div>
+    <div class="step-connector done"></div>
+    <div class="step">
+      <div class="step-circle active">3</div>
+      <span class="step-label active">Paramétrer</span>
+    </div>
+    <div class="step-connector todo"></div>
+    <div class="step">
+      <div class="step-circle todo">4</div>
+      <span class="step-label todo">Préparer le lancement</span>
+    </div>
+    <div class="step-connector todo"></div>
+    <div class="step">
+      <div class="step-circle todo">5</div>
+      <span class="step-label todo">Suivre les résultats</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page-wrap">
+  <div class="page-head">
+    <h1 class="page-title">Paramétrer l'autodiagnostic</h1>
+    <p class="page-sub">Définissez ce que verront les répondants avant et après l'autodiagnostic, les données socio-démo utiles à l'analyse, et l'URL de passation.</p>
+  </div>
+
+  <div class="two-col">
+    <!-- COLONNE PRINCIPALE -->
+    <div>
+
+      <!-- BLOC 1 — Informations générales -->
+      <div class="block">
+        <div class="block-title">Informations générales</div>
+        <div class="block-sub">Ces informations servent à identifier l'autodiagnostic dans votre espace et à configurer son URL de passation.</div>
+
+        <div class="inp-row">
+          <div class="field">
+            <label>Nom de l'autodiagnostic<span class="req">*</span></label>
+            <input class="inp" id="nom" type="text" value="Autodiagnostic sécurité &amp; culture de sûreté" oninput="save();updateSidebar()">
+          </div>
+          <div class="field">
+            <label>Titre visible par les répondants<span class="req">*</span></label>
+            <input class="inp" id="titre" type="text" value="Sécurité &amp; culture de sûreté" oninput="save()">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Description interne</label>
+          <input class="inp" id="desc" type="text" value="Campagne interne Sonora RH sur les réflexes sécurité du quotidien." oninput="save()">
+        </div>
+
+        <div class="field">
+          <label>Slug de l'URL<span class="req">*</span></label>
+          <input class="inp" id="slug" type="text" value="securite-culture-surete" oninput="updateSlug()" placeholder="ex: securite-culture-surete">
+          <div class="url-preview">
+            <span class="url-label">URL</span>
+            <span class="url-val" id="url-preview">app.selftech.app/sonora-rh/securite-culture-surete</span>
+          </div>
+          <div class="url-note">Le slug compose l'adresse de passation. Il doit être court, lisible et sans espace.</div>
+        </div>
+      </div>
+
+      <!-- BLOC 2 — Introduction -->
+      <div class="block">
+        <div class="block-title">
+          Introduction affichée avant l'autodiagnostic
+          <span class="oblig-badge">Obligatoire avant publication</span>
+        </div>
+        <div class="block-sub">Cette introduction explique l'objectif de l'autodiagnostic, le temps estimé et l'usage des résultats. Elle doit impérativement préciser le caractère <strong>100 % anonyme</strong> : aucun login, aucun mot de passe, aucun cookie, aucun suivi d'adresse IP. Cela donne aux répondants un intérêt réel à répondre sincèrement — et aucune raison de chercher la "bonne réponse".</div>
+
+        <button class="btn-ai" onclick="generateIntro()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white"/></svg>
+          Générer une introduction avec l'IA
+        </button>
+
+        <div class="field" style="margin-bottom:0">
+          <label>Texte d'introduction<span class="req">*</span></label>
+          <textarea class="inp" id="intro" rows="6" oninput="save();checkContinue()" placeholder="Rédigez ici l'introduction que verront les répondants avant de commencer...">Bienvenue dans cet autodiagnostic consacré à la sécurité et à la culture de sûreté. Il vous propose des situations concrètes du quotidien professionnel pour vous aider à identifier vos réflexes, vos points d'appui et vos axes de progression. Il ne s'agit pas d'une évaluation individuelle ni d'un contrôle de performance. Cet autodiagnostic est entièrement anonyme : aucun login, aucun mot de passe, aucun cookie, aucun suivi d'adresse IP. Personne ne pourra associer vos réponses à votre identité. Vous avez donc tout intérêt à répondre sincèrement — et aucune raison de chercher la "bonne réponse". Les résultats seront analysés de manière agrégée afin d'aider l'entreprise à mieux cibler ses actions de sensibilisation et d'accompagnement. Temps estimé : 5 à 7 minutes.</textarea>
+        </div>
+      </div>
+
+      <!-- BLOC 3 — Socio-démo -->
+      <div class="block">
+        <div class="block-title">
+          Données socio-démo utiles à l'analyse
+          <span class="oblig-badge">Au moins 1 requise</span>
+        </div>
+        <div class="block-sub">Ces données permettent de lire les résultats par segment et d'identifier les écarts de perception ou de pratique entre populations. Elles doivent être choisies avec prudence pour préserver l'anonymat et selon leur pertinence pour une analyse utile.</div>
+
+        <!-- Alerte anonymat permanente -->
+        <div class="alert alert-info" style="margin-bottom:14px">
+          <span class="alert-ico">🔒</span>
+          <span>Le risque d'identification vient du <strong>croisement des critères</strong>, pas seulement du nombre de répondants par critère. Plus vous combinez de critères, plus chaque combinaison peut concerner peu de personnes — et potentiellement identifier indirectement un répondant. Renseignez le nombre total de répondants estimé et l'effectif minimum de chaque critère pour calculer le risque réel.</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+          <div class="field" style="margin-bottom:0">
+            <label>Nombre total de répondants estimé<span class="req">*</span></label>
+            <input class="inp" id="nb-repondants" type="number" value="120" min="1" oninput="save();checkAnonymity()" placeholder="Ex : 120">
+          </div>
+          <div style="padding:10px 14px;background:#f7f9fc;border:1px solid #e2e8f0;border-radius:8px;display:flex;flex-direction:column;justify-content:center">
+            <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Groupe croisé estimé</div>
+            <div id="cross-estimate" style="font-size:16px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif">—</div>
+            <div style="font-size:10px;color:#94a3b8;font-family:'Asap',sans-serif;margin-top:1px">personnes dans la plus petite cellule</div>
+          </div>
+        </div>
+
+        <!-- Alerte dynamique anonymat -->
+        <div id="anon-alert"></div>
+
+        <!-- Liste socio-démo -->
+        <div id="socio-list"></div>
+
+        <!-- Boutons -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <button class="btn-add" onclick="addSociodemo()">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="#007883" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
+            Ajouter une donnée
+          </button>
+          <button class="btn-ai" onclick="suggestSociodemo()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white"/></svg>
+            Suggérer des données avec l'IA
+          </button>
+        </div>
+      </div>
+
+      <!-- BLOC 4 — Fin d'autodiagnostic -->
+      <div class="block">
+        <div class="block-title">Fin d'autodiagnostic et ressources</div>
+        <div class="block-sub">Configurez le message et les ressources affichés après les résultats individuels du répondant. Ces liens peuvent pointer vers des ressources internes hébergées par l'entreprise cliente.</div>
+
+        <div class="field">
+          <label>Message de fin</label>
+          <textarea class="inp" id="msg-fin" rows="3" oninput="save();updatePreview()">Merci d'avoir réalisé cet autodiagnostic. Vos réponses contribuent à mieux comprendre les pratiques du quotidien et à identifier les actions les plus utiles pour progresser collectivement.</textarea>
+        </div>
+
+        <div class="block-divider"></div>
+
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#18375d;margin-bottom:8px;font-family:'Asap',sans-serif">Bouton principal</div>
+          <div class="inp-row">
+            <div class="field" style="margin-bottom:0">
+              <label>Titre du bouton</label>
+              <input class="inp" id="btn-titre" type="text" value="Télécharger le rapport de synthèse" oninput="save();updatePreview()">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label>URL du bouton</label>
+              <input class="inp" id="btn-url" type="url" value="https://www.sonora-rh.fr/ressources/securite-rapport.pdf" oninput="save()">
+            </div>
+          </div>
+        </div>
+
+        <div class="block-divider"></div>
+
+        <div style="font-size:12px;font-weight:700;color:#18375d;margin-bottom:8px;font-family:'Asap',sans-serif">Ressources complémentaires</div>
+        <div id="resources-list"></div>
+        <button class="btn-add" onclick="addResource()" style="margin-top:4px">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="#007883" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
+          Ajouter une ressource
+        </button>
+
+        <div class="block-divider"></div>
+
+        <div style="font-size:12px;font-weight:700;color:#18375d;margin-bottom:10px;font-family:'Asap',sans-serif">Aperçu</div>
+        <div class="preview-box" id="preview-box"></div>
+      </div>
+
+      <!-- BOUTONS BAS -->
+      <div class="bottom-actions">
+        <button class="btn-back" onclick="window.location.href='3-selftech_editeur_questions_profils.html'">← Retour à l'éditeur</button>
+        <button class="btn-continue" id="btn-continue" onclick="continuer()">
+          Continuer vers le lancement
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-head">
+          <div class="sidebar-head-lbl">Thème</div>
+          <div class="sidebar-head-val" id="sb-theme">Sécurité &amp; culture de sûreté</div>
+        </div>
+        <div class="sidebar-body">
+          <div class="sidebar-row">
+            <span class="sidebar-row-lbl">Chapitres</span>
+            <span class="sidebar-row-val" id="sb-chap">4</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-lbl">Questions</span>
+            <span class="sidebar-row-val" id="sb-q">17</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-lbl">Profils</span>
+            <span class="sidebar-row-val" id="sb-profils">12</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-lbl">Statut</span>
+            <span class="status-badge">Brouillon</span>
+          </div>
+        </div>
+        <div class="sidebar-url">
+          <div class="sidebar-url-lbl">URL de passation</div>
+          <div class="sidebar-url-val" id="sb-url">app.selftech.app/sonora-rh/securite-culture-surete</div>
+        </div>
+      </div>
+
+      <div class="pack-card">
+        <div class="pack-head">
+          <div class="pack-head-lbl">Pack passations</div>
+          <div class="pack-head-val">200 restantes sur 1 000</div>
+        </div>
+        <div class="pack-body">
+          <div class="pack-bar-w"><div class="pack-bar-f"></div></div>
+          <div class="pack-note">Ces passations sont mutualisées pour tous les autodiagnostics de Sonora RH.</div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f0f4f8">
+            <div style="font-size:11px;color:#64748b;font-family:'Asap',sans-serif;margin-bottom:5px">Besoin de recharger votre pack ?</div>
+            <a href="mailto:cmichelon@meandyoutoo.app" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#007883;text-decoration:none;font-family:'Asap',sans-serif">
+              Contactez-nous →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── ÉTAT ─────────────────────────────────────────────────────────────────────
+const LS_KEY = 'selftech_current_ad';
+
+let sociodemo = [
+  { q:"À quelle catégorie appartenez-vous ?",    opts:["Collaborateur·rice","Manager","Direction"], min_groupe: 25 },
+  { q:"Quel est votre service principal ?",       opts:["Production","Maintenance","RH","Fonctions support","Autre"], min_groupe: 10 },
+];
+
+let resources = [
+  { titre:"Comprendre les bons réflexes sécurité",  url:"https://www.sonora-rh.fr/ressources/reflexes-securite" },
+  { titre:"Signaler un presqu'accident",             url:"https://www.sonora-rh.fr/ressources/signalement" },
+  { titre:"Préparer un briefing sécurité",           url:"https://www.sonora-rh.fr/ressources/briefing-securite" },
+  { titre:"Accéder aux consignes internes",          url:"https://www.sonora-rh.fr/ressources/consignes" },
+];
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function init() {
+  // Charger depuis localStorage si disponible
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const stored = JSON.parse(raw);
+      if (stored.meta) {
+        if (stored.meta.nom)    document.getElementById('nom').value    = stored.meta.nom;
+        if (stored.meta.titre)  document.getElementById('titre').value  = stored.meta.titre;
+        if (stored.meta.desc)   document.getElementById('desc').value   = stored.meta.desc;
+        if (stored.meta.slug)   document.getElementById('slug').value   = stored.meta.slug;
+      }
+      if (stored.intro)   document.getElementById('intro').value    = stored.intro;
+      if (stored.fin) {
+        if (stored.fin.message)    document.getElementById('msg-fin').value   = stored.fin.message;
+        if (stored.fin.btn_titre)  document.getElementById('btn-titre').value = stored.fin.btn_titre;
+        if (stored.fin.btn_url)    document.getElementById('btn-url').value   = stored.fin.btn_url;
+      }
+      if (stored.sociodemo && stored.sociodemo.length) sociodemo = stored.sociodemo;
+      if (stored.resources && stored.resources.length) resources = stored.resources;
+      // Sidebar from theme
+      if (stored.theme) {
+        const th = stored.theme;
+        if (th.title) {
+          document.getElementById('sb-theme').textContent = th.title;
+          document.getElementById('titre').value = th.title;
+        }
+        if (th.chapters) {
+          document.getElementById('sb-chap').textContent = th.chapters.length;
+          const totalQ = th.chapters.reduce((a,c)=>a+(c.questions||[]).length,0);
+          document.getElementById('sb-q').textContent = totalQ;
+          const totalP = th.chapters.reduce((a,c)=>a+((c.profils||[]).length),0);
+          document.getElementById('sb-profils').textContent = totalP;
+        }
+      }
+    }
+  } catch(e) {}
+
+  renderSociodemo();
+  renderResources();
+  updateSlug();
+  checkAnonymity();
+  checkContinue();
+  updatePreview();
+}
+
+// ── SAVE ──────────────────────────────────────────────────────────────────────
+function save() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    const existing = raw ? JSON.parse(raw) : {};
+    const updated = Object.assign({}, existing, {
+      meta: {
+        nom:   document.getElementById('nom').value,
+        titre: document.getElementById('titre').value,
+        desc:  document.getElementById('desc').value,
+        slug:  document.getElementById('slug').value,
+      },
+      intro: document.getElementById('intro').value,
+      sociodemo: sociodemo,
+      resources: resources,
+      fin: {
+        message:   document.getElementById('msg-fin').value,
+        btn_titre: document.getElementById('btn-titre').value,
+        btn_url:   document.getElementById('btn-url').value,
+      },
+    });
+    localStorage.setItem(LS_KEY, JSON.stringify(updated));
+  } catch(e) {}
+}
+
+// ── SLUG / URL ────────────────────────────────────────────────────────────────
+function updateSlug() {
+  const slug = document.getElementById('slug').value.trim() || 'mon-autodiagnostic';
+  const url  = `app.selftech.app/sonora-rh/${slug}`;
+  document.getElementById('url-preview').textContent = url;
+  document.getElementById('sb-url').textContent = url;
+  save();
+}
+
+function updateSidebar() {
+  const nom = document.getElementById('nom').value;
+  document.getElementById('sb-theme').textContent = nom || '—';
+}
+
+// ── INTRO IA ──────────────────────────────────────────────────────────────────
+function generateIntro() {
+  const btn = document.querySelector('.btn-ai');
+  btn.textContent = '⏳ Génération…';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('intro').value = "Bienvenue dans cet autodiagnostic consacré à la sécurité et à la culture de sûreté. Il vous propose des situations concrètes du quotidien professionnel pour vous aider à identifier vos réflexes, vos points d'appui et vos axes de progression. Il ne s'agit pas d'une évaluation individuelle ni d'un contrôle de performance. Cet autodiagnostic est entièrement anonyme : aucun login, aucun mot de passe, aucun cookie, aucun suivi d'adresse IP. Personne ne pourra associer vos réponses à votre identité. Vous avez donc tout intérêt à répondre sincèrement — et aucune raison de chercher la \"bonne réponse\". Les résultats seront analysés de manière agrégée afin d'aider l'entreprise à mieux cibler ses actions de sensibilisation et d'accompagnement. Temps estimé : 5 à 7 minutes.";
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white"/></svg> Régénérer l'introduction`;
+    btn.disabled = false;
+    save(); checkContinue();
+  }, 1400);
+}
+
+// ── SOCIO-DEMO ────────────────────────────────────────────────────────────────
+function renderSociodemo() {
+  const container = document.getElementById('socio-list');
+  if (sociodemo.length === 0) {
+    container.innerHTML = `<div class="alert alert-danger" style="margin-bottom:10px"><span class="alert-ico">⛔</span><span>Au moins une donnée socio-démo est nécessaire pour continuer.</span></div>`;
+    checkContinue(); return;
+  }
+  container.innerHTML = sociodemo.map((s, i) => {
+    const mg = s.min_groupe;
+    const mgColor = mg === null ? '#94a3b8' : mg < 5 ? '#c0392b' : mg < 10 ? '#b7840a' : '#27823a';
+    const mgBg    = mg === null ? '#f0f2f5'  : mg < 5 ? '#fceaea'  : mg < 10 ? '#fff9ec'  : '#f0fbf2';
+    const mgHint  = mg === null ? '' : mg < 5 ? '🚨 Groupe très petit — risque élevé' : mg < 10 ? '⚠️ Groupe petit — restez vigilant' : '✓ Groupe suffisant';
+    return `
+    <div class="socio-card" id="socio-${i}">
+      <div class="socio-card-head">
+        <span class="socio-card-num">Donnée ${i+1} · Choix unique</span>
+        <button class="btn-del" onclick="removeSociodemo(${i})" title="Supprimer">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14H6L5 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#eb6366" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4h6v2" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="inp-row" style="margin-bottom:8px">
+        <div class="field" style="margin-bottom:0">
+          <label>Intitulé de la question</label>
+          <input class="inp" value="${esc(s.q)}" oninput="sociodemo[${i}].q=this.value;save()" placeholder="Ex : Quel est votre service ?">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Effectif min. du plus petit groupe</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input class="inp" type="number" min="1" value="${mg !== null && mg !== undefined ? mg : ''}" placeholder="Ex : 10" style="background:${mgBg};border-color:${mgColor};color:${mgColor};font-weight:700"
+              oninput="sociodemo[${i}].min_groupe=this.value?parseInt(this.value):null;save();renderSociodemo()">
+          </div>
+          ${mgHint ? `<div style="font-size:10px;font-weight:700;color:${mgColor};margin-top:3px;font-family:'Asap',sans-serif">${mgHint}</div>` : `<div style="font-size:10px;color:#94a3b8;margin-top:3px;font-family:'Asap',sans-serif">Estimez combien de personnes pourraient être dans le plus petit groupe</div>`}
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Réponses possibles</label>
+        <div class="socio-opts" id="socio-opts-${i}">
+          ${s.opts.map((o,oi) => `
+          <div class="socio-opt-row">
+            <input class="socio-opt-inp" value="${esc(o)}" oninput="sociodemo[${i}].opts[${oi}]=this.value;save()" placeholder="Option…">
+            <button class="btn-del-opt" onclick="removeSocioOpt(${i},${oi})" title="Supprimer">✕</button>
+          </div>`).join('')}
+        </div>
+        <button class="btn-add-opt" onclick="addSocioOpt(${i})">+ Ajouter une option</button>
+      </div>
+    </div>`;
+  }).join('');
+  checkAnonymity(); checkContinue();
+}
+
+function addSociodemo() {
+  sociodemo.push({ q:"Nouvelle question socio-démo", opts:["Option A","Option B","Option C"], min_groupe: null });
+  renderSociodemo(); save(); checkAnonymity();
+}
+
+function removeSociodemo(i) {
+  sociodemo.splice(i, 1);
+  renderSociodemo(); save(); checkAnonymity(); checkContinue();
+}
+
+function addSocioOpt(i) {
+  sociodemo[i].opts.push("Nouvelle option");
+  renderSociodemo(); save();
+}
+
+function removeSocioOpt(i, oi) {
+  if (sociodemo[i].opts.length <= 2) return;
+  sociodemo[i].opts.splice(oi, 1);
+  renderSociodemo(); save();
+}
+
+function suggestSociodemo() {
+  const suggestions = [
+    { q:"Ancienneté dans l'entreprise", opts:["Moins d'un an","1 à 3 ans","4 à 10 ans","Plus de 10 ans"], min_groupe: null },
+    { q:"Type de poste",                opts:["Terrain","Bureau","Encadrement","Support"], min_groupe: null },
+    { q:"Exposition aux situations à risque", opts:["Régulière","Occasionnelle","Rare"], min_groupe: null },
+  ];
+  suggestions.forEach(s => {
+    if (!sociodemo.some(sd => sd.q === s.q)) sociodemo.push(s);
+  });
+  renderSociodemo(); save(); checkAnonymity();
+}
+
+// ── ANONYMAT ──────────────────────────────────────────────────────────────────
+function checkAnonymity() {
+  const n = sociodemo.length;
+  const el = document.getElementById('anon-alert');
+  const crossEl = document.getElementById('cross-estimate');
+  const nRepondants = parseInt(document.getElementById('nb-repondants').value) || 0;
+
+  if (n === 0) {
+    if (crossEl) crossEl.textContent = '—';
+    el.innerHTML = '';
+    return;
+  }
+
+  // ── Calcul du groupe croisé estimé ────────────────────────────────────────
+  // Formule : n_répondants / (n_options_1 × n_options_2 × ...)
+  // = taille moyenne de la plus petite cellule dans une distribution uniforme
+  const productOptions = sociodemo.reduce((acc, s) => acc * (s.opts.length || 1), 1);
+  const crossGroup = nRepondants > 0 ? (nRepondants / productOptions) : null;
+  const crossGroupRounded = crossGroup !== null ? Math.round(crossGroup * 10) / 10 : null;
+
+  if (crossEl) {
+    crossEl.textContent = crossGroupRounded !== null ? `~${crossGroupRounded}` : '—';
+    crossEl.style.color = crossGroupRounded === null ? '#18375d'
+      : crossGroupRounded < 5  ? '#c0392b'
+      : crossGroupRounded < 10 ? '#b7840a'
+      : '#27823a';
+  }
+
+  // ── Alerte basée sur le groupe croisé ─────────────────────────────────────
+  if (crossGroupRounded !== null && crossGroupRounded < 5) {
+    el.innerHTML = `<div class="alert alert-danger" style="margin-bottom:10px">
+      <span class="alert-ico">🚨</span>
+      <span><strong>Risque d'identification élevé</strong> — En croisant vos ${n} critère${n>1?'s':''} (${productOptions} combinaisons possibles), 
+      le groupe le plus petit est estimé à <strong>~${crossGroupRounded} personne${crossGroupRounded>1?'s':''}</strong> seulement. 
+      Réduisez le nombre de critères, regroupez des options ou augmentez le périmètre de répondants.</span>
+    </div>`;
+  } else if (crossGroupRounded !== null && crossGroupRounded < 10) {
+    el.innerHTML = `<div class="alert alert-warning" style="margin-bottom:10px">
+      <span class="alert-ico">⚠️</span>
+      <span><strong>Groupe croisé petit</strong> — En combinant vos ${n} critère${n>1?'s':''}, 
+      la plus petite cellule contient environ <strong>~${crossGroupRounded} personnes</strong>. 
+      Vérifiez que cette combinaison ne permet pas d'identifier des répondants dans votre contexte.</span>
+    </div>`;
+  } else if (crossGroupRounded !== null) {
+    el.innerHTML = `<div class="alert alert-neutral" style="margin-bottom:10px">
+      <span class="alert-ico">✓</span>
+      <span>Croisement raisonnable — avec ${nRepondants} répondants et ${n} critère${n>1?'s':''}, 
+      le groupe croisé estimé est d'environ <strong>~${crossGroupRounded} personnes</strong> par cellule (seuil recommandé : 5 minimum).</span>
+    </div>`;
+  } else if (n > 0) {
+    // Criteria present but no respondent count
+    el.innerHTML = `<div class="alert alert-neutral" style="margin-bottom:10px">
+      <span class="alert-ico">ℹ️</span>
+      <span>Renseignez le nombre total de répondants estimé pour évaluer le risque de croisement.</span>
+    </div>`;
+  }
+
+  // ── Alerte supplémentaire si un critère a un très petit groupe ────────────
+  const defined = sociodemo.filter(s => s.min_groupe && s.min_groupe > 0);
+  if (defined.length > 0) {
+    const worstCrit = defined.reduce((a,b) => a.min_groupe < b.min_groupe ? a : b);
+    if (worstCrit.min_groupe < 5) {
+      el.innerHTML += `<div class="alert alert-danger" style="margin-bottom:10px">
+        <span class="alert-ico">🚨</span>
+        <span><strong>Critère asymétrique</strong> — Le critère "<em>${esc(worstCrit.q)}</em>" peut avoir un groupe de seulement 
+        <strong>${worstCrit.min_groupe} personne${worstCrit.min_groupe>1?'s':''}</strong>, 
+        indépendamment du croisement. Ce critère seul peut identifier des répondants.</span>
+      </div>`;
+    } else if (worstCrit.min_groupe < 10) {
+      el.innerHTML += `<div class="alert alert-warning" style="margin-bottom:10px">
+        <span class="alert-ico">⚠️</span>
+        <span>Le critère "<em>${esc(worstCrit.q)}</em>" a un groupe minimum estimé de <strong>${worstCrit.min_groupe} personnes</strong> — restez vigilant si ce critère est croisé avec d'autres.</span>
+      </div>`;
+    }
+  }
+}
+
+// ── RESSOURCES ────────────────────────────────────────────────────────────────
+function renderResources() {
+  const container = document.getElementById('resources-list');
+  container.innerHTML = resources.map((r, i) => `
+    <div class="resource-row">
+      <input class="inp" style="flex:2;min-width:140px" value="${esc(r.titre)}" placeholder="Titre de la ressource" oninput="resources[${i}].titre=this.value;save();updatePreview()">
+      <input class="inp url" style="flex:3;min-width:180px" type="url" value="${esc(r.url)}" placeholder="https://..." oninput="resources[${i}].url=this.value;save()">
+      <button class="btn-del" onclick="removeResource(${i})" title="Supprimer">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 6l-1 14H6L5 6" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#eb6366" stroke-width="2" stroke-linecap="round"/><path d="M9 6V4h6v2" stroke="#eb6366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>`).join('');
+  updatePreview();
+}
+
+function addResource() {
+  resources.push({ titre:"Nouvelle ressource", url:"https://" });
+  renderResources(); save();
+}
+
+function removeResource(i) {
+  resources.splice(i, 1);
+  renderResources(); save();
+}
+
+// ── APERÇU FIN ────────────────────────────────────────────────────────────────
+function updatePreview() {
+  const msg      = document.getElementById('msg-fin').value;
+  const btnTitre = document.getElementById('btn-titre').value;
+  const resHTML  = resources.map(r => `
+    <div class="preview-res-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="#007883" stroke-width="2" stroke-linecap="round"/><polyline points="15 3 21 3 21 9" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="14" x2="21" y2="3" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
+      ${esc(r.titre)}
+    </div>`).join('');
+  document.getElementById('preview-box').innerHTML = `
+    <div class="preview-label">Aperçu — fin d'autodiagnostic</div>
+    <p class="preview-msg">${esc(msg)}</p>
+    <button class="preview-btn">📄 ${esc(btnTitre)}</button>
+    ${resources.length ? `<div class="preview-res">Ressources complémentaires</div>${resHTML}` : ''}`;
+}
+
+// ── VALIDATION / CONTINUER ────────────────────────────────────────────────────
+function checkContinue() {
+  const introOk  = document.getElementById('intro').value.trim().length > 0;
+  const socioOk  = sociodemo.length > 0;
+  const btn = document.getElementById('btn-continue');
+  btn.disabled = !(introOk && socioOk);
+}
+
+function continuer() {
+  save();
+  // Marquer comme paramétré dans localStorage
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    const stored = raw ? JSON.parse(raw) : {};
+    stored.parametrage_done = true;
+    localStorage.setItem(LS_KEY, JSON.stringify(stored));
+  } catch(e) {}
+  window.location.href = '5-selftech_campagne_autodiagnostic.html';
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── DÉMARRAGE ─────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
