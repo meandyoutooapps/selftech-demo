@@ -460,71 +460,61 @@ let resources = [
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 function init() {
+  const themeFromUrl = getThemeNameFromUrl();
+
   try {
     const raw = localStorage.getItem(LS_KEY);
+    const stored = raw ? JSON.parse(raw) : {};
 
-    if (raw) {
-      const stored = JSON.parse(raw);
+    const themeTitle =
+      themeFromUrl ||
+      stored?.theme?.title ||
+      'Nouveau thème';
 
-      if (stored.meta) {
-        if (stored.meta.nom) {
-          document.getElementById('nom').value = stored.meta.nom;
-        }
+    // Informations générales : on force le thème courant
+    document.getElementById('nom').value =
+      stored?.meta?.nom && !stored.meta.nom.toLowerCase().includes('sécurité')
+        ? stored.meta.nom
+        : `Autodiagnostic ${themeTitle}`;
 
-        // On ne pré-remplit pas le titre visible : il doit être rédigé par l'utilisateur
-        document.getElementById('titre').value = '';
+    // Le titre visible ne doit PAS être pré-rempli
+    document.getElementById('titre').value = '';
 
-        if (stored.meta.desc) {
-          document.getElementById('desc').value = stored.meta.desc;
-        }
+    document.getElementById('desc').value =
+      stored?.meta?.desc && !stored.meta.desc.toLowerCase().includes('sécurité')
+        ? stored.meta.desc
+        : `Campagne interne Sonora RH sur ${themeTitle}.`;
 
-        if (stored.meta.slug) {
-          document.getElementById('slug').value = stored.meta.slug;
-        }
-      }
+    document.getElementById('slug').value =
+      stored?.meta?.slug && !stored.meta.slug.toLowerCase().includes('securite')
+        ? stored.meta.slug
+        : slugify(themeTitle);
 
-      if (stored.intro) {
-        document.getElementById('intro').value = stored.intro;
-      }
+    // Intro / fin / ressources
+    if (stored?.intro) document.getElementById('intro').value = stored.intro;
 
-      if (stored.fin) {
-        if (stored.fin.message) {
-          document.getElementById('msg-fin').value = stored.fin.message;
-        }
-        if (stored.fin.btn_titre) {
-          document.getElementById('btn-titre').value = stored.fin.btn_titre;
-        }
-        if (stored.fin.btn_url) {
-          document.getElementById('btn-url').value = stored.fin.btn_url;
-        }
-      }
-
-      if (stored.sociodemo && stored.sociodemo.length) {
-        sociodemo = stored.sociodemo;
-      }
-
-      if (stored.resources && stored.resources.length) {
-        resources = stored.resources;
-      }
-
-      if (stored.theme) {
-        const th = stored.theme;
-
-        if (th.title) {
-          document.getElementById('sb-theme').textContent = th.title;
-        }
-
-        if (th.chapters) {
-          document.getElementById('sb-chap').textContent = th.chapters.length;
-
-          const totalQ = th.chapters.reduce((a, c) => a + (c.questions || []).length, 0);
-          document.getElementById('sb-q').textContent = totalQ;
-
-          const totalP = th.chapters.reduce((a, c) => a + ((c.profils || []).length), 0);
-          document.getElementById('sb-profils').textContent = totalP;
-        }
-      }
+    if (stored?.fin) {
+      if (stored.fin.message) document.getElementById('msg-fin').value = stored.fin.message;
+      if (stored.fin.btn_titre) document.getElementById('btn-titre').value = stored.fin.btn_titre;
+      if (stored.fin.btn_url) document.getElementById('btn-url').value = stored.fin.btn_url;
     }
+
+    if (stored?.sociodemo && stored.sociodemo.length) sociodemo = stored.sociodemo;
+    if (stored?.resources && stored.resources.length) resources = stored.resources;
+
+    // Sidebar
+    document.getElementById('sb-theme').textContent = themeTitle;
+
+    if (stored?.theme?.chapters) {
+      document.getElementById('sb-chap').textContent = stored.theme.chapters.length;
+
+      const totalQ = stored.theme.chapters.reduce((a, c) => a + (c.questions || []).length, 0);
+      document.getElementById('sb-q').textContent = totalQ;
+
+      const totalP = stored.theme.chapters.reduce((a, c) => a + ((c.profils || []).length), 0);
+      document.getElementById('sb-profils').textContent = totalP;
+    }
+
   } catch(e) {
     console.warn('Impossible de charger le paramétrage', e);
   }
