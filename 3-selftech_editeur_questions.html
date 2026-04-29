@@ -567,8 +567,49 @@ function updateEditorModeUI() {
   }
 }
 
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, 'et')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function saveCurrentAutodiagDraft() {
+  const themeName = getCurrentThemeName();
+  const slug = slugify(themeName) || 'mon-autodiagnostic';
+
+  const currentAd = {
+    meta: {
+      nom: `Autodiagnostic ${themeName}`,
+      titre: '',
+      desc: `Campagne interne Sonora RH sur ${themeName}.`,
+      slug: slug
+    },
+    theme: {
+      title: themeName,
+      chapters: chapters
+    },
+    intro: '',
+    sociodemo: [
+      { q:"À quelle catégorie appartenez-vous ?", opts:["Collaborateur·rice","Manager","Direction"], min_groupe: 25 }
+    ],
+    resources: [],
+    fin: {
+      message: "Merci d'avoir réalisé cet autodiagnostic. Vos réponses contribuent à mieux comprendre les pratiques du quotidien et à identifier les actions les plus utiles pour progresser collectivement.",
+      btn_titre: "Accéder aux ressources",
+      btn_url: ""
+    }
+  };
+
+  localStorage.setItem('selftech_current_ad', JSON.stringify(currentAd));
+}
+
 function goNextAfterSave() {
   if (editorMode === 'autodiag') {
+    saveCurrentAutodiagDraft();
     window.location.href = '4-selftech_parametrage_autodiagnostic.html';
   } else {
     window.location.href = '1-selftech_ma_bibliotheque.html';
