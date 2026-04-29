@@ -87,6 +87,7 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .badge-client{background:#f0fdf4;border-color:#86efac;color:#166534}
 .badge-validation{background:#fceaea;border-color:#ffd6d4;color:#c0392b}
 .badge-aide{background:#edf1f7;border-color:#c5cfdc;color:#18375d}
+.badge-tbf{background:#fff0f6;border-color:#f9a8d4;color:#be185d}
 
 /* Bas de carte */
 .card-bot{padding:12px 18px;border-top:1px solid #f0f4f8;display:flex;gap:7px}
@@ -394,7 +395,7 @@ const THEMES = [
     name:"Management engageant et leadership assertif",
     desc:"Base de travail sur les postures managériales qui favorisent l'engagement, la clarté des attentes et l'assertivité bienveillante dans les relations d'équipe.",
     chapitres:5, questions:22,
-    badges:["expert","aide"],
+    badges:["tbf","aide"],
     chapters:[
       {num:1, name:"Créer les conditions de l'engagement", desc:"Identifier les comportements qui favorisent la motivation intrinsèque et l'implication durable.", exemples:["Un collaborateur vous semble moins investi depuis quelques semaines. Vous ne savez pas pourquoi. Que faites-vous ?","Vous devez confier une tâche peu valorisante mais nécessaire à un membre de votre équipe."]},
       {num:2, name:"Formuler des attentes claires sans pression", desc:"Analyser la manière dont on exprime ses demandes et ses exigences sans créer de stress inutile.", exemples:["Vous devez demander à votre équipe de fournir un effort supplémentaire sur une période courte."]},
@@ -408,7 +409,7 @@ const THEMES = [
     name:"Gestion de projet au quotidien : réflexes et pratiques",
     desc:"Aide à la rédaction pour mesurer les comportements liés à la gestion de projet : cadrage, pilotage, coopération, décision et capitalisation.",
     chapitres:4, questions:18,
-    badges:["expert","aide","validation"],
+    badges:["tbf","aide","validation"],
     chapters:[
       {num:1, name:"Cadrer et prioriser dès le départ", desc:"Identifier les réflexes liés à la définition des objectifs, du périmètre et des rôles en début de projet.", exemples:["Un projet démarre après une réunion de lancement enthousiaste, mais les attentes du sponsor restent floues. Que faites-vous ?","On vous demande de lancer un projet sans vous donner le temps de cadrer correctement. Vous…"]},
       {num:2, name:"Piloter, anticiper les risques et tenir les délais", desc:"Analyser les comportements de suivi, de communication d'avancement et de gestion des imprévus.", exemples:["Vous constatez à mi-parcours que votre projet a pris du retard. Vous n'en avez pas encore informé les parties prenantes."]},
@@ -424,6 +425,7 @@ const BADGE_CONFIG = {
   client:     { label:'Contribution client',         cls:'badge-client' },
   validation: { label:'Validation obligatoire',      cls:'badge-validation' },
   aide:       { label:'Aide à la rédaction',         cls:'badge-aide' },
+  tbf:        { label:'Conçu par The Big Factory',   cls:'badge-tbf' },
 };
 
 // ── ÉTAT ────────────────────────────────────────────────────────────────────
