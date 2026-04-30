@@ -470,27 +470,33 @@ let activeFilterTag = '';
 let activeLib = 'ma';
 let likertInfoOpen = false;
   function applyDraftThemeFromStorage() {
-      const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
-  if (themeFromUrl) return;
   const raw = localStorage.getItem('selftechDraftTheme');
   if (!raw) return;
 
   try {
     const draft = JSON.parse(raw);
+    if (!draft || !draft.chapters || !draft.chapters.length) return;
 
-    if (!draft.chapters || !draft.chapters.length) return;
+    const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
+    const draftSlug = slugify(draft.name || '');
+
+    // Sécurité :
+    // - si aucun thème n'est dans l'URL, on charge le brouillon
+    // - si le thème de l'URL correspond au brouillon, on le charge
+    // - sinon, on laisse les données de la page telles quelles
+    if (themeFromUrl && themeFromUrl !== draftSlug) return;
 
     chapters.splice(0, chapters.length, ...draft.chapters.map((c, index) => ({
       id: index + 1,
       name: c.name || `Chapitre ${index + 1}`,
       desc: c.desc || '',
-      questions: [],
-      profils: [
+      questions: c.questions || [],
+      profils: c.profils || [
         {niveau:1, titre:"", phrase:"", description:"", motscles:[]},
         {niveau:2, titre:"", phrase:"", description:"", motscles:[]},
         {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
       ],
-      seuils: [
+      seuils: c.seuils || [
         {min:0, max:0.7},
         {min:0.7, max:1.7},
         {min:1.7, max:2.1}
@@ -510,9 +516,21 @@ const editorMode = urlParams.get('mode') || 'theme';
 
 function getCurrentThemeName() {
   const themeFromUrl = urlParams.get('theme');
+  const raw = localStorage.getItem('selftechDraftTheme');
 
-  // 1. Si on arrive depuis la bibliothèque avec un thème dans l'URL,
-  // on utilise ce thème en priorité.
+  if (raw) {
+    try {
+      const draft = JSON.parse(raw);
+      const draftSlug = slugify(draft.name || '');
+
+      if (draft && draft.name && (!themeFromUrl || themeFromUrl === draftSlug)) {
+        return draft.name;
+      }
+    } catch (e) {
+      console.warn('Nom du thème non récupérable', e);
+    }
+  }
+
   if (themeFromUrl) {
     const themeMap = {
       'securite-culture-surete': 'Sécurité & culture de sûreté',
@@ -524,18 +542,6 @@ function getCurrentThemeName() {
     };
 
     return themeMap[themeFromUrl] || decodeURIComponent(themeFromUrl);
-  }
-
-  // 2. Sinon, si on vient de la page "Nouveau thème", on lit le brouillon généré.
-  const raw = localStorage.getItem('selftechDraftTheme');
-
-  if (raw) {
-    try {
-      const draft = JSON.parse(raw);
-      if (draft.name) return draft.name;
-    } catch (e) {
-      console.warn('Nom du thème non récupérable', e);
-    }
   }
 
   return 'Nouveau thème';
