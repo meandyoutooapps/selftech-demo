@@ -8,8 +8,6 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18375d}
-
-/* ── TOPBAR ── */
 .topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;position:sticky;top:0;z-index:50}
 .logo{display:flex;align-items:stretch}
 .logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px;align-self:center}
@@ -19,92 +17,67 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px}
 .av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
 .acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
-
-/* ── SUBNAV ── */
 .subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
 .subnav::-webkit-scrollbar{display:none}
 .sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;font-family:'Asap',sans-serif;transition:all 0.12s}
 .sn.on{background:#18375d;color:#fff;font-weight:600}
 .sn:not(.on):hover{background:#eef1f6;color:#18375d}
-
-/* ── PAGE ── */
-.page{max-width:1080px;margin:0 auto;padding:28px 24px 60px}
-
-/* Intro header */
+.page{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
 .intro-block{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:22px 24px;margin-bottom:14px;display:flex;align-items:flex-start;gap:18px}
 .intro-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#18375d,#007883);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .intro-text h1{font-size:17px;font-weight:700;color:#18375d;margin-bottom:5px}
 .intro-text p{font-size:13px;color:#64748b;line-height:1.6}
-
-/* Alerte responsabilité */
 .alert-resp{background:#fff9ec;border:1px solid #ffd490;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px}
-.alert-resp-ico{font-size:15px;flex-shrink:0;margin-top:1px}
 .alert-resp-text{font-size:12px;color:#7a5f00;line-height:1.5;font-family:'Asap',sans-serif}
 .alert-resp-text strong{font-weight:700}
-
-/* Barre de recherche + filtres */
-.search-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.search-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
 .search-wrap{flex:1;min-width:220px;position:relative}
-.search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;pointer-events:none}
+.search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none}
 .search-inp{width:100%;padding:9px 12px 9px 36px;border:1px solid #d8e0ea;border-radius:9px;font-size:13px;font-family:'Asap',sans-serif;outline:none;transition:border-color 0.15s;background:#fff;color:#18375d}
 .search-inp:focus{border-color:#18375d}
 .search-inp::placeholder{color:#c5ccd5}
-.results-count{font-size:12px;color:#94a3b8;font-family:'Asap',sans-serif;align-self:center;white-space:nowrap}
-
-/* Filtres catégories */
-.filters-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;align-items:center}
+.results-count{font-size:12px;color:#94a3b8;font-family:'Asap',sans-serif;white-space:nowrap}
+.filters-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;align-items:center}
 .filter-lbl{font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;font-family:'Asap',sans-serif;margin-right:4px}
 .fcat{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;font-family:'Asap',sans-serif;cursor:pointer;border:1.5px solid #d8e0ea;background:#fff;color:#64748b;transition:all 0.12s;white-space:nowrap}
 .fcat:hover{border-color:#18375d;color:#18375d}
 .fcat.on{background:#18375d;color:#fff;border-color:#18375d}
-
-/* Filtres badge */
-.fbadge-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:22px;align-items:center}
-
-/* Grille cartes */
 .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:900px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:580px){.cards-grid{grid-template-columns:1fr}}
-
-/* Carte thème */
 .theme-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;display:flex;flex-direction:column;overflow:hidden;transition:border-color 0.15s,box-shadow 0.15s}
 .theme-card:hover{border-color:#b8c4d4;box-shadow:0 4px 14px rgba(24,55,93,0.09)}
+.theme-card.mayt{border-color:#ffc000;border-width:2px}
+.theme-card.mayt:hover{border-color:#007883;box-shadow:0 4px 14px rgba(0,120,131,0.14)}
 .card-top{padding:16px 18px 12px;flex:1}
 .card-cat{font-size:10px;font-weight:700;color:#007883;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
 .card-cat-dot{width:6px;height:6px;border-radius:50%;background:#007883;flex-shrink:0}
 .card-name{font-size:14px;font-weight:700;color:#18375d;line-height:1.35;margin-bottom:8px}
 .card-desc{font-size:12px;color:#64748b;line-height:1.55;margin-bottom:12px}
-.card-meta{display:flex;gap:12px;margin-bottom:12px}
+.card-meta{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .card-meta-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif}
 .card-meta-val{font-weight:700;color:#18375d}
 .card-badges{display:flex;flex-wrap:wrap;gap:4px}
-
-/* Badges */
 .badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;font-family:'Asap',sans-serif;border:1px solid;white-space:nowrap}
 .badge-ai{background:#f0edff;border-color:#c4b5fd;color:#6d28d9}
 .badge-expert{background:#fef3c7;border-color:#fcd34d;color:#92400e}
-.badge-selftech{background:#e5f4f5;border-color:#b8dfe0;color:#007883}
-.badge-client{background:#f0fdf4;border-color:#86efac;color:#166534}
-.badge-validation{background:#fceaea;border-color:#ffd6d4;color:#c0392b}
+.badge-contribution{background:#f0fdf4;border-color:#86efac;color:#166534}
 .badge-aide{background:#edf1f7;border-color:#c5cfdc;color:#18375d}
 .badge-tbf{background:#fff0f6;border-color:#f9a8d4;color:#be185d}
-
-/* Bas de carte */
+.badge-mayt{background:#e5f4f5;border-color:#007883;color:#007883}
 .card-bot{padding:12px 18px;border-top:1px solid #f0f4f8;display:flex;gap:7px}
 .btn-apercu{flex:0 0 auto;padding:7px 13px;border:1px solid #d8e0ea;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;background:#fff;color:#64748b;transition:all 0.12s}
 .btn-apercu:hover{background:#f7f9fc;border-color:#b8c4d4;color:#18375d}
 .btn-use{flex:1;padding:7px 13px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;background:#18375d;color:#fff;transition:all 0.12s}
 .btn-use:hover{background:#122a47}
-
-/* Empty state */
+.btn-contact{flex:1;padding:7px 13px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;background:#273a64;color:#fff;transition:background 0.12s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px}
+.btn-contact:hover{background:#007883}
+.mayt-notice{padding:8px 18px;background:#e5f4f5;border-top:2px solid #ffc000;font-size:11px;color:#007883;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:6px}
 .empty-state{text-align:center;padding:56px 24px;color:#94a3b8;font-family:'Asap',sans-serif}
 .empty-state strong{display:block;font-size:15px;color:#18375d;margin-bottom:8px}
-.empty-state p{font-size:13px}
-
-/* ── PANNEAU APERÇU ── */
 .overlay{position:fixed;inset:0;background:rgba(15,30,55,0.38);z-index:60;display:none}
 .overlay.on{display:block}
-.panel-apercu{position:fixed;top:0;right:-500px;width:460px;max-width:95vw;height:100%;background:#fff;border-left:1px solid #d8e0ea;z-index:70;transition:right 0.28s ease;display:flex;flex-direction:column;overflow:hidden}
+.panel-apercu{position:fixed;top:0;right:-500px;width:460px;max-width:95vw;height:100%;background:#fff;border-left:1px solid #d8e0ea;z-index:70;transition:right 0.28s ease;display:flex;flex-direction:column}
 .panel-apercu.on{right:0}
 .pa-head{padding:18px 20px;border-bottom:1px solid #f0f4f8;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-shrink:0}
 .pa-head-info{flex:1;min-width:0}
@@ -115,7 +88,8 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .pa-body{flex:1;overflow-y:auto;padding:18px 20px}
 .pa-desc{font-size:13px;color:#64748b;line-height:1.6;margin-bottom:16px}
 .pa-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
-.pa-section{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;margin-top:4px}
+.pa-alert{background:#fff9ec;border:1px solid #ffd490;border-radius:8px;padding:10px 14px;font-size:11px;color:#7a5f00;line-height:1.5;margin-bottom:16px}
+.pa-section{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px}
 .pa-chap{background:#fafbfc;border:1px solid #e8edf4;border-radius:10px;padding:12px 14px;margin-bottom:8px}
 .pa-chap-num{font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px}
 .pa-chap-name{font-size:13px;font-weight:600;color:#18375d;margin-bottom:3px}
@@ -123,56 +97,76 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .pa-q-sample{margin-top:10px;padding-top:10px;border-top:1px solid #f0f4f8}
 .pa-q-lbl{font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px}
 .pa-q-item{font-size:11px;color:#475569;background:#fff;border:1px solid #e8edf4;border-radius:6px;padding:6px 10px;margin-bottom:4px;line-height:1.4}
-.pa-alert{background:#fff9ec;border:1px solid #ffd490;border-radius:8px;padding:10px 14px;font-size:11px;color:#7a5f00;line-height:1.5;margin-bottom:16px}
 .pa-foot{padding:14px 20px;border-top:1px solid #f0f4f8;flex-shrink:0}
 .btn-use-full{width:100%;padding:11px;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;background:#18375d;color:#fff;transition:all 0.15s}
 .btn-use-full:hover{background:#122a47}
-
-/* Toast */
+.btn-contact-full{width:100%;padding:11px;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;background:linear-gradient(90deg,#a21caf,#be185d);color:#fff;transition:opacity 0.15s;text-decoration:none;display:block;text-align:center}
+.btn-contact-full:hover{opacity:0.88}
 .toast{position:fixed;bottom:24px;right:24px;background:#18375d;color:#fff;padding:12px 18px;border-radius:9px;font-size:13px;font-weight:600;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:9px;box-shadow:0 4px 16px rgba(24,55,93,0.3);z-index:200;transform:translateY(80px);transition:transform 0.3s}
 .toast.show{transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="logo"><span class="logo-self">SELF</span><div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div></div>
   <div class="tb-sp"></div>
   <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
 </div>
 
-<!-- SUBNAV -->
 <div class="subnav">
   <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
   <button class="sn" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
   <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
-  <button class="sn on" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
-  <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
+  <button class="sn on">Bibliothèque partagée</button>
+  <button class="sn">Résultats</button>
   <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
 </div>
 
-<!-- PAGE -->
 <div class="page">
-
-  <!-- Intro -->
   <div class="intro-block">
     <div class="intro-icon">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <div class="intro-text">
       <h1>Bibliothèque partagée</h1>
-      <p>Cette bibliothèque propose des thèmes pouvant servir d'aide à la rédaction pour concevoir vos autodiagnostics. Ces contenus sont des bases de travail à relire, adapter et valider avant lancement. Selftech fournit l'outil technique et des supports d'aide à la rédaction, mais le client reste seul responsable du contenu final publié.</p>
+      <p>Cette bibliothèque propose des thèmes pouvant servir d'aide à la rédaction pour concevoir vos autodiagnostics. Ces contenus sont des bases de travail à relire, adapter et valider avant lancement. Le client reste seul responsable du contenu final publié.</p>
     </div>
   </div>
 
-  <!-- Alerte responsabilité -->
   <div class="alert-resp">
-    <span class="alert-resp-ico">⚠️</span>
-    <div class="alert-resp-text"><strong>Important :</strong> les contenus proposés dans cette bibliothèque sont des aides à la rédaction. Ils doivent être adaptés et validés par le client avant diffusion. Selftech n'est pas responsable du contenu final publié, de son exactitude, de son adéquation au contexte du client, ni de son usage.</div>
+    <span style="font-size:15px;flex-shrink:0">⚠️</span>
+    <div class="alert-resp-text"><strong>Important :</strong> les contenus proposés sont des aides à la rédaction. Ils doivent être adaptés et validés par le client avant diffusion. Selftech n'est pas responsable du contenu final publié, de son exactitude, de son adéquation au contexte du client, ni de son usage.</div>
   </div>
 
-  <!-- Recherche -->
+  <!-- Pavé badges -->
+  <div style="background:#fff;border:1px solid #d8e0ea;border-radius:12px;padding:18px 22px;margin-bottom:20px">
+    <div style="font-size:12px;font-weight:700;color:#18375d;margin-bottom:14px">🏷 Comprendre les badges</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span class="badge badge-ai" style="flex-shrink:0;margin-top:2px">Base assistée par IA</span>
+        <span style="font-size:12px;color:#64748b;line-height:1.5">Contenu généré ou structuré avec l'IA. Base de travail à relire et adapter — jamais à publier tel quel.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span class="badge badge-expert" style="flex-shrink:0;margin-top:2px">Conçu par expert externe (nom)</span>
+        <span style="font-size:12px;color:#64748b;line-height:1.5">Contenu rédigé par un expert identifié. Dans le produit final, le nom réel de l'expert remplace "(nom)".</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span class="badge badge-contribution" style="flex-shrink:0;margin-top:2px">Contribution partagée entreprise</span>
+        <span style="font-size:12px;color:#64748b;line-height:1.5">Thème partagé volontairement par une organisation utilisatrice. Contenu peer-to-peer, non garanti par Selftech.</span>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span class="badge badge-aide" style="flex-shrink:0;margin-top:2px">Aide à la rédaction</span>
+        <span style="font-size:12px;color:#64748b;line-height:1.5">Présent sur tous les thèmes sauf Me&amp;YouToo. Rappelle que chaque contenu est une base de travail — le client reste responsable du contenu final.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span class="badge badge-mayt" style="flex-shrink:0;margin-top:2px">Conçu par Me&amp;YouToo</span>
+        <span style="font-size:12px;color:#64748b;line-height:1.5">Contenus propriétaires de Me&amp;YouToo, accessibles uniquement sur demande. Contact direct requis.</span>
+      </div>
+    </div>
+  </div>
+
   <div class="search-bar">
     <div class="search-wrap">
       <svg class="search-ico" width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#94a3b8" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/></svg>
@@ -181,30 +175,27 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
     <span class="results-count" id="results-count"></span>
   </div>
 
-  <!-- Filtres catégories -->
   <div class="filters-row">
     <span class="filter-lbl">Catégorie</span>
-    <button class="fcat on" data-cat="all" onclick="setCat('all',this)">Toutes</button>
-    <button class="fcat" data-cat="Management & coopération" onclick="setCat(this.dataset.cat,this)">Management & coopération</button>
-    <button class="fcat" data-cat="Qualité de vie au travail" onclick="setCat(this.dataset.cat,this)">Qualité de vie au travail</button>
-    <button class="fcat" data-cat="Sécurité & prévention" onclick="setCat(this.dataset.cat,this)">Sécurité & prévention</button>
-    <button class="fcat" data-cat="Transformation & changement" onclick="setCat(this.dataset.cat,this)">Transformation & changement</button>
-    <button class="fcat" data-cat="Numérique & cybersécurité" onclick="setCat(this.dataset.cat,this)">Numérique & cybersécurité</button>
-    <button class="fcat" data-cat="Éthique & conformité" onclick="setCat(this.dataset.cat,this)">Éthique & conformité</button>
-    <button class="fcat" data-cat="Environnement & sobriété" onclick="setCat(this.dataset.cat,this)">Environnement & sobriété</button>
-    <button class="fcat" data-cat="Inclusion & relations professionnelles" onclick="setCat(this.dataset.cat,this)">Inclusion & relations</button>
+    <button class="fcat on" onclick="setCat('all',this)">Toutes</button>
+    <button class="fcat" onclick="setCat('Management &amp; coopération',this)">Management &amp; coopération</button>
+    <button class="fcat" onclick="setCat('Qualité de vie au travail',this)">Qualité de vie au travail</button>
+    <button class="fcat" onclick="setCat('Sécurité &amp; prévention',this)">Sécurité &amp; prévention</button>
+    <button class="fcat" onclick="setCat('Transformation &amp; changement',this)">Transformation &amp; changement</button>
+    <button class="fcat" onclick="setCat('Numérique &amp; cybersécurité',this)">Numérique &amp; cybersécurité</button>
+    <button class="fcat" onclick="setCat('Éthique &amp; conformité',this)">Éthique &amp; conformité</button>
+    <button class="fcat" onclick="setCat('Environnement &amp; sobriété',this)">Environnement &amp; sobriété</button>
+    <button class="fcat" onclick="setCat('Relations client &amp; qualité de service',this)">Relations client</button>
+    <button class="fcat" onclick="setCat('Inclusion &amp; diversité',this)">Inclusion &amp; diversité</button>
   </div>
 
-  <!-- Grille cartes -->
   <div class="cards-grid" id="cards-grid"></div>
   <div class="empty-state" id="empty-state" style="display:none">
     <strong>Aucun thème trouvé</strong>
     <p>Essayez un autre mot-clé ou réinitialisez les filtres.</p>
   </div>
-
 </div>
 
-<!-- OVERLAY + PANNEAU APERÇU -->
 <div class="overlay" id="overlay" onclick="closePanel()"></div>
 <div class="panel-apercu" id="panel-apercu">
   <div class="pa-head">
@@ -214,354 +205,518 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
     </div>
     <button class="pa-close" onclick="closePanel()">✕</button>
   </div>
-  <div class="pa-body">
-    <div class="pa-alert">⚠️ <strong>Aide à la rédaction :</strong> ce contenu doit être relu, adapté et validé par votre organisation avant tout lancement. Selftech n'est pas responsable du contenu final publié.</div>
-    <div class="pa-desc" id="pa-desc"></div>
-    <div class="pa-badges" id="pa-badges"></div>
-    <div class="pa-section">Chapitres</div>
-    <div id="pa-chapters"></div>
-  </div>
-  <div class="pa-foot">
-    <button class="btn-use-full" id="pa-use-btn">Utiliser comme base de travail</button>
-  </div>
+  <div class="pa-body" id="pa-body"></div>
+  <div class="pa-foot" id="pa-foot"></div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast">
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7L5 10L12 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <span id="toast-msg">Thème copié dans Ma bibliothèque</span>
 </div>
 
 <script>
-// ── DONNÉES ────────────────────────────────────────────────────────────────────
-const THEMES = [
-  {
-    id:1, cat:"Management & coopération",
+var THEMES = [
+  // ── MANAGEMENT & COOPÉRATION ─────────────────────────────────────────────────
+  {id:1, cat:"Management & coopération", mayt:false,
     name:"Donner et recevoir du feedback au quotidien",
     desc:"Mesurer les réflexes comportementaux liés à la pratique du feedback dans une équipe professionnelle.",
-    chapitres:4, questions:20,
-    badges:["expert","aide"],
+    chapitres:4, questions:20, badges:["expert","aide"],
     chapters:[
-      {num:1, name:"Accueillir le feedback", desc:"Identifier ses réflexes lorsqu'un retour est formulé par un collègue ou un manager.", exemples:["Votre manager vous donne un retour sur une présentation que vous venez de terminer. Vous…","Un collègue souligne une erreur dans votre livrable devant le reste de l'équipe."]},
-      {num:2, name:"Formuler un feedback utile", desc:"Analyser la manière dont on structure et transmet un retour professionnel.", exemples:["Vous devez donner un retour sur le travail d'un collègue dont vous n'avez pas apprécié la qualité."]},
+      {num:1, name:"Accueillir le feedback", desc:"Identifier ses réflexes lorsqu'un retour est formulé par un collègue ou un manager.",
+        exemples:["Votre manager vous donne un retour sur une présentation que vous venez de terminer. Vous…","Un collègue souligne une erreur dans votre livrable devant le reste de l'équipe."]},
+      {num:2, name:"Formuler un feedback utile", desc:"Analyser la manière dont on structure et transmet un retour professionnel.", exemples:[]},
       {num:3, name:"Gérer les feedbacks sensibles", desc:"Observer ses réactions face à un retour difficile ou inattendu.", exemples:[]},
-      {num:4, name:"Transformer le feedback en actions", desc:"Identifier les comportements qui permettent de tirer parti d'un retour reçu.", exemples:[]},
+      {num:4, name:"Transformer le feedback en actions", desc:"Identifier les comportements qui permettent de tirer parti d'un retour reçu.", exemples:[]}
     ]
   },
-  {
-    id:2, cat:"Management & coopération",
+  {id:2, cat:"Management & coopération", mayt:false,
     name:"Manager à distance : pratiques et postures",
     desc:"Base de travail sur les comportements managériaux dans un contexte d'équipe distribuée ou hybride.",
-    chapitres:5, questions:22,
-    badges:["expert","validation"],
+    chapitres:5, questions:22, badges:["expert","aide"],
     chapters:[
-      {num:1, name:"Maintenir le lien à distance", desc:"Observer ses pratiques pour préserver le contact humain en dehors du présentiel.", exemples:["Votre équipe est en télétravail depuis plusieurs semaines. Vous réalisez que vous n'avez pas eu de conversation informelle avec certains collaborateurs depuis longtemps."]},
+      {num:1, name:"Maintenir le lien à distance", desc:"Observer ses pratiques pour préserver le contact humain en dehors du présentiel.",
+        exemples:["Votre équipe est en télétravail depuis plusieurs semaines. Vous n'avez pas eu de conversation informelle avec certains collaborateurs depuis longtemps."]},
       {num:2, name:"Clarifier les attentes et les priorités", desc:"Analyser la façon dont on formule et suit les objectifs à distance.", exemples:[]},
       {num:3, name:"Faire confiance sans contrôler", desc:"Identifier ses réflexes face à l'autonomie laissée à distance.", exemples:[]},
-      {num:4, name:"Détecter les signaux faibles", desc:"Observer sa vigilance sur les signaux de décrochage ou de difficultés à distance.", exemples:[]},
-      {num:5, name:"Animer des moments collectifs à distance", desc:"Analyser ses pratiques d'animation de réunions ou d'ateliers en visioconférence.", exemples:[]},
+      {num:4, name:"Détecter les signaux faibles", desc:"Observer sa vigilance sur les signaux de décrochage à distance.", exemples:[]},
+      {num:5, name:"Animer des moments collectifs à distance", desc:"Analyser ses pratiques d'animation de réunions en visioconférence.", exemples:[]}
     ]
   },
-  {
-    id:3, cat:"Qualité de vie au travail",
-    name:"Et si mon quotidien m'exposait aux risques psychosociaux ?",
-    desc:"Aide à la rédaction pour mesurer les perceptions liées à la charge de travail, l'autonomie et le soutien collectif.",
-    chapitres:4, questions:18,
-    badges:["ai","aide","validation"],
+  {id:3, cat:"Management & coopération", mayt:false,
+    name:"Déléguer avec confiance : postures et pratiques",
+    desc:"Mesurer les comportements de délégation dans une équipe : clarté des attentes, suivi et autonomie accordée.",
+    chapitres:4, questions:16, badges:["ai","aide"],
     chapters:[
-      {num:1, name:"Ma charge de travail au quotidien", desc:"Explorer la perception de sa propre charge de travail et les stratégies adoptées.", exemples:["Vous terminez une semaine particulièrement chargée. Plusieurs tâches non réalisées restent en attente.","Votre responsable vous confie un nouveau projet alors que vous êtes déjà en surcharge."]},
+      {num:1, name:"Clarifier avant de déléguer", desc:"Identifier les comportements qui permettent de formuler des attentes claires.",
+        exemples:["Vous confiez une tâche importante à un collaborateur pour la première fois."]},
+      {num:2, name:"Accorder l'autonomie nécessaire", desc:"Observer sa capacité à laisser faire sans intervenir excessivement.", exemples:[]},
+      {num:3, name:"Assurer le suivi sans micro-manager", desc:"Analyser ses pratiques de suivi et de point d'avancement.", exemples:[]},
+      {num:4, name:"Tirer les enseignements après délégation", desc:"Identifier les comportements qui permettent de capitaliser sur l'expérience.", exemples:[]}
+    ]
+  },
+  {id:4, cat:"Management & coopération", mayt:false,
+    name:"Management engageant et leadership assertif",
+    desc:"Base de travail sur les postures managériales qui favorisent l'engagement, la clarté des attentes et l'assertivité bienveillante.",
+    chapitres:5, questions:22, badges:["tbf","aide"],
+    chapters:[
+      {num:1, name:"Créer les conditions de l'engagement", desc:"Identifier les comportements qui favorisent la motivation intrinsèque et l'implication durable.",
+        exemples:["Un collaborateur vous semble moins investi depuis quelques semaines. Vous ne savez pas pourquoi. Que faites-vous ?"]},
+      {num:2, name:"Formuler des attentes claires sans pression", desc:"Analyser la manière dont on exprime ses demandes sans créer de stress inutile.", exemples:[]},
+      {num:3, name:"Dire non, dire oui : savoir poser des limites", desc:"Observer ses réflexes face aux demandes excessives ou aux conflits d'agenda.", exemples:[]},
+      {num:4, name:"Reconnaître et valoriser la contribution", desc:"Mesurer la régularité et la sincérité des gestes de reconnaissance.", exemples:[]},
+      {num:5, name:"Gérer les désaccords avec assertivité", desc:"Identifier les comportements face aux situations de tension au sein de l'équipe.", exemples:[]}
+    ]
+  },
+  {id:5, cat:"Management & coopération", mayt:false,
+    name:"Gestion de projet au quotidien : réflexes et pratiques",
+    desc:"Mesurer les comportements liés à la gestion de projet : cadrage, pilotage, coopération, décision et capitalisation.",
+    chapitres:4, questions:18, badges:["tbf","aide"],
+    chapters:[
+      {num:1, name:"Cadrer et prioriser dès le départ", desc:"Identifier les réflexes liés à la définition des objectifs, du périmètre et des rôles.",
+        exemples:["Un projet démarre après une réunion de lancement enthousiaste, mais les attentes du sponsor restent floues. Que faites-vous ?"]},
+      {num:2, name:"Piloter, anticiper les risques et tenir les délais", desc:"Analyser les comportements de suivi et de gestion des imprévus.",
+        exemples:["Vous constatez à mi-parcours que votre projet a pris du retard. Vous n'en avez pas encore informé les parties prenantes."]},
+      {num:3, name:"Coopérer et communiquer avec les parties prenantes", desc:"Observer ses pratiques de communication et de coordination avec les acteurs.", exemples:[]},
+      {num:4, name:"Ajuster, décider et capitaliser", desc:"Identifier les comportements qui permettent de s'adapter et de tirer les enseignements.", exemples:[]}
+    ]
+  },
+  // ── QUALITÉ DE VIE AU TRAVAIL ─────────────────────────────────────────────────
+  {id:10, cat:"Qualité de vie au travail", mayt:false,
+    name:"Et si mon quotidien m'exposait aux risques psychosociaux ?",
+    desc:"Mesurer les perceptions liées à la charge de travail, l'autonomie et le soutien collectif.",
+    chapitres:4, questions:18, badges:["ai","aide"],
+    chapters:[
+      {num:1, name:"Ma charge de travail au quotidien", desc:"Explorer la perception de sa propre charge de travail et les stratégies adoptées.",
+        exemples:["Vous terminez une semaine particulièrement chargée. Plusieurs tâches restent en attente.","Votre responsable vous confie un nouveau projet alors que vous êtes déjà en surcharge."]},
       {num:2, name:"Mon autonomie et mes marges de manœuvre", desc:"Identifier le sentiment de maîtrise sur son travail et ses décisions.", exemples:[]},
       {num:3, name:"Le soutien de mon entourage professionnel", desc:"Mesurer la perception du soutien reçu de la part des collègues et du management.", exemples:[]},
-      {num:4, name:"Sens du travail et reconnaissance", desc:"Observer les comportements liés au sentiment de contribution et de reconnaissance.", exemples:[]},
+      {num:4, name:"Sens du travail et reconnaissance", desc:"Observer les comportements liés au sentiment de contribution et de reconnaissance.", exemples:[]}
     ]
   },
-  {
-    id:4, cat:"Sécurité & prévention",
-    name:"Sécurité & culture de sûreté — réflexes terrain",
-    desc:"Base de travail pour mesurer les comportements préventifs et les réflexes de signalement dans un contexte industriel ou terrain.",
-    chapitres:4, questions:17,
-    badges:["ai","aide"],
+  {id:11, cat:"Qualité de vie au travail", mayt:false,
+    name:"Déconnexion et équilibre des temps de vie",
+    desc:"Aide à la rédaction pour mesurer les comportements liés à la frontière entre vie professionnelle et vie personnelle.",
+    chapitres:3, questions:14, badges:["ai","aide"],
     chapters:[
-      {num:1, name:"Connaître les risques", desc:"Identifier les signaux de risque dans l'environnement de travail.", exemples:["Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?","Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?"]},
+      {num:1, name:"Mes habitudes numériques hors bureau", desc:"Observer ses pratiques de consultation des outils professionnels en dehors du temps de travail.",
+        exemples:["Vous êtes en congé. Vous recevez un email de votre manager marqué urgent. Que faites-vous ?"]},
+      {num:2, name:"Poser des limites sans culpabiliser", desc:"Identifier ses réflexes pour protéger son temps personnel sans générer de tension.", exemples:[]},
+      {num:3, name:"Contribuer à une culture de la déconnexion", desc:"Analyser ses comportements vis-à-vis des collègues en dehors des heures ouvrées.", exemples:[]}
+    ]
+  },
+  {id:12, cat:"Qualité de vie au travail", mayt:false,
+    name:"Gestion du stress au travail",
+    desc:"Base de travail pour mesurer les réflexes face au stress professionnel : signaux, stratégies d'adaptation et ressources mobilisées.",
+    chapitres:4, questions:16, badges:["expert","aide"],
+    chapters:[
+      {num:1, name:"Reconnaître ses propres signaux de stress", desc:"Identifier les manifestations physiques et comportementales du stress chez soi.",
+        exemples:["Vous avez une réunion importante dans une heure et plusieurs dossiers urgents sont encore en attente."]},
+      {num:2, name:"Réagir sous pression sans se laisser déborder", desc:"Observer ses stratégies face à un pic de charge ou une situation imprévue.", exemples:[]},
+      {num:3, name:"Mobiliser ses ressources et son entourage", desc:"Analyser sa capacité à demander de l'aide ou à ajuster ses priorités en situation de stress.", exemples:[]},
+      {num:4, name:"Prévenir le stress chronique au quotidien", desc:"Identifier les comportements qui contribuent à un environnement de travail plus serein.", exemples:[]}
+    ]
+  },
+  // ── SÉCURITÉ & PRÉVENTION ────────────────────────────────────────────────────
+  {id:20, cat:"Sécurité & prévention", mayt:false,
+    name:"Sécurité & culture de sûreté — réflexes terrain",
+    desc:"Mesurer les comportements préventifs et les réflexes de signalement dans un contexte industriel ou terrain.",
+    chapitres:4, questions:17, badges:["ai","aide"],
+    chapters:[
+      {num:1, name:"Connaître les risques", desc:"Identifier les signaux de risque dans l'environnement de travail.",
+        exemples:["Une situation inconnue vous semble risquée sur votre poste. Que faites-vous le plus spontanément ?","Vous remarquez un presqu'accident qui n'a pas eu de conséquence. Que faites-vous ?"]},
       {num:2, name:"Adopter les bons réflexes", desc:"Mesurer les comportements préventifs au quotidien.", exemples:[]},
       {num:3, name:"Travailler en équipe en sécurité", desc:"Contribuer à la sécurité collective de l'environnement.", exemples:[]},
-      {num:4, name:"Réagir et signaler", desc:"Réagir face à l'incident et mobiliser les bons interlocuteurs.", exemples:[]},
+      {num:4, name:"Réagir et signaler", desc:"Réagir face à l'incident et mobiliser les bons interlocuteurs.", exemples:[]}
     ]
   },
-  {
-    id:5, cat:"Sécurité & prévention",
+  {id:21, cat:"Sécurité & prévention", mayt:false,
     name:"Gestes et postures : au-delà des consignes",
     desc:"Aide à la rédaction sur les comportements réels liés aux gestes et postures en situation de travail physique.",
-    chapitres:3, questions:14,
-    badges:["expert","aide"],
+    chapitres:3, questions:14, badges:["expert","aide"],
     chapters:[
-      {num:1, name:"Mes automatismes au quotidien", desc:"Observer les gestes et postures adoptés spontanément pendant les tâches physiques.", exemples:["Vous devez déplacer une charge lourde seul. Vous êtes pressé."]},
+      {num:1, name:"Mes automatismes au quotidien", desc:"Observer les gestes et postures adoptés spontanément pendant les tâches physiques.",
+        exemples:["Vous devez déplacer une charge lourde seul. Vous êtes pressé."]},
       {num:2, name:"Face à la fatigue ou à la pression", desc:"Analyser comment la fatigue ou le temps influe sur les comportements préventifs.", exemples:[]},
-      {num:3, name:"Contribuer à la prévention collective", desc:"Identifier les comportements de vigilance et de transmission des bonnes pratiques.", exemples:[]},
+      {num:3, name:"Contribuer à la prévention collective", desc:"Identifier les comportements de vigilance et de transmission des bonnes pratiques.", exemples:[]}
     ]
   },
-  {
-    id:6, cat:"Transformation & changement",
+  // ── TRANSFORMATION & CHANGEMENT ──────────────────────────────────────────────
+  {id:30, cat:"Transformation & changement", mayt:false,
     name:"Changer sans se crisper : mes réflexes face aux transformations",
     desc:"Base comportementale sur les réactions au changement, la coopération en transition et l'ancrage de nouveaux réflexes.",
-    chapitres:5, questions:25,
-    badges:["ai","aide"],
+    chapitres:5, questions:25, badges:["ai","aide"],
     chapters:[
-      {num:1, name:"Comprendre ses réactions face au changement", desc:"Identifier ses réflexes spontanés lorsqu'une nouvelle organisation ou méthode apparaît.", exemples:["Un nouveau logiciel va remplacer celui que vous utilisez depuis 3 ans. La formation prévue dure une demi-journée."]},
+      {num:1, name:"Comprendre ses réactions face au changement", desc:"Identifier ses réflexes spontanés lorsqu'une nouvelle organisation ou méthode apparaît.",
+        exemples:["Un nouveau logiciel va remplacer celui que vous utilisez depuis 3 ans. La formation prévue dure une demi-journée."]},
       {num:2, name:"Gérer l'incertitude sans se crisper", desc:"Observer sa manière de réagir lorsque les repères changent.", exemples:[]},
       {num:3, name:"Coopérer dans une période de transition", desc:"Analyser la manière dont on partage l'information et contribue au collectif.", exemples:[]},
       {num:4, name:"Expérimenter et ajuster ses pratiques", desc:"Identifier les comportements qui permettent de tester, apprendre et progresser.", exemples:[]},
-      {num:5, name:"Ancrer de nouveaux réflexes", desc:"Transformer progressivement le changement en pratiques durables.", exemples:[]},
+      {num:5, name:"Ancrer de nouveaux réflexes", desc:"Transformer progressivement le changement en pratiques durables.", exemples:[]}
     ]
   },
-  {
-    id:7, cat:"Numérique & cybersécurité",
+  // ── NUMÉRIQUE & CYBERSÉCURITÉ ─────────────────────────────────────────────────
+  {id:40, cat:"Numérique & cybersécurité", mayt:false,
     name:"Quel est mon niveau de compréhension des risques cyber ?",
-    desc:"Aide à la rédaction pour mesurer la maturité comportementale face aux risques numériques du quotidien professionnel.",
-    chapitres:4, questions:20,
-    badges:["ai","aide","validation"],
+    desc:"Mesurer la maturité comportementale face aux risques numériques du quotidien professionnel.",
+    chapitres:4, questions:20, badges:["ai","aide"],
     chapters:[
-      {num:1, name:"Comprendre les risques cyber du quotidien", desc:"Identifier les situations courantes qui exposent les données ou les outils.", exemples:["Vous recevez un email de votre direction des systèmes d'information vous demandant de cliquer sur un lien pour vérifier vos identifiants."]},
+      {num:1, name:"Comprendre les risques cyber du quotidien", desc:"Identifier les situations courantes qui exposent les données ou les outils.",
+        exemples:["Vous recevez un email de votre DSI vous demandant de cliquer sur un lien pour vérifier vos identifiants."]},
       {num:2, name:"Reconnaître les signaux d'alerte", desc:"Repérer les indices d'un message suspect ou d'une tentative de phishing.", exemples:[]},
       {num:3, name:"Protéger ses accès et ses données", desc:"Analyser ses pratiques autour des mots de passe et des fichiers sensibles.", exemples:[]},
-      {num:4, name:"Réagir en cas de doute ou d'incident", desc:"Savoir quoi faire et qui prévenir lorsqu'une situation semble suspecte.", exemples:[]},
+      {num:4, name:"Réagir en cas de doute ou d'incident", desc:"Savoir quoi faire et qui prévenir lorsqu'une situation semble suspecte.", exemples:[]}
     ]
   },
-  {
-    id:8, cat:"Numérique & cybersécurité",
+  {id:41, cat:"Numérique & cybersécurité", mayt:false,
     name:"Usage responsable des outils numériques au travail",
-    desc:"Base comportementale sur les pratiques numériques au bureau : stockage, partage, usage des messageries et des outils collaboratifs.",
-    chapitres:3, questions:13,
-    badges:["ai","aide"],
+    desc:"Base comportementale sur les pratiques numériques : stockage, partage, messageries et outils collaboratifs.",
+    chapitres:3, questions:13, badges:["ai","aide"],
     chapters:[
       {num:1, name:"Mes pratiques de stockage et partage", desc:"Observer comment on stocke, partage et protège les fichiers professionnels.", exemples:[]},
       {num:2, name:"Usage des outils de messagerie", desc:"Analyser les réflexes liés aux communications par email, Teams ou Slack.", exemples:[]},
-      {num:3, name:"Hygiène numérique au quotidien", desc:"Identifier les comportements qui contribuent ou non à la sécurité numérique collective.", exemples:[]},
+      {num:3, name:"Hygiène numérique au quotidien", desc:"Identifier les comportements qui contribuent à la sécurité numérique collective.", exemples:[]}
     ]
   },
-  {
-    id:9, cat:"Éthique & conformité",
+  // ── ÉTHIQUE & CONFORMITÉ ─────────────────────────────────────────────────────
+  {id:50, cat:"Éthique & conformité", mayt:false,
     name:"Intégrité professionnelle et situations à risque",
     desc:"Aide à la rédaction sur les comportements face à des situations pouvant relever du conflit d'intérêts, de la pression hiérarchique ou de la fraude.",
-    chapitres:4, questions:16,
-    badges:["expert","validation","aide"],
+    chapitres:4, questions:16, badges:["expert","aide"],
     chapters:[
-      {num:1, name:"Reconnaître une situation à risque éthique", desc:"Identifier les situations professionnelles pouvant poser un problème d'intégrité.", exemples:["Un partenaire commercial vous propose un cadeau de valeur au moment d'une décision d'achat vous concernant."]},
+      {num:1, name:"Reconnaître une situation à risque éthique", desc:"Identifier les situations professionnelles pouvant poser un problème d'intégrité.",
+        exemples:["Un partenaire commercial vous propose un cadeau de valeur au moment d'une décision d'achat vous concernant."]},
       {num:2, name:"Faire face à la pression hiérarchique", desc:"Observer ses réflexes lorsque la hiérarchie pousse à agir en dehors des règles.", exemples:[]},
       {num:3, name:"Signaler une situation préoccupante", desc:"Analyser sa propension à utiliser les canaux de signalement disponibles.", exemples:[]},
-      {num:4, name:"Protéger les données et les ressources", desc:"Identifier les comportements qui préservent les biens et informations de l'organisation.", exemples:[]},
+      {num:4, name:"Protéger les données et les ressources", desc:"Identifier les comportements qui préservent les biens et informations de l'organisation.", exemples:[]}
     ]
   },
-  {
-    id:10, cat:"Environnement & sobriété",
-    name:"Suis-je acteur de ma sobriété énergétique au quotidien ?",
-    desc:"Base comportementale sur les gestes et habitudes liés à la consommation d'énergie dans l'environnement professionnel.",
-    chapitres:2, questions:10,
-    badges:["client","aide"],
+  {id:51, cat:"Éthique & conformité", mayt:false,
+    name:"Prévention des conflits d'intérêts",
+    desc:"Base comportementale pour identifier et gérer les situations pouvant créer un conflit entre intérêts personnels et responsabilités professionnelles.",
+    chapitres:3, questions:14, badges:["expert","aide"],
     chapters:[
-      {num:1, name:"Comprendre ses usages quotidiens", desc:"Identifier les gestes et habitudes qui influencent la consommation d'énergie.", exemples:["En fin de journée, votre poste de travail est allumé. Vous avez une réunion en dehors du bureau. Vous…"]},
-      {num:2, name:"Agir concrètement au quotidien", desc:"Repérer les leviers simples permettant de contribuer à une sobriété collective.", exemples:[]},
+      {num:1, name:"Identifier un conflit d'intérêts potentiel", desc:"Reconnaître les situations dans lesquelles un intérêt personnel pourrait influencer une décision professionnelle.",
+        exemples:["Vous devez évaluer des candidatures pour un poste. L'un des candidats est un ami proche."]},
+      {num:2, name:"Réagir et déclarer", desc:"Analyser ses réflexes lorsqu'une situation potentielle de conflit d'intérêts est identifiée.", exemples:[]},
+      {num:3, name:"Contribuer à une culture de transparence", desc:"Identifier les comportements qui favorisent la confiance et la neutralité dans les décisions.", exemples:[]}
     ]
   },
-  {
-    id:11, cat:"Inclusion & relations professionnelles",
-    name:"Etes-vous un·e collègue inclusif·ve ?",
-    desc:"Aide à la rédaction sur les comportements favorisant l'inclusion au sein des équipes. À adapter impérativement au contexte de l'organisation.",
-    chapitres:5, questions:22,
-    badges:["expert","validation","aide"],
+  {id:52, cat:"Éthique & conformité", mayt:false,
+    name:"Prévention de la corruption",
+    desc:"Aide à la rédaction sur les comportements face à des situations pouvant relever de la corruption, du favoritisme ou des cadeaux d'affaires.",
+    chapitres:3, questions:13, badges:["expert","aide"],
     chapters:[
-      {num:1, name:"Les stéréotypes dans mon quotidien", desc:"Identifier les réflexes inconscients liés aux représentations et aux catégories.", exemples:["Vous devez former un binôme pour un projet complexe. Vous êtes libre de choisir votre partenaire."]},
-      {num:2, name:"Reconnaître les différences individuelles", desc:"Observer sa façon de prendre en compte les spécificités de chacun.", exemples:[]},
-      {num:3, name:"Communiquer de manière inclusive", desc:"Analyser ses pratiques de communication au sein des équipes.", exemples:[]},
-      {num:4, name:"Agir face à une situation excluante", desc:"Identifier ses réflexes lorsqu'on est témoin d'un comportement excluant.", exemples:[]},
-      {num:5, name:"Contribuer à un collectif équitable", desc:"Observer les comportements qui favorisent l'équité dans les équipes.", exemples:[]},
+      {num:1, name:"Reconnaître une situation à risque", desc:"Identifier les formes directes et indirectes que peut prendre la corruption dans un contexte professionnel.",
+        exemples:["Un prestataire vous offre des billets pour un événement sportif dans le cadre d'un appel d'offres en cours."]},
+      {num:2, name:"Refuser et signaler sans fragiliser la relation", desc:"Observer ses réflexes pour décliner une proposition inappropriée sans créer de rupture relationnelle.", exemples:[]},
+      {num:3, name:"Connaître les règles et les recours", desc:"Analyser sa compréhension des règles internes et des dispositifs de signalement disponibles.", exemples:[]}
     ]
   },
-  {
-    id:12, cat:"Management & coopération",
-    name:"Déléguer avec confiance : postures et pratiques",
-    desc:"Base de travail pour mesurer les comportements de délégation dans une équipe : clarté des attentes, suivi et autonomie accordée.",
-    chapitres:4, questions:16,
-    badges:["ai","aide"],
+  // ── ENVIRONNEMENT & SOBRIÉTÉ ─────────────────────────────────────────────────
+  {id:60, cat:"Environnement & sobriété", mayt:false,
+    name:"Sobriété énergétique au quotidien",
+    desc:"Mesurer les gestes et habitudes liés à la consommation d'énergie dans l'environnement professionnel.",
+    chapitres:2, questions:10, badges:["contribution","aide"],
     chapters:[
-      {num:1, name:"Clarifier avant de déléguer", desc:"Identifier les comportements qui permettent de formuler des attentes claires.", exemples:["Vous confiez une tâche importante à un collaborateur pour la première fois."]},
-      {num:2, name:"Accorder l'autonomie nécessaire", desc:"Observer sa capacité à laisser faire sans intervenir excessivement.", exemples:[]},
-      {num:3, name:"Assurer le suivi sans micro-manager", desc:"Analyser ses pratiques de suivi et de point d'avancement.", exemples:[]},
-      {num:4, name:"Tirer les enseignements après délégation", desc:"Identifier les comportements qui permettent de capitaliser sur l'expérience.", exemples:[]},
+      {num:1, name:"Comprendre ses usages quotidiens", desc:"Identifier les gestes et habitudes qui influencent la consommation d'énergie.",
+        exemples:["En fin de journée, votre poste de travail est allumé. Vous avez une réunion en dehors du bureau. Vous…"]},
+      {num:2, name:"Agir concrètement au quotidien", desc:"Repérer les leviers simples permettant de contribuer à une sobriété collective.", exemples:[]}
     ]
   },
-  {
-    id:13, cat:"Management & coopération",
-    name:"Management engageant et leadership assertif",
-    desc:"Base de travail sur les postures managériales qui favorisent l'engagement, la clarté des attentes et l'assertivité bienveillante dans les relations d'équipe.",
-    chapitres:5, questions:22,
-    badges:["tbf","aide"],
+  {id:61, cat:"Environnement & sobriété", mayt:false,
+    name:"Éco-gestes au travail : ce que je fais vraiment",
+    desc:"Base comportementale sur les gestes environnementaux au bureau : énergie, déchets, eau, consommables.",
+    chapitres:3, questions:14, badges:["ai","aide"],
     chapters:[
-      {num:1, name:"Créer les conditions de l'engagement", desc:"Identifier les comportements qui favorisent la motivation intrinsèque et l'implication durable.", exemples:["Un collaborateur vous semble moins investi depuis quelques semaines. Vous ne savez pas pourquoi. Que faites-vous ?","Vous devez confier une tâche peu valorisante mais nécessaire à un membre de votre équipe."]},
-      {num:2, name:"Formuler des attentes claires sans pression", desc:"Analyser la manière dont on exprime ses demandes et ses exigences sans créer de stress inutile.", exemples:["Vous devez demander à votre équipe de fournir un effort supplémentaire sur une période courte."]},
-      {num:3, name:"Dire non, dire oui : savoir poser des limites", desc:"Observer ses réflexes face aux demandes excessives, aux situations floues ou aux conflits d'agenda.", exemples:[]},
-      {num:4, name:"Reconnaître et valoriser la contribution", desc:"Mesurer la régularité et la sincérité des gestes de reconnaissance au sein de l'équipe.", exemples:[]},
-      {num:5, name:"Gérer les désaccords avec assertivité", desc:"Identifier les comportements face aux situations de tension ou d'opposition au sein de l'équipe.", exemples:[]},
+      {num:1, name:"Mes gestes liés à l'énergie", desc:"Observer ses habitudes de consommation électrique et thermique au bureau.",
+        exemples:["Vous passez dans une salle de réunion vide en fin de journée. La lumière et le vidéoprojecteur sont allumés."]},
+      {num:2, name:"Mes gestes liés aux déchets et aux consommables", desc:"Analyser ses pratiques d'impression, de gestion des déchets et d'utilisation des ressources.", exemples:[]},
+      {num:3, name:"Contribuer à une culture éco-responsable collective", desc:"Identifier les comportements qui favorisent l'engagement environnemental dans l'équipe.", exemples:[]}
     ]
   },
-  {
-    id:14, cat:"Management & coopération",
-    name:"Gestion de projet au quotidien : réflexes et pratiques",
-    desc:"Aide à la rédaction pour mesurer les comportements liés à la gestion de projet : cadrage, pilotage, coopération, décision et capitalisation.",
-    chapitres:4, questions:18,
-    badges:["tbf","aide","validation"],
+  {id:62, cat:"Environnement & sobriété", mayt:false,
+    name:"Mobilité durable : mes trajets professionnels",
+    desc:"Aide à la rédaction pour mesurer les comportements liés aux déplacements professionnels et au choix des modes de transport.",
+    chapitres:3, questions:13, badges:["ai","aide"],
     chapters:[
-      {num:1, name:"Cadrer et prioriser dès le départ", desc:"Identifier les réflexes liés à la définition des objectifs, du périmètre et des rôles en début de projet.", exemples:["Un projet démarre après une réunion de lancement enthousiaste, mais les attentes du sponsor restent floues. Que faites-vous ?","On vous demande de lancer un projet sans vous donner le temps de cadrer correctement. Vous…"]},
-      {num:2, name:"Piloter, anticiper les risques et tenir les délais", desc:"Analyser les comportements de suivi, de communication d'avancement et de gestion des imprévus.", exemples:["Vous constatez à mi-parcours que votre projet a pris du retard. Vous n'en avez pas encore informé les parties prenantes."]},
-      {num:3, name:"Coopérer et communiquer avec les parties prenantes", desc:"Observer ses pratiques de communication, d'écoute et de coordination avec les acteurs du projet.", exemples:[]},
-      {num:4, name:"Ajuster, décider et capitaliser", desc:"Identifier les comportements qui permettent de s'adapter en cours de projet et de tirer les enseignements à la fin.", exemples:[]},
+      {num:1, name:"Mes trajets domicile-travail", desc:"Observer ses pratiques de déplacement quotidien et les critères de choix du mode de transport.",
+        exemples:["Vous habitez à 12 km de votre lieu de travail. Plusieurs options de transport s'offrent à vous."]},
+      {num:2, name:"Mes déplacements professionnels", desc:"Analyser ses réflexes face aux déplacements en mission ou entre sites.", exemples:[]},
+      {num:3, name:"Réduire l'empreinte de mes déplacements", desc:"Identifier les alternatives et les comportements qui réduisent l'impact environnemental.", exemples:[]}
     ]
   },
+  {id:63, cat:"Environnement & sobriété", mayt:false,
+    name:"Achats responsables au quotidien",
+    desc:"Mesurer les comportements liés aux achats professionnels : matériel, fournitures, prestataires et critères de décision.",
+    chapitres:3, questions:12, badges:["ai","aide"],
+    chapters:[
+      {num:1, name:"Mes critères de choix lors d'un achat", desc:"Observer les facteurs qui influencent mes décisions d'achat professionnel.",
+        exemples:["Vous devez commander du matériel bureautique. Deux fournisseurs répondent au besoin : l'un est moins cher, l'autre a une démarche RSE certifiée."]},
+      {num:2, name:"Consommer moins et mieux", desc:"Analyser ses réflexes pour réduire les achats inutiles ou sur-dimensionnés.", exemples:[]},
+      {num:3, name:"Intégrer les critères RSE dans mes décisions", desc:"Identifier les comportements qui favorisent des achats durables et responsables.", exemples:[]}
+    ]
+  },
+  {id:64, cat:"Environnement & sobriété", mayt:false,
+    name:"Réduction des déchets au travail",
+    desc:"Base comportementale sur les pratiques de tri, de réduction à la source et de réemploi dans l'environnement professionnel.",
+    chapitres:3, questions:12, badges:["ai","aide"],
+    chapters:[
+      {num:1, name:"Mon rapport au tri et au recyclage", desc:"Observer ses pratiques de tri des déchets dans les espaces de travail.", exemples:[]},
+      {num:2, name:"Réduire avant de jeter", desc:"Analyser ses comportements pour limiter la production de déchets en amont.", exemples:["Vous devez commander des fournitures pour un événement interne. Vous avez le choix entre vaisselle jetable ou réutilisable."]},
+      {num:3, name:"Sensibiliser et entraîner ses collègues", desc:"Identifier les comportements de partage et d'entraînement sur les bonnes pratiques.", exemples:[]}
+    ]
+  },
+  {id:65, cat:"Environnement & sobriété", mayt:false,
+    name:"Ma responsabilité individuelle dans la transition écologique",
+    desc:"Aide à la rédaction pour mesurer la perception de son rôle personnel dans les enjeux environnementaux de l'entreprise.",
+    chapitres:3, questions:13, badges:["ai","aide"],
+    chapters:[
+      {num:1, name:"Comment je perçois mon rôle", desc:"Identifier la vision que l'on a de sa propre contribution aux enjeux écologiques.", exemples:[]},
+      {num:2, name:"Arbitrer entre performance et impact environnemental", desc:"Observer ses réflexes lorsqu'une décision met en tension efficacité et impact écologique.",
+        exemples:["Vous pouvez terminer un projet plus vite en imprimant 200 exemplaires d'un document ou en 2 jours de plus en travaillant en numérique."]},
+      {num:3, name:"Contribuer à la culture RSE de mon organisation", desc:"Analyser ses comportements vis-à-vis des initiatives environnementales de l'entreprise.", exemples:[]}
+    ]
+  },
+  // ── RELATIONS CLIENT & QUALITÉ DE SERVICE ─────────────────────────────────────
+  {id:70, cat:"Relations client & qualité de service", mayt:false,
+    name:"Posture client : comment j'accueille et je gère une demande",
+    desc:"Mesurer les réflexes comportementaux liés à l'accueil, la qualification et le traitement des demandes clients.",
+    chapitres:4, questions:16, badges:["expert","aide"],
+    chapters:[
+      {num:1, name:"Accueillir une demande avec la bonne posture", desc:"Identifier ses réflexes lorsqu'une demande client arrive, quelle que soit sa forme.",
+        exemples:["Un client vous contacte par email avec une demande urgente qui ne relève pas de votre périmètre direct."]},
+      {num:2, name:"Comprendre avant de répondre", desc:"Analyser ses pratiques de reformulation et de qualification du besoin avant de traiter.", exemples:[]},
+      {num:3, name:"Gérer les situations tendues avec un client", desc:"Observer ses réflexes face à un client mécontent ou exigeant.", exemples:["Un client se plaint vivement d'un délai non respecté. Il a partiellement raison."]},
+      {num:4, name:"Fidéliser par la qualité de la relation", desc:"Identifier les comportements qui renforcent la confiance et la satisfaction dans la durée.", exemples:[]}
+    ]
+  },
+  {id:71, cat:"Relations client & qualité de service", mayt:false,
+    name:"Qualité de service interne : je suis aussi le client de mes collègues",
+    desc:"Base comportementale sur la relation de service en interne : entre équipes, entre fonctions et entre sites.",
+    chapitres:3, questions:13, badges:["ai","aide"],
+    chapters:[
+      {num:1, name:"Ma posture vis-à-vis de mes clients internes", desc:"Observer la qualité de service que j'offre aux collègues qui dépendent de mon travail.",
+        exemples:["Une équipe interne attend depuis plusieurs jours un livrable de votre part sans relance de votre côté."]},
+      {num:2, name:"Formuler une demande interne avec clarté", desc:"Analyser la façon dont je sollicite les autres équipes et la qualité de mes briefs.", exemples:[]},
+      {num:3, name:"Résoudre les frictions inter-équipes", desc:"Identifier les comportements qui permettent de gérer les désaccords de service sans escalade.", exemples:[]}
+    ]
+  },
+  {id:72, cat:"Relations client & qualité de service", mayt:false,
+    name:"Gérer les réclamations et situations difficiles avec un client",
+    desc:"Aide à la rédaction pour mesurer les comportements face aux situations de tension, réclamation ou mécontentement client.",
+    chapitres:4, questions:15, badges:["expert","aide"],
+    chapters:[
+      {num:1, name:"Accueillir une réclamation sans se défendre", desc:"Observer ses réflexes lorsqu'un client exprime un mécontentement, fondé ou non.",
+        exemples:["Un client vous appelle pour se plaindre d'une erreur dans sa commande. Il est agressif."]},
+      {num:2, name:"Analyser et reconnaître sa part de responsabilité", desc:"Identifier ses réflexes pour admettre une erreur et prendre en charge sans minimiser.", exemples:[]},
+      {num:3, name:"Proposer une solution et engager sa parole", desc:"Analyser la façon dont on formule une réponse et prend des engagements réalistes.", exemples:[]},
+      {num:4, name:"Capitaliser pour éviter la récidive", desc:"Observer les comportements de retour d'expérience et de prévention après une situation difficile.", exemples:[]}
+    ]
+  },
+  // ── INCLUSION & DIVERSITÉ (Me&YouToo) ────────────────────────────────────────
+  {id:80, cat:"Inclusion & diversité", mayt:true,
+    name:"Êtes-vous un·e collègue inclusif·ve ?",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure les réflexes individuels en matière d'inclusion au sein des équipes.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:81, cat:"Inclusion & diversité", mayt:true,
+    name:"Votre compréhension du sexisme au travail",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure la compréhension des mécanismes du sexisme ordinaire en milieu professionnel.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:82, cat:"Inclusion & diversité", mayt:true,
+    name:"Êtes-vous un manager inclusif ?",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure les pratiques managériales en matière d'équité, de reconnaissance et d'inclusion.",
+    chapitres:5, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:83, cat:"Inclusion & diversité", mayt:true,
+    name:"Êtes-vous un·e allié·e de la mixité ?",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure l'engagement individuel en faveur de la mixité professionnelle.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:84, cat:"Inclusion & diversité", mayt:true,
+    name:"Votre compréhension du sujet LGBT+ dans l'entreprise",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure la sensibilité et la posture face aux enjeux LGBT+ en milieu professionnel.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:85, cat:"Inclusion & diversité", mayt:true,
+    name:"Votre compréhension de la laïcité au travail",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure la compréhension des principes de laïcité et leur application dans l'environnement professionnel.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:86, cat:"Inclusion & diversité", mayt:true,
+    name:"Votre posture sur l'intergénérationnel dans l'entreprise",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure les réflexes et représentations liés aux différences de générations au travail.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:87, cat:"Inclusion & diversité", mayt:true,
+    name:"Votre compréhension du handicap dans l'entreprise",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure la sensibilité et les comportements face au handicap en milieu professionnel.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:88, cat:"Inclusion & diversité", mayt:true,
+    name:"Votre compréhension de la diversité des origines",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure la posture face à la diversité des origines, des parcours et des cultures dans l'entreprise.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  },
+  {id:89, cat:"Inclusion & diversité", mayt:true,
+    name:"Repérer & agir : votre posture face au harcèlement moral",
+    desc:"Autodiagnostic comportemental conçu par Me&YouToo. Mesure la capacité à identifier, nommer et réagir face à des situations de harcèlement moral.",
+    chapitres:4, questions:0, badges:["mayt"],
+    chapters:[]
+  }
 ];
 
-const BADGE_CONFIG = {
-  ai:         { label:'Base assistée par IA',        cls:'badge-ai' },
-  expert:     { label:'Conçu par expert·e externe',  cls:'badge-expert' },
-  client:     { label:'Contribution client',         cls:'badge-client' },
-  validation: { label:'Validation obligatoire',      cls:'badge-validation' },
-  aide:       { label:'Aide à la rédaction',         cls:'badge-aide' },
-  tbf:        { label:'Conçu par The Big Factory',   cls:'badge-tbf' },
+var BADGE_CONFIG = {
+  ai:           {label:"Base assistée par IA",                 cls:"badge-ai"},
+  expert:       {label:"Conçu par expert externe (nom)",       cls:"badge-expert"},
+  contribution: {label:"Contribution partagée entreprise",     cls:"badge-contribution"},
+  aide:         {label:"Aide à la rédaction",                  cls:"badge-aide"},
+  tbf:          {label:"Conçu par The Big Factory",            cls:"badge-tbf"},
+  mayt:         {label:"Conçu par Me&YouToo",                  cls:"badge-mayt"}
 };
 
-// ── ÉTAT ────────────────────────────────────────────────────────────────────
-let activeCat = 'all';
-let searchVal = '';
+var activeCat = "all";
 
-// ── FILTRES ──────────────────────────────────────────────────────────────────
 function setCat(cat, btn) {
   activeCat = cat;
-  document.querySelectorAll('.fcat').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
+  document.querySelectorAll(".fcat").forEach(function(b){ b.classList.remove("on"); });
+  btn.classList.add("on");
   applyFilters();
 }
 
 function applyFilters() {
-  searchVal = document.getElementById('search').value.toLowerCase().trim();
-  const grid = document.getElementById('cards-grid');
-  const empty = document.getElementById('empty-state');
-  let count = 0;
-
-  const cards = grid.querySelectorAll('.theme-card');
-  cards.forEach(card => {
-    const id = parseInt(card.dataset.id);
-    const t = THEMES.find(th => th.id === id);
-    const catOk = activeCat === 'all' || t.cat === activeCat;
-    const searchOk = !searchVal ||
-      t.name.toLowerCase().includes(searchVal) ||
-      t.desc.toLowerCase().includes(searchVal) ||
-      t.cat.toLowerCase().includes(searchVal) ||
-      t.badges.some(b => BADGE_CONFIG[b]?.label.toLowerCase().includes(searchVal));
-    const visible = catOk && searchOk;
-    card.style.display = visible ? '' : 'none';
-    if (visible) count++;
+  var search = document.getElementById("search").value.toLowerCase().trim();
+  var grid = document.getElementById("cards-grid");
+  var empty = document.getElementById("empty-state");
+  var count = 0;
+  grid.querySelectorAll(".theme-card").forEach(function(card) {
+    var id = parseInt(card.dataset.id);
+    var t = THEMES.filter(function(x){ return x.id === id; })[0];
+    var catOk = activeCat === "all" || t.cat === activeCat;
+    var searchOk = !search ||
+      t.name.toLowerCase().indexOf(search) >= 0 ||
+      t.desc.toLowerCase().indexOf(search) >= 0 ||
+      t.cat.toLowerCase().indexOf(search) >= 0 ||
+      t.badges.some(function(b){ return BADGE_CONFIG[b] && BADGE_CONFIG[b].label.toLowerCase().indexOf(search) >= 0; });
+    var show = catOk && searchOk;
+    card.style.display = show ? "" : "none";
+    if (show) count++;
   });
-
-  document.getElementById('results-count').textContent = count + ' thème' + (count > 1 ? 's' : '');
-  empty.style.display = count === 0 ? 'block' : 'none';
+  document.getElementById("results-count").textContent = count + " thème" + (count > 1 ? "s" : "");
+  empty.style.display = count === 0 ? "block" : "none";
 }
 
-// ── RENDU CARTES ─────────────────────────────────────────────────────────────
 function badgeHTML(key) {
-  const b = BADGE_CONFIG[key];
-  if (!b) return '';
-  return `<span class="badge ${b.cls}">${b.label}</span>`;
+  var b = BADGE_CONFIG[key];
+  if (!b) return "";
+  return '<span class="badge ' + b.cls + '">' + b.label + "</span>";
 }
 
 function renderCards() {
-  const grid = document.getElementById('cards-grid');
-  grid.innerHTML = THEMES.map(t => `
-    <div class="theme-card" data-id="${t.id}">
-      <div class="card-top">
-        <div class="card-cat"><span class="card-cat-dot"></span>${t.cat}</div>
-        <div class="card-name">${t.name}</div>
-        <div class="card-desc">${t.desc}</div>
-        <div class="card-meta">
-          <div class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="#94a3b8" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="#94a3b8" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="#94a3b8" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="#94a3b8" stroke-width="2"/></svg><span class="card-meta-val">${t.chapitres}</span> chapitres</div>
-          <div class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#94a3b8" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/></svg><span class="card-meta-val">~${Math.round(t.questions * 0.9)}</span> min</div>
-          <div class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="card-meta-val">${t.questions}</span> questions</div>
-        </div>
-        <div class="card-badges">${t.badges.map(badgeHTML).join('')}</div>
-      </div>
-      <div class="card-bot">
-        <button class="btn-apercu" onclick="openPanel(${t.id})">Aperçu</button>
-        <button class="btn-use" onclick="useTheme(${t.id})">Utiliser comme base de travail</button>
-      </div>
-    </div>`).join('');
+  var grid = document.getElementById("cards-grid");
+  var html = "";
+  THEMES.forEach(function(t) {
+    var badgesHTML = t.badges.map(badgeHTML).join("");
+    var metaHTML = t.mayt
+      ? '<div class="card-meta"><div class="card-meta-item"><span class="card-meta-val">' + t.chapitres + "</span> chapitres</div></div>"
+      : '<div class="card-meta"><div class="card-meta-item"><span class="card-meta-val">' + t.chapitres + '</span> chapitres</div><div class="card-meta-item"><span class="card-meta-val">' + t.questions + '</span> questions</div></div>';
+    var botHTML = t.mayt
+      ? '<a class="btn-contact" href="mailto:contact@meandyoutoo.app">✉ Contacter Me&YouToo</a>'
+      : '<button class="btn-apercu" onclick="openPanel(' + t.id + ')">Aperçu</button><button class="btn-use" onclick="useTheme(' + t.id + ')">Utiliser comme base de travail</button>';
+    var maytNotice = t.mayt
+      ? '<div class="mayt-notice">🔒 Contenu sur demande — non accessible en autonomie</div>'
+      : "";
+    html += '<div class="theme-card' + (t.mayt ? " mayt" : "") + '" data-id="' + t.id + '">'
+      + '<div class="card-top">'
+      + '<div class="card-cat"><span class="card-cat-dot"></span>' + t.cat + "</div>"
+      + '<div class="card-name">' + t.name + "</div>"
+      + '<div class="card-desc">' + t.desc + "</div>"
+      + metaHTML
+      + '<div class="card-badges">' + badgesHTML + "</div>"
+      + "</div>"
+      + maytNotice
+      + '<div class="card-bot">' + botHTML + "</div>"
+      + "</div>";
+  });
+  grid.innerHTML = html;
   applyFilters();
 }
 
-// ── PANNEAU APERÇU ────────────────────────────────────────────────────────────
 function openPanel(id) {
-  const t = THEMES.find(th => th.id === id);
-  if (!t) return;
-  document.getElementById('pa-cat').textContent = t.cat;
-  document.getElementById('pa-title').textContent = t.name;
-  document.getElementById('pa-desc').textContent = t.desc;
-  document.getElementById('pa-badges').innerHTML = t.badges.map(badgeHTML).join('');
-  document.getElementById('pa-chapters').innerHTML = t.chapters.map(c => `
-    <div class="pa-chap">
-      <div class="pa-chap-num">Chapitre ${c.num}</div>
-      <div class="pa-chap-name">${c.name}</div>
-      <div class="pa-chap-desc">${c.desc}</div>
-      ${c.exemples.length ? `
-        <div class="pa-q-sample">
-          <div class="pa-q-lbl">Exemple${c.exemples.length > 1 ? 's' : ''} de mise${c.exemples.length > 1 ? 's' : ''} en situation</div>
-          ${c.exemples.map(e => `<div class="pa-q-item">${e}</div>`).join('')}
-        </div>` : ''}
-    </div>`).join('');
-  document.getElementById('pa-use-btn').onclick = () => useTheme(id);
-  document.getElementById('overlay').classList.add('on');
-  document.getElementById('panel-apercu').classList.add('on');
+  var t = THEMES.filter(function(x){ return x.id === id; })[0];
+  if (!t || t.mayt) return;
+  document.getElementById("pa-cat").textContent = t.cat;
+  document.getElementById("pa-title").textContent = t.name;
+  var bodyHTML = '<div class="pa-alert">⚠️ <strong>Aide à la rédaction :</strong> ce contenu doit être relu, adapté et validé par votre organisation avant tout lancement.</div>'
+    + '<div class="pa-desc">' + t.desc + "</div>"
+    + '<div class="pa-badges">' + t.badges.map(badgeHTML).join("") + "</div>";
+  if (t.chapters.length > 0) {
+    bodyHTML += '<div class="pa-section">Chapitres</div>';
+    t.chapters.forEach(function(c) {
+      bodyHTML += '<div class="pa-chap"><div class="pa-chap-num">Chapitre ' + c.num + "</div>"
+        + '<div class="pa-chap-name">' + c.name + "</div>"
+        + '<div class="pa-chap-desc">' + c.desc + "</div>";
+      if (c.exemples && c.exemples.length > 0) {
+        bodyHTML += '<div class="pa-q-sample"><div class="pa-q-lbl">Exemple' + (c.exemples.length > 1 ? "s" : "") + " de mise en situation</div>";
+        c.exemples.forEach(function(e){ bodyHTML += '<div class="pa-q-item">' + e + "</div>"; });
+        bodyHTML += "</div>";
+      }
+      bodyHTML += "</div>";
+    });
+  }
+  document.getElementById("pa-body").innerHTML = bodyHTML;
+  document.getElementById("pa-foot").innerHTML = '<button class="btn-use-full" onclick="useTheme(' + t.id + ')">Utiliser comme base de travail</button>';
+  document.getElementById("overlay").classList.add("on");
+  document.getElementById("panel-apercu").classList.add("on");
 }
 
 function closePanel() {
-  document.getElementById('overlay').classList.remove('on');
-  document.getElementById('panel-apercu').classList.remove('on');
+  document.getElementById("overlay").classList.remove("on");
+  document.getElementById("panel-apercu").classList.remove("on");
 }
 
-// ── UTILISER UN THÈME ─────────────────────────────────────────────────────────
 function useTheme(id) {
   closePanel();
-  const t = THEMES.find(th => th.id === id);
-  if (!t) return;
-
-  // Sauvegarder en localStorage pour passage à l'éditeur
-  const draft = {
+  var t = THEMES.filter(function(x){ return x.id === id; })[0];
+  if (!t || t.mayt) return;
+  var draft = {
     name: t.name,
-    chapters: t.chapters.map((c, i) => ({
-      id: i + 1,
-      name: c.name,
-      desc: c.desc,
-      questions: [],
-      profils: [
-        {niveau:1, titre:'', phrase:'', description:'', motscles:[]},
-        {niveau:2, titre:'', phrase:'', description:'', motscles:[]},
-        {niveau:3, titre:'', phrase:'', description:'', motscles:[]},
-      ],
-      seuils: [{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]
-    }))
+    chapters: t.chapters.map(function(c, i) {
+      return {
+        id: i + 1, name: c.name, desc: c.desc, questions: [],
+        profils: [
+          {niveau:1, titre:"", phrase:"", description:"", motscles:[]},
+          {niveau:2, titre:"", phrase:"", description:"", motscles:[]},
+          {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
+        ],
+        seuils: [{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]
+      };
+    })
   };
-  localStorage.setItem('selftechDraftTheme', JSON.stringify(draft));
-
-  showToast('Thème copié dans Ma bibliothèque — adaptation et validation requises avant lancement');
-  setTimeout(() => {
-    window.location.href = '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(t.name);
+  localStorage.setItem("selftechDraftTheme", JSON.stringify(draft));
+  showToast("Thème copié — adaptation et validation requises avant lancement");
+  setTimeout(function() {
+    window.location.href = "3-selftech_editeur_questions.html?mode=autodiag&theme=" + encodeURIComponent(t.name);
   }, 2200);
 }
 
 function showToast(msg) {
-  document.getElementById('toast-msg').textContent = msg;
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
+  document.getElementById("toast-msg").textContent = msg;
+  var t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 3500);
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
 renderCards();
 </script>
 </body>
