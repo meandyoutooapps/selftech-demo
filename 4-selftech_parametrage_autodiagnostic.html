@@ -232,7 +232,7 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
 
         <div class="alert alert-info" style="margin-bottom:14px">
           <span class="alert-ico">🔒</span>
-          <span>Le risque d'identification vient du <strong>croisement des critères</strong>, pas seulement du nombre de répondants par critère. Plus vous combinez de critères, plus chaque combinaison peut concerner peu de personnes — et potentiellement identifier indirectement un répondant. Renseignez le nombre total de répondants estimé et l'effectif minimum de chaque critère pour calculer le risque réel.</span>
+          <span>Plus vous ajoutez de données socio-démo, plus les résultats peuvent créer de très petits groupes. Par exemple : <strong>manager + plus de 10 ans d'ancienneté + poste terrain + exposition régulière</strong>. S'il n'y a que quelques personnes dans ce cas, elles pourraient être reconnues indirectement dans les résultats.</span>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
@@ -241,9 +241,9 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
             <input class="inp" id="nb-repondants" type="number" value="120" min="1" oninput="save();checkAnonymity()" placeholder="Ex : 120">
           </div>
           <div style="padding:10px 14px;background:#f7f9fc;border:1px solid #e2e8f0;border-radius:8px;display:flex;flex-direction:column;justify-content:center">
-            <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Groupe croisé estimé</div>
+            <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">Taille moyenne après croisement</div>
             <div id="cross-estimate" style="font-size:16px;font-weight:700;color:#18375d;font-family:'Asap',sans-serif">—</div>
-            <div style="font-size:10px;color:#94a3b8;font-family:'Asap',sans-serif;margin-top:1px">personnes dans la plus petite cellule</div>
+            <div style="font-size:10px;color:#94a3b8;font-family:'Asap',sans-serif;margin-top:1px">personnes environ par combinaison</div>
           </div>
         </div>
 
@@ -505,31 +505,83 @@ function checkAnonymity() {
   var el = document.getElementById('anon-alert');
   var crossEl = document.getElementById('cross-estimate');
   var nR = parseInt(document.getElementById('nb-repondants').value) || 0;
-  if (n === 0) { if (crossEl) crossEl.textContent = '—'; el.innerHTML = ''; return; }
-  var prod = sociodemo.reduce(function(acc,s){ return acc*(s.opts.length||1); },1);
-  var cg = nR > 0 ? Math.round((nR/prod)*10)/10 : null;
+
+  if (n === 0) {
+    if (crossEl) crossEl.textContent = '—';
+    el.innerHTML = '';
+    return;
+  }
+
+  // Nombre total de combinaisons possibles si l'on croise toutes les données socio-démo.
+  // Exemple : 3 catégories x 4 anciennetés x 4 types de poste x 3 expositions = 144 combinaisons.
+  var prod = sociodemo.reduce(function(acc, s) {
+    return acc * (s.opts.length || 1);
+  }, 1);
+
+  // Taille moyenne d'un groupe après croisement.
+  var cg = nR > 0 ? Math.round((nR / prod) * 10) / 10 : null;
+
   if (crossEl) {
-    crossEl.textContent = cg !== null ? ('~'+cg) : '—';
+    crossEl.textContent = cg !== null ? ('≈ ' + cg) : '—';
     crossEl.style.color = cg === null ? '#18375d' : cg < 5 ? '#c0392b' : cg < 10 ? '#b7840a' : '#27823a';
   }
+
   var html = '';
+
   if (cg !== null && cg < 5) {
-    html = '<div class="alert alert-danger" style="margin-bottom:10px"><span class="alert-ico">🚨</span><span><strong>Risque élevé</strong> — Groupe croisé estimé : <strong>~'+cg+' personne'+(cg>1?'s':'')+'</strong>. Réduisez le nombre de critères ou regroupez des options.</span></div>';
+    html = '<div class="alert alert-danger" style="margin-bottom:10px">'
+      + '<span class="alert-ico">🚨</span>'
+      + '<span><strong>Risque d’anonymat élevé</strong> — Avec ces critères, certaines combinaisons peuvent concerner très peu de répondants. '
+      + 'Exemple : <em>manager + plus de 10 ans d’ancienneté + poste terrain + exposition régulière au risque</em>. '
+      + 'Pour protéger l’anonymat, réduisez le nombre de critères.</span>'
+      + '</div>';
   } else if (cg !== null && cg < 10) {
-    html = '<div class="alert alert-warning" style="margin-bottom:10px"><span class="alert-ico">⚠️</span><span><strong>Groupe croisé petit</strong> — Environ <strong>~'+cg+' personnes</strong> par cellule. Vérifiez le risque d\'identification.</span></div>';
+    html = '<div class="alert alert-warning" style="margin-bottom:10px">'
+      + '<span class="alert-ico">⚠️</span>'
+      + '<span><strong>Risque d’anonymat à vérifier</strong> — Avec ces critères, certaines combinaisons peuvent concerner seulement quelques répondants. '
+      + 'Cela peut suffire à reconnaître indirectement une personne dans les résultats. '
+      + 'Vérifiez les croisements avant de partager une analyse détaillée.</span>'
+      + '</div>';
   } else if (cg !== null) {
-    html = '<div class="alert alert-neutral" style="margin-bottom:10px"><span class="alert-ico">✓</span><span>Croisement raisonnable — environ <strong>~'+cg+' personnes</strong> par cellule (seuil minimum recommandé : 5).</span></div>';
+    html = '<div class="alert alert-neutral" style="margin-bottom:10px">'
+      + '<span class="alert-ico">✓</span>'
+      + '<span><strong>Croisement plutôt confortable</strong> — En moyenne, chaque combinaison de critères regroupe environ <strong>' + cg + ' personnes</strong>. '
+      + 'Gardez tout de même en tête que certains groupes réels peuvent être plus petits que la moyenne.</span>'
+      + '</div>';
   } else {
-    html = '<div class="alert alert-neutral" style="margin-bottom:10px"><span class="alert-ico">ℹ️</span><span>Renseignez le nombre total de répondants estimé pour évaluer le risque de croisement.</span></div>';
+    html = '<div class="alert alert-neutral" style="margin-bottom:10px">'
+      + '<span class="alert-ico">ℹ️</span>'
+      + '<span>Renseignez le nombre total de répondants estimé pour vérifier si vos critères socio-démo risquent de créer de trop petits groupes.</span>'
+      + '</div>';
   }
-  var defined = sociodemo.filter(function(s){ return s.min_groupe && s.min_groupe > 0; });
+
+  var defined = sociodemo.filter(function(s) {
+    return s.min_groupe && s.min_groupe > 0;
+  });
+
   if (defined.length > 0) {
-    var worst = defined.reduce(function(a,b){ return a.min_groupe < b.min_groupe ? a : b; });
-    if (worst.min_groupe < 5) html += '<div class="alert alert-danger" style="margin-bottom:10px"><span class="alert-ico">🚨</span><span><strong>Critère asymétrique</strong> — "<em>'+esc(worst.q)+'</em>" peut avoir un groupe de <strong>'+worst.min_groupe+' personne'+(worst.min_groupe>1?'s':'')+'</strong> seulement.</span></div>';
-    else if (worst.min_groupe < 10) html += '<div class="alert alert-warning" style="margin-bottom:10px"><span class="alert-ico">⚠️</span><span>Le critère "<em>'+esc(worst.q)+'</em>" a un groupe minimum de <strong>'+worst.min_groupe+' personnes</strong>.</span></div>';
+    var worst = defined.reduce(function(a, b) {
+      return a.min_groupe < b.min_groupe ? a : b;
+    });
+
+    if (worst.min_groupe < 5) {
+      html += '<div class="alert alert-danger" style="margin-bottom:10px">'
+        + '<span class="alert-ico">🚨</span>'
+        + '<span><strong>Attention à ce critère</strong> — Pour "<em>' + esc(worst.q) + '</em>", la plus petite réponse pourrait ne concerner que <strong>' + worst.min_groupe + ' personne' + (worst.min_groupe > 1 ? 's' : '') + '</strong>. '
+        + 'Ce critère est donc sensible, même sans croisement avec les autres.</span>'
+        + '</div>';
+    } else if (worst.min_groupe < 10) {
+      html += '<div class="alert alert-warning" style="margin-bottom:10px">'
+        + '<span class="alert-ico">⚠️</span>'
+        + '<span><strong>Petit groupe repéré</strong> — Pour "<em>' + esc(worst.q) + '</em>", la plus petite réponse pourrait concerner environ <strong>' + worst.min_groupe + ' personnes</strong>. '
+        + 'À surveiller si vous croisez ce critère avec d’autres.</span>'
+        + '</div>';
+    }
   }
+
   el.innerHTML = html;
 }
+
 function renderResources() {
   var container = document.getElementById('resources-list');
   var html = '';
