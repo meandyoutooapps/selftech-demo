@@ -385,15 +385,39 @@ function startAutodiagFromLibrary(slug) {
     return;
   }
 
+  // On nettoie les anciens brouillons pour éviter de retomber sur un vieux thème sécurité générique
   localStorage.removeItem('selftechDraftTheme');
+  localStorage.removeItem('selftech_current_ad');
+
+  const cleanChapters = theme.chapters.map((c, index) => ({
+    id: index + 1,
+    name: c.name || c.title || `Chapitre ${index + 1}`,
+    title: c.name || c.title || `Chapitre ${index + 1}`,
+    desc: c.desc || '',
+    questions: c.questions || [],
+    profils: c.profils || [
+      {niveau:1, titre:"", phrase:"", description:"", motscles:[]},
+      {niveau:2, titre:"", phrase:"", description:"", motscles:[]},
+      {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
+    ],
+    seuils: c.seuils || [
+      {min:0, max:0.7},
+      {min:0.7, max:1.7},
+      {min:1.7, max:2.1}
+    ]
+  }));
 
   localStorage.setItem('selftechDraftTheme', JSON.stringify({
     slug: slug,
     name: theme.name,
-    chapters: theme.chapters
+    title: theme.name,
+    chapters: cleanChapters
   }));
 
-  window.location.href = '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(slug);
+  window.location.href =
+    '3-selftech_editeur_questions.html?mode=autodiag&theme='
+    + encodeURIComponent(slug)
+    + '&t=' + Date.now();
 }
 
 function addTagToTheme(btn) {
