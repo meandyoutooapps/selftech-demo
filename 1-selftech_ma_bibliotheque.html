@@ -223,7 +223,7 @@
               </div>
             </div>
             <div class="t-actions">
-              <button class="btn-use" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag&theme=sobriete'">Créer un autodiagnostic</button>
+              <button class="btn-use" onclick="startAutodiagFromLibrary('sobriete')">Créer un autodiagnostic</button>
               <button class="btn-dots" onclick="openMenu('t4',event)">···</button>
             </div>
           </div>
@@ -379,10 +379,21 @@ function getLibraryTheme(slug) {
 
 function startAutodiagFromLibrary(slug) {
   const theme = getLibraryTheme(slug);
-  if (!theme) { alert("Thème introuvable dans la démo."); return; }
+
+  if (!theme) {
+    alert("Thème introuvable dans la démo.");
+    return;
+  }
+
   localStorage.removeItem('selftechDraftTheme');
-  localStorage.setItem('selftechDraftTheme', JSON.stringify({ name: theme.name, chapters: theme.chapters }));
-  window.location.href = '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(theme.name);
+
+  localStorage.setItem('selftechDraftTheme', JSON.stringify({
+    slug: slug,
+    name: theme.name,
+    chapters: theme.chapters
+  }));
+
+  window.location.href = '3-selftech_editeur_questions.html?mode=autodiag&theme=' + encodeURIComponent(slug);
 }
 
 function addTagToTheme(btn) {
