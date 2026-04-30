@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résultats — Into The Shift</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;color:#18375d;font-family:'Asap',sans-serif}
+.db{border-radius:14px;overflow:hidden;border:1px solid #cdd5e0;background:#fff;min-height:100vh}
+.topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px}
+.logo{cursor:pointer;display:flex;align-items:center;height:54px}
+.tb-sp{flex:1}
+.acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:30px;padding:5px 13px 5px 5px;cursor:pointer}
+.av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.acct-n{font-size:13px;color:rgba(255,255,255,0.9)}
+.subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.sn{padding:7px 14px;border-radius:8px;font-size:12px;color:#64748b;cursor:pointer;border:none;background:transparent;white-space:nowrap;font-weight:500;transition:all 0.12s;font-family:'Asap',sans-serif}
+.sn.on{background:#18375d;color:#fff;font-weight:600}
+.sn:not(.on):hover{background:#eef1f6;color:#18375d}
+
+.breadcrumb{display:flex;align-items:center;gap:6px;padding:11px 24px;border-bottom:1px solid #f0f4f8;background:#fafbfc;flex-wrap:wrap}
+.bc-link{font-size:12px;color:#007883;cursor:pointer;font-weight:500;font-family:'Asap',sans-serif}
+.bc-link:hover{text-decoration:underline}
+.bc-sep{font-size:12px;color:#c5ccd5}
+.bc-cur{font-size:12px;color:#64748b;font-family:'Asap',sans-serif}
+
+.content{padding:24px;background:#f7f9fc;min-height:calc(100vh - 137px)}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}
+.page-title{font-size:22px;font-weight:800;color:#18375d;margin-bottom:5px}
+.page-sub{font-size:13px;color:#64748b;line-height:1.45;max-width:720px}
+.head-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn-primary,.btn-secondary{border-radius:8px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Asap',sans-serif;border:1px solid transparent;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-primary{background:#eb6366;color:#fff}
+.btn-secondary{background:#fff;color:#18375d;border-color:#d8e0ea}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:15px 16px}
+.kpi-lbl{font-size:10px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.kpi-val{font-size:24px;font-weight:800;color:#18375d;line-height:1}
+.kpi-sub{font-size:11px;color:#64748b;margin-top:5px;line-height:1.35}
+.kpi.good .kpi-val{color:#007883}.kpi.warn .kpi-val{color:#b7840a}
+.toolbar{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filter-tabs{display:flex;gap:3px;background:#f0f2f5;border-radius:9px;padding:3px}
+.ftab{padding:6px 13px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#64748b;transition:all .12s;white-space:nowrap;font-family:'Asap',sans-serif}
+.ftab.on{background:#18375d;color:#fff;box-shadow:0 1px 4px rgba(24,55,93,.15)}
+.search{flex:1;min-width:220px;padding:8px 12px;border:1px solid #d8e0ea;border-radius:8px;font-size:12px;color:#18375d;font-family:'Asap',sans-serif;outline:none;background:#fff}
+.sort-sel{padding:8px 10px;border:1px solid #d8e0ea;border-radius:8px;font-size:12px;color:#18375d;outline:none;background:#fff;cursor:pointer;font-family:'Asap',sans-serif}
+.count-lbl{font-size:12px;color:#94a3b8;white-space:nowrap}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px;align-items:start}
+.results-panel{display:flex;flex-direction:column;gap:12px}
+.side-panel{display:flex;flex-direction:column;gap:12px;position:sticky;top:76px}
+.side-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:16px}
+.side-title{font-size:13px;font-weight:800;color:#18375d;margin-bottom:10px}
+.legend{display:flex;flex-direction:column;gap:8px}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:#64748b}
+.ldot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.note{font-size:12px;color:#64748b;line-height:1.45}.note strong{color:#18375d}
+.ad-card{background:#fff;border:1px solid #d8e0ea;border-radius:16px;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.ad-card:hover{border-color:#b8c4d4;box-shadow:0 6px 18px rgba(24,55,93,.08)}
+.card-main{display:grid;grid-template-columns:minmax(0,1fr) 230px}
+.card-left{padding:18px 20px}
+.card-right{padding:18px;background:#fafbfc;border-left:1px solid #edf1f6;display:flex;flex-direction:column;justify-content:space-between;gap:13px}
+.ad-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+.ad-name{font-size:15px;font-weight:800;color:#18375d;line-height:1.25;margin-bottom:4px}
+.ad-theme{font-size:12px;color:#64748b}
+.status-pill{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.s-actif{background:#e5f4f5;color:#007883;border:1px solid #b8dfe0}
+.s-cloture{background:#f0f2f5;color:#64748b;border:1px solid #d8e0ea}
+.meta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.meta-item{font-size:11px;color:#94a3b8}
+.chap-list{display:flex;flex-direction:column;gap:8px}
+.chap-row{display:grid;grid-template-columns:150px minmax(80px,1fr) 70px;gap:10px;align-items:center}
+.chap-nom{font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chap-track{height:10px;border-radius:20px;overflow:hidden;display:flex;background:#edf1f7}
+.chap-seg{height:100%}.seg-a{background:#77cd8a}.seg-p{background:#ffc744}.seg-d{background:#ff847e}
+.chap-pct{font-size:10px;font-weight:800;text-align:right;white-space:nowrap}
+.pass-block{text-align:center;background:#fff;border:1px solid #edf1f6;border-radius:12px;padding:13px 10px}
+.pass-num{font-size:30px;font-weight:800;color:#18375d;line-height:1}
+.pass-lbl{font-size:10px;color:#94a3b8;margin-top:3px}
+.taux-block{display:flex;flex-direction:column;gap:5px}
+.taux-head{display:flex;justify-content:space-between;align-items:center}
+.taux-label{font-size:10px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em}
+.taux-val{font-size:13px;font-weight:800;color:#007883}
+.taux-bar{height:6px;background:#e8edf4;border-radius:20px;overflow:hidden}
+.taux-fill{height:100%;border-radius:20px;background:#007883}
+.taux-obj{font-size:11px;color:#94a3b8}
+.btn-db{display:flex;align-items:center;justify-content:center;gap:6px;background:#18375d;color:#fff;border:none;border-radius:9px;padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;width:100%;font-family:'Asap',sans-serif}
+.empty{text-align:center;padding:48px 24px;color:#94a3b8;background:#fff;border:1px dashed #d8e0ea;border-radius:14px}
+.empty strong{display:block;font-size:14px;color:#18375d;margin-bottom:5px}
+@media(max-width:980px){.summary-grid{grid-template-columns:repeat(2,1fr)}.main-grid{grid-template-columns:1fr}.side-panel{position:static;display:grid;grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.content{padding:16px}.page-head{flex-direction:column}.summary-grid{grid-template-columns:1fr}.card-main{grid-template-columns:1fr}.card-right{border-left:none;border-top:1px solid #edf1f6}.chap-row{grid-template-columns:1fr}.chap-pct{text-align:left}.side-panel{display:flex}}
+</style>
+</head>
+<body>
+<div class="db">
+  <div id="header"></div>
+  <script src="header.js"></script>
+
+  <div class="subnav">
+    <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
+    <button class="sn" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
+    <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
+    <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
+    <button class="sn on">Résultats</button>
+    <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
+  </div>
+
+  <div class="breadcrumb">
+    <span class="bc-link" onclick="window.location.href='index.html'">Dashboard</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-cur">Résultats</span>
+  </div>
+
+  <div class="content">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Résultats des autodiagnostics</h1>
+        <p class="page-sub">Suivez vos campagnes, repérez les tendances par chapitre et accédez au dashboard détaillé de chaque autodiagnostic.</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn-secondary" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Voir mes autodiagnostics</button>
+        <button class="btn-primary" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Créer une campagne</button>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="kpi"><div class="kpi-lbl">Campagnes</div><div class="kpi-val" id="kpi-total">4</div><div class="kpi-sub">Autodiagnostics avec résultats</div></div>
+      <div class="kpi good"><div class="kpi-lbl">Passations</div><div class="kpi-val" id="kpi-pass">446</div><div class="kpi-sub">Réponses complétées au total</div></div>
+      <div class="kpi warn"><div class="kpi-lbl">Actifs</div><div class="kpi-val" id="kpi-active">2</div><div class="kpi-sub">Campagnes encore ouvertes</div></div>
+      <div class="kpi"><div class="kpi-lbl">Participation moyenne</div><div class="kpi-val" id="kpi-rate">89%</div><div class="kpi-sub">Sur les objectifs définis</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="filter-tabs">
+        <button class="ftab on" onclick="setFilter('tous',this)">Tous</button>
+        <button class="ftab" onclick="setFilter('actif',this)">Actifs</button>
+        <button class="ftab" onclick="setFilter('cloture',this)">Clôturés</button>
+      </div>
+      <input class="search" id="search" type="search" placeholder="Rechercher un autodiagnostic ou une thématique..." oninput="renderCards()">
+      <select class="sort-sel" onchange="sortCards(this.value)">
+        <option value="date-desc">Plus récent</option>
+        <option value="date-asc">Plus ancien</option>
+        <option value="passations">Passations</option>
+        <option value="participation">Taux de participation</option>
+      </select>
+      <span class="count-lbl" id="count-lbl">4 autodiagnostics</span>
+    </div>
+
+    <div class="main-grid">
+      <div>
+        <div class="results-panel" id="ad-grid"></div>
+        <div class="empty" id="empty" style="display:none">
+          <strong>Aucun autodiagnostic trouvé</strong>
+          <p>Modifiez les filtres ou la recherche pour afficher d'autres résultats.</p>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="side-card">
+          <div class="side-title">Lecture des profils</div>
+          <div class="legend">
+            <div class="legend-item"><div class="ldot" style="background:#77cd8a"></div>Ancré</div>
+            <div class="legend-item"><div class="ldot" style="background:#ffc744"></div>En progression</div>
+            <div class="legend-item"><div class="ldot" style="background:#ff847e"></div>En développement</div>
+          </div>
+        </div>
+        <div class="side-card">
+          <div class="side-title">À retenir</div>
+          <p class="note"><strong>Les cartes donnent une vision rapide.</strong><br>Le dashboard détaillé permet ensuite de filtrer par segment, chapitre et profil agrégé.</p>
+        </div>
+        <div class="side-card">
+          <div class="side-title">Conseil d’analyse</div>
+          <p class="note">Évitez de commenter des croisements trop fins quand les groupes sont petits. Les tendances sont plus utiles que les micro-comparaisons.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+var ADS = [
+{id:1, nom:"Sécurité & culture de sûreté — Campagne 2025", theme:"Sécurité & prévention", statut:"actif", date:"2025-01-15", date_fin:"2025-06-30", passations:87, objectif:120, url:"selftech_dashboard.html?ad=1", chapitres:[{nom:"Connaître les risques",a:64,p:24,d:12},{nom:"Adopter les bons réflexes",a:48,p:38,d:14},{nom:"Travailler en équipe",a:71,p:22,d:7},{nom:"Réagir et signaler",a:39,p:42,d:19}]},
+{id:2, nom:"Risques cyber au quotidien — Vague 1", theme:"Numérique & cybersécurité", statut:"actif", date:"2025-03-01", date_fin:"2025-05-31", passations:43, objectif:80, url:"selftech_dashboard.html?ad=2", chapitres:[{nom:"Comprendre les risques",a:42,p:35,d:23},{nom:"Reconnaître les signaux",a:28,p:38,d:34},{nom:"Protéger ses accès",a:55,p:31,d:14},{nom:"Réagir en cas d'incident",a:19,p:37,d:44}]},
+{id:3, nom:"Sobriété énergétique — Pilote RH", theme:"Environnement & sobriété", statut:"cloture", date:"2024-09-01", date_fin:"2024-11-30", passations:112, objectif:100, url:"selftech_dashboard.html?ad=3", chapitres:[{nom:"Comprendre ses usages",a:78,p:17,d:5},{nom:"Agir au quotidien",a:66,p:28,d:6}]},
+{id:4, nom:"Réflexes face aux transformations", theme:"Transformation & changement", statut:"cloture", date:"2024-04-01", date_fin:"2024-07-31", passations:204, objectif:200, url:"selftech_dashboard.html?ad=4", chapitres:[{nom:"Réactions face au changement",a:51,p:34,d:15},{nom:"Gérer l'incertitude",a:38,p:42,d:20},{nom:"Coopérer en transition",a:58,p:30,d:12},{nom:"Expérimenter et ajuster",a:74,p:19,d:7},{nom:"Ancrer de nouveaux réflexes",a:62,p:27,d:11}]}
+];
+var currentFilter='tous', currentSort='date-desc';
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fd(d){var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+function rate(ad){return Math.min(Math.round(ad.passations/ad.objectif*100),100);}
+function updateKpis(){document.getElementById('kpi-total').textContent=ADS.length;document.getElementById('kpi-pass').textContent=ADS.reduce(function(a,b){return a+b.passations},0);document.getElementById('kpi-active').textContent=ADS.filter(function(a){return a.statut==='actif'}).length;document.getElementById('kpi-rate').textContent=Math.round(ADS.reduce(function(a,b){return a+rate(b)},0)/ADS.length)+'%';}
+function renderCards(){
+ var q=(document.getElementById('search')?document.getElementById('search').value:'').toLowerCase().trim();
+ var list=ADS.filter(function(a){return (currentFilter==='tous'||a.statut===currentFilter)&&(!q||(a.nom+' '+a.theme).toLowerCase().indexOf(q)>=0);});
+ if(currentSort==='date-desc')list.sort(function(a,b){return b.date.localeCompare(a.date)});else if(currentSort==='date-asc')list.sort(function(a,b){return a.date.localeCompare(b.date)});else if(currentSort==='participation')list.sort(function(a,b){return rate(b)-rate(a)});else list.sort(function(a,b){return b.passations-a.passations});
+ document.getElementById('count-lbl').textContent=list.length+' autodiagnostic'+(list.length>1?'s':'');
+ var empty=document.getElementById('empty'), grid=document.getElementById('ad-grid');
+ if(!list.length){grid.innerHTML='';empty.style.display='block';return;} empty.style.display='none';
+ grid.innerHTML=list.map(function(ad){
+  var closed=ad.statut==='cloture', taux=rate(ad);
+  var chapRows=ad.chapitres.map(function(c){var total=c.a+c.p+c.d,pa=Math.round(c.a/total*100),pp=Math.round(c.p/total*100),pd=100-pa-pp,col=pa>=60?'#27823a':pa>=40?'#b7840a':'#c0392b';return '<div class="chap-row"><div class="chap-nom">'+esc(c.nom)+'</div><div class="chap-track"><div class="chap-seg seg-a" style="width:'+pa+'%"></div><div class="chap-seg seg-p" style="width:'+pp+'%"></div><div class="chap-seg seg-d" style="width:'+pd+'%"></div></div><div class="chap-pct" style="color:'+col+'">'+pa+'% ancré</div></div>';}).join('');
+  return '<article class="ad-card"><div class="card-main"><div class="card-left"><div class="ad-top"><div><div class="ad-name">'+esc(ad.nom)+'</div><div class="ad-theme">'+esc(ad.theme)+'</div></div><span class="status-pill '+(closed?'s-cloture':'s-actif')+'">'+(closed?'Clôturé':'Actif')+'</span></div><div class="meta-row"><span class="meta-item">📅 '+fd(ad.date)+' → '+fd(ad.date_fin)+'</span><span class="meta-item">📋 '+ad.chapitres.length+' chapitre'+(ad.chapitres.length>1?'s':'')+'</span></div><div class="chap-list">'+chapRows+'</div></div><div class="card-right"><div class="pass-block"><div class="pass-num">'+ad.passations+'</div><div class="pass-lbl">passations complétées</div></div><div class="taux-block"><div class="taux-head"><span class="taux-label">Participation</span><span class="taux-val">'+taux+'%</span></div><div class="taux-bar"><div class="taux-fill" style="width:'+taux+'%"></div></div><div class="taux-obj">Objectif : '+ad.objectif+' répondants</div></div><a class="btn-db" href="'+esc(ad.url)+'">Voir le dashboard →</a></div></div></article>';
+ }).join('');
+}
+function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.ftab').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');renderCards();}
+function sortCards(val){currentSort=val;renderCards();}
+updateKpis();renderCards();
+</script>
+</body>
+</html>
