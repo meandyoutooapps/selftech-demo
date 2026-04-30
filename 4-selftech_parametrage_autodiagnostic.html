@@ -332,11 +332,11 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
 
         <!-- Boutons -->
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <button class="btn-add" onclick="addSociodemo()">
+         <button type="button" class="btn-add" onclick="addSociodemo()">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="#007883" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
             Ajouter une donnée
           </button>
-          <button class="btn-ai" onclick="suggestSociodemo()">
+          <button type="button" class="btn-ai" onclick="suggestSociodemo()">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white"/></svg>
             Suggérer des données avec l'IA
           </button>
@@ -357,7 +357,7 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
 
         <div style="font-size:12px;font-weight:700;color:#18375d;margin-bottom:8px;font-family:'Asap',sans-serif">Ressources complémentaires</div>
         <div id="resources-list"></div>
-        <button class="btn-add" onclick="addResource()" style="margin-top:4px">
+        <button type="button" class="btn-add" onclick="addResource()" style="margin-top:4px">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="#007883" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
           Ajouter une ressource
         </button>
@@ -506,11 +506,9 @@ let resources = [
     // Intro / fin / ressources
     if (stored?.intro) document.getElementById('intro').value = stored.intro;
 
-    if (stored?.fin) {
-      if (stored.fin.message) document.getElementById('msg-fin').value = stored.fin.message;
-      if (stored.fin.btn_titre) document.getElementById('btn-titre').value = stored.fin.btn_titre;
-      if (stored.fin.btn_url) document.getElementById('btn-url').value = stored.fin.btn_url;
-    }
+    if (stored?.fin?.message) {
+  document.getElementById('msg-fin').value = stored.fin.message;
+}
 
     if (stored?.sociodemo && stored.sociodemo.length) sociodemo = stored.sociodemo;
     if (stored?.resources && stored.resources.length) resources = stored.resources;
@@ -556,10 +554,8 @@ function save() {
       sociodemo: sociodemo,
       resources: resources,
       fin: {
-        message:   document.getElementById('msg-fin').value,
-        btn_titre: document.getElementById('btn-titre').value,
-        btn_url:   document.getElementById('btn-url').value,
-      },
+  message: document.getElementById('msg-fin').value
+},
     });
     localStorage.setItem(LS_KEY, JSON.stringify(updated));
   } catch(e) {}
@@ -778,18 +774,29 @@ function removeResource(i) {
 
 // ── APERÇU FIN ────────────────────────────────────────────────────────────────
 function updatePreview() {
-  const msg      = document.getElementById('msg-fin').value;
-  const btnTitre = document.getElementById('btn-titre').value;
-  const resHTML  = resources.map(r => `
+  const msgEl = document.getElementById('msg-fin');
+  const previewEl = document.getElementById('preview-box');
+
+  if (!msgEl || !previewEl) return;
+
+  const msg = msgEl.value;
+
+  const resHTML = resources.map(r => `
     <div class="preview-res-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="#007883" stroke-width="2" stroke-linecap="round"/><polyline points="15 3 21 3 21 9" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="14" x2="21" y2="3" stroke="#007883" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="#007883" stroke-width="2" stroke-linecap="round"/>
+        <polyline points="15 3 21 3 21 9" stroke="#007883" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="10" y1="14" x2="21" y2="3" stroke="#007883" stroke-width="2" stroke-linecap="round"/>
+      </svg>
       ${esc(r.titre)}
-    </div>`).join('');
-  document.getElementById('preview-box').innerHTML = `
+    </div>
+  `).join('');
+
+  previewEl.innerHTML = `
     <div class="preview-label">Aperçu — fin d'autodiagnostic</div>
     <p class="preview-msg">${esc(msg)}</p>
-    <button class="preview-btn">📄 ${esc(btnTitre)}</button>
-    ${resources.length ? `<div class="preview-res">Ressources complémentaires</div>${resHTML}` : ''}`;
+    ${resources.length ? `<div class="preview-res">Ressources complémentaires</div>${resHTML}` : ''}
+  `;
 }
 
 // ── VALIDATION / CONTINUER ────────────────────────────────────────────────────
