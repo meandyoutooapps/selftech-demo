@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   header.innerHTML = `
     <div class="topbar">
       <div class="logo" onclick="window.location.href='index.html'">
-        <span class="logo-main">INTO</span>
-        <span class="logo-shift">THE SHIFT</span>
+        <img src="into the shift fond blanc.png" alt="Into the Shift" class="logo-img">
       </div>
       <div class="tb-sp"></div>
       <div class="acct">
