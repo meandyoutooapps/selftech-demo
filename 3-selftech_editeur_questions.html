@@ -695,6 +695,7 @@ function selectChap(i) {
   openCards = {};
   renderNav();
   renderMain();
+  updateSaveButton();
 }
 
 function setTab(i, tab) {
@@ -703,6 +704,7 @@ function setTab(i, tab) {
   openCards = {};
   renderNav();
   renderMain();
+  updateSaveButton();
 }
 
 // ── RENDER MAIN ───────────────────────────────────────────────────────────────
@@ -1132,17 +1134,33 @@ function addMkw(e, profIdx, bg, border, color) {
   renderMain();
 }
 function genProfil(profIdx) {
-  const pc = profils_config[profIdx];
   const texts = [
-    {titre:"La vigilance s'invite rarement dans votre quotidien", phrase:"Vous naviguez souvent en automatique, les signaux de risque passent inaperçus.", desc:"Au quotidien, vous évoluez dans une forme d'habitude professionnelle qui laisse peu de place à la vigilance active. Ce n'est pas un manque d'intention — c'est souvent une exposition progressive aux risques qui les rend invisibles."},
-    {titre:"Vous avez l'œil, mais pas encore le réflexe", phrase:"Votre sensibilité aux risques existe — elle s'exprime encore de façon irrégulière.", desc:"Vous percevez les risques dans certaines situations, mais cela reste lié au contexte ou à votre état d'attention du moment. Ce qui vous manque encore, c'est la constance du regard."},
-    {titre:"La vigilance fait partie de votre ADN professionnel", phrase:"Vous repérez et traitez les risques avec constance, même quand personne ne regarde.", desc:"Vous avez intégré la vigilance comme une posture naturelle. Ce réflexe est une ressource précieuse pour vous et pour les personnes qui travaillent avec vous."},
+    {
+      titre: "La vigilance s'invite rarement dans votre quotidien",
+      phrase: "Vous naviguez souvent en automatique, les signaux de risque passent inaperçus.",
+      desc: "Au quotidien, vous évoluez dans une forme d'habitude professionnelle qui laisse peu de place à la vigilance active. Ce n'est pas un manque d'intention — c'est souvent une exposition progressive aux risques qui les rend invisibles."
+    },
+    {
+      titre: "Vous avez l'œil, mais pas encore le réflexe",
+      phrase: "Votre sensibilité aux risques existe — elle s'exprime encore de façon irrégulière.",
+      desc: "Vous percevez les risques dans certaines situations, mais cela reste lié au contexte ou à votre état d'attention du moment. Ce qui vous manque encore, c'est la constance du regard."
+    },
+    {
+      titre: "La vigilance fait partie de votre ADN professionnel",
+      phrase: "Vous repérez et traitez les risques avec constance, même quand personne ne regarde.",
+      desc: "Vous avez intégré la vigilance comme une posture naturelle. Ce réflexe est une ressource précieuse pour vous et pour les personnes qui travaillent avec vous."
+    }
   ];
+
   const t = texts[profIdx];
+
   chapters[activeChap].profils[profIdx].titre = t.titre;
   chapters[activeChap].profils[profIdx].phrase = t.phrase;
   chapters[activeChap].profils[profIdx].description = t.desc;
+
+  renderNav();
   renderMain();
+  updateSaveButton();
 }
 function fmt(cmd) { document.execCommand(cmd, false, null); }
 function addLink() { const url = prompt('URL du lien :'); if (url) document.execCommand('createLink', false, url); }
