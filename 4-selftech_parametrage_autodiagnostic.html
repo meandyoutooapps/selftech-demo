@@ -192,6 +192,16 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
           <label>Description interne</label>
           <input class="inp" id="desc" type="text" value="Campagne interne Sonora RH sur les réflexes sécurité du quotidien." oninput="save()">
         </div>
+        <div class="inp-row">
+          <div class="field">
+            <label>Date de lancement souhaitée<span class="req">*</span></label>
+            <input class="inp" id="date-lancement" type="date" oninput="save();updateSidebar();checkContinue()">
+          </div>
+          <div class="field">
+            <label>Date de clôture estimée</label>
+            <input class="inp" id="date-cloture" type="date" oninput="save();updateSidebar()">
+          </div>
+        </div>
         <div class="field">
           <label>Slug de l'URL<span class="req">*</span></label>
           <input class="inp" id="slug" type="text" value="securite-culture-surete" oninput="updateSlug()" placeholder="ex: securite-culture-surete">
@@ -291,6 +301,8 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
           <div class="sidebar-row"><span class="sidebar-row-lbl">Questions</span><span class="sidebar-row-val" id="sb-q">17</span></div>
           <div class="sidebar-row"><span class="sidebar-row-lbl">Profils</span><span class="sidebar-row-val" id="sb-profils">12</span></div>
           <div class="sidebar-row"><span class="sidebar-row-lbl">Statut</span><span class="status-badge">Brouillon</span></div>
+          <div class="sidebar-row"><span class="sidebar-row-lbl">Lancement</span><span class="sidebar-row-val" id="sb-lancement">À renseigner</span></div>
+          <div class="sidebar-row"><span class="sidebar-row-lbl">Clôture</span><span class="sidebar-row-val" id="sb-cloture">—</span></div>
         </div>
         <div class="sidebar-url">
           <div class="sidebar-url-lbl">URL de passation</div>
@@ -334,6 +346,12 @@ function esc(s) {
 function slugify(text) {
   return String(text||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/&/g,'et').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 }
+function formatDateFr(dateStr) {
+  if (!dateStr) return '';
+  var parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  return parts[2] + '/' + parts[1] + '/' + parts[0];
+}
 function getThemeNameFromUrl() {
   var params = new URLSearchParams(window.location.search);
   var themeName = params.get('themeName');
@@ -358,6 +376,8 @@ function init() {
     document.getElementById('nom').value = (stored.meta && stored.meta.nom) || ('Autodiagnostic ' + themeTitle);
     document.getElementById('titre').value = '';
     document.getElementById('desc').value = (stored.meta && stored.meta.desc) || ('Campagne interne Sonora RH sur ' + themeTitle + '.');
+    document.getElementById('date-lancement').value = (stored.meta && stored.meta.date_lancement) || '';
+    document.getElementById('date-cloture').value = (stored.meta && stored.meta.date_cloture) || '';
     document.getElementById('slug').value = (stored.meta && stored.meta.slug) || slugify(themeTitle);
     if (stored.intro) document.getElementById('intro').value = stored.intro;
     if (stored.fin && stored.fin.message) document.getElementById('msg-fin').value = stored.fin.message;
@@ -383,7 +403,14 @@ function save() {
     var raw = localStorage.getItem(LS_KEY);
     var existing = raw ? JSON.parse(raw) : {};
     var updated = Object.assign({}, existing, {
-      meta: { nom: document.getElementById('nom').value, titre: document.getElementById('titre').value, desc: document.getElementById('desc').value, slug: document.getElementById('slug').value },
+      meta: {
+        nom: document.getElementById('nom').value,
+        titre: document.getElementById('titre').value,
+        desc: document.getElementById('desc').value,
+        date_lancement: document.getElementById('date-lancement').value,
+        date_cloture: document.getElementById('date-cloture').value,
+        slug: document.getElementById('slug').value
+      },
       intro: document.getElementById('intro').value,
       sociodemo: sociodemo,
       resources: resources,
@@ -401,6 +428,12 @@ function updateSlug() {
 }
 function updateSidebar() {
   document.getElementById('sb-theme').textContent = document.getElementById('nom').value || '—';
+  var lancement = document.getElementById('date-lancement') ? document.getElementById('date-lancement').value : '';
+  var cloture = document.getElementById('date-cloture') ? document.getElementById('date-cloture').value : '';
+  var sbLancement = document.getElementById('sb-lancement');
+  var sbCloture = document.getElementById('sb-cloture');
+  if (sbLancement) sbLancement.textContent = lancement ? formatDateFr(lancement) : 'À renseigner';
+  if (sbCloture) sbCloture.textContent = cloture ? formatDateFr(cloture) : '—';
 }
 function generateIntro() {
   var btn = document.getElementById('btn-gen-intro');
@@ -516,7 +549,9 @@ function updatePreview() {
   previewEl.innerHTML = '<div class="preview-label">Aperçu — fin d\'autodiagnostic</div><p class="preview-msg">'+esc(msg)+'</p>'+(resources.length ? '<div class="preview-res">Ressources complémentaires</div>'+resHTML : '');
 }
 function checkContinue() {
-  var ok = document.getElementById('intro').value.trim().length > 0 && sociodemo.length > 0;
+  var ok = document.getElementById('intro').value.trim().length > 0
+    && sociodemo.length > 0
+    && document.getElementById('date-lancement').value.trim().length > 0;
   document.getElementById('btn-continue').disabled = !ok;
 }
 function continuer() {
@@ -539,6 +574,8 @@ function applyThemeFromEditor() {
     document.getElementById('nom').value = 'Autodiagnostic ' + themeName;
     document.getElementById('titre').value = '';
     document.getElementById('desc').value = 'Campagne interne Sonora RH sur ' + themeName + '.';
+    document.getElementById('date-lancement').value = (stored.meta && stored.meta.date_lancement) || '';
+    document.getElementById('date-cloture').value = (stored.meta && stored.meta.date_cloture) || '';
     document.getElementById('slug').value = slug;
     document.getElementById('sb-theme').textContent = themeName;
     if (stored.theme && stored.theme.chapters) {
@@ -554,7 +591,14 @@ function applyThemeFromEditor() {
     var url = 'app.selftech.app/sonora-rh/' + slug;
     document.getElementById('url-preview').textContent = url;
     document.getElementById('sb-url').textContent = url;
-    stored.meta = Object.assign({}, stored.meta||{}, { nom:'Autodiagnostic '+themeName, titre:'', desc:'Campagne interne Sonora RH sur '+themeName+'.', slug:slug });
+    stored.meta = Object.assign({}, stored.meta||{}, {
+      nom:'Autodiagnostic '+themeName,
+      titre:'',
+      desc:'Campagne interne Sonora RH sur '+themeName+'.',
+      date_lancement: document.getElementById('date-lancement').value,
+      date_cloture: document.getElementById('date-cloture').value,
+      slug:slug
+    });
     localStorage.setItem('selftech_current_ad', JSON.stringify(stored));
   } catch(e) {
     console.warn("Impossible de recuperer le theme depuis l'editeur", e);
@@ -563,6 +607,7 @@ function applyThemeFromEditor() {
 init();
 applyThemeFromEditor();
 updateSlug();
+updateSidebar();
 checkContinue();
 updatePreview();
 </script>
