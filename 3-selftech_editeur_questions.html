@@ -487,7 +487,7 @@ let likertInfoOpen = false;
 
   const normalizeChapters = (list) => list.map((c, index) => ({
     id: index + 1,
-    name: c.name || `Chapitre ${index + 1}`,
+    name: c.name || c.title || `Chapitre ${index + 1}`,
     desc: c.desc || '',
     questions: c.questions || [],
     profils: c.profils || emptyProfils(),
