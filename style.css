@@ -1,16 +1,14 @@
-/* LOGO */
+.logo-img{
+  height:28px !important;
+  width:auto !important;
+  max-width:170px !important;
+  object-fit:contain;
+  display:block;
+}
+
 .logo{
   display:flex;
   align-items:center;
-  cursor:pointer;
   height:54px;
-  overflow:hidden;
-}
-
-.logo-img{
-  height:34px;
-  width:auto;
-  max-width:180px;
-  object-fit:contain;
-  display:block;
+  padding-top:2px;
 }
