@@ -348,7 +348,7 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
   </div>
   <div class="lib-toggle">
     <button class="lib-btn on" id="lib-btn-ma" onclick="switchLib('ma')">Ma bibliothèque</button>
-    <button class="lib-btn" id="lib-btn-shared" onclick="switchLib('shared')">Bibliothèque Selftech</button>
+    <button class="lib-btn" id="lib-btn-shared" onclick="switchLib('shared')">Bibliothèque partagée</button>
   </div>
   <div class="panel-search">
     <input class="search-inp" id="panel-search-inp" placeholder="Rechercher par mot-clé…" oninput="filterPanel(this.value)">
@@ -470,33 +470,27 @@ let activeFilterTag = '';
 let activeLib = 'ma';
 let likertInfoOpen = false;
   function applyDraftThemeFromStorage() {
+      const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
+  if (themeFromUrl) return;
   const raw = localStorage.getItem('selftechDraftTheme');
   if (!raw) return;
 
   try {
     const draft = JSON.parse(raw);
-    if (!draft || !draft.chapters || !draft.chapters.length) return;
 
-    const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
-    const draftSlug = slugify(draft.name || '');
-
-    // Sécurité :
-    // - si aucun thème n'est dans l'URL, on charge le brouillon
-    // - si le thème de l'URL correspond au brouillon, on le charge
-    // - sinon, on laisse les données de la page telles quelles
-    if (themeFromUrl && themeFromUrl !== draftSlug) return;
+    if (!draft.chapters || !draft.chapters.length) return;
 
     chapters.splice(0, chapters.length, ...draft.chapters.map((c, index) => ({
       id: index + 1,
       name: c.name || `Chapitre ${index + 1}`,
       desc: c.desc || '',
-      questions: c.questions || [],
-      profils: c.profils || [
+      questions: [],
+      profils: [
         {niveau:1, titre:"", phrase:"", description:"", motscles:[]},
         {niveau:2, titre:"", phrase:"", description:"", motscles:[]},
         {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
       ],
-      seuils: c.seuils || [
+      seuils: [
         {min:0, max:0.7},
         {min:0.7, max:1.7},
         {min:1.7, max:2.1}
@@ -516,21 +510,9 @@ const editorMode = urlParams.get('mode') || 'theme';
 
 function getCurrentThemeName() {
   const themeFromUrl = urlParams.get('theme');
-  const raw = localStorage.getItem('selftechDraftTheme');
 
-  if (raw) {
-    try {
-      const draft = JSON.parse(raw);
-      const draftSlug = slugify(draft.name || '');
-
-      if (draft && draft.name && (!themeFromUrl || themeFromUrl === draftSlug)) {
-        return draft.name;
-      }
-    } catch (e) {
-      console.warn('Nom du thème non récupérable', e);
-    }
-  }
-
+  // 1. Si on arrive depuis la bibliothèque avec un thème dans l'URL,
+  // on utilise ce thème en priorité.
   if (themeFromUrl) {
     const themeMap = {
       'securite-culture-surete': 'Sécurité & culture de sûreté',
@@ -542,6 +524,18 @@ function getCurrentThemeName() {
     };
 
     return themeMap[themeFromUrl] || decodeURIComponent(themeFromUrl);
+  }
+
+  // 2. Sinon, si on vient de la page "Nouveau thème", on lit le brouillon généré.
+  const raw = localStorage.getItem('selftechDraftTheme');
+
+  if (raw) {
+    try {
+      const draft = JSON.parse(raw);
+      if (draft.name) return draft.name;
+    } catch (e) {
+      console.warn('Nom du thème non récupérable', e);
+    }
   }
 
   return 'Nouveau thème';
@@ -655,8 +649,9 @@ const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentCo
   nav.innerHTML = '';
   chapters.forEach((c, i) => {
     const n = c.questions.length;
-    const hasProfiles = c.profils.some(p => p.titre.length > 0);
-    const dotColor = n >= 5 ? '#77cd8a' : n > 0 ? '#ffc744' : '#d8e0ea';
+    const nProfils = c.profils.filter(p => p.titre.trim() && p.phrase.trim() && p.description.trim()).length;
+    const dotColorQ = n >= 4 ? '#77cd8a' : n > 0 ? '#ffc744' : '#d8e0ea';
+    const dotColorP = nProfils === 3 ? '#77cd8a' : nProfils > 0 ? '#ffc744' : '#d8e0ea';
     const div = document.createElement('div');
     div.className = `cni ${i === activeChap ? 'on' : ''}`;
     div.innerHTML = `
@@ -664,8 +659,12 @@ const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentCo
         <div class="cni-lbl">Chapitre ${c.id}</div>
         <div class="cni-name">${c.name}</div>
         <div class="cni-meta">
-          <span class="cni-dot" style="background:${dotColor}"></span>
+          <span class="cni-dot" style="background:${dotColorQ}"></span>
           <span class="cni-qcount">${n}/10 questions</span>
+        </div>
+        <div class="cni-meta">
+          <span class="cni-dot" style="background:${dotColorP}"></span>
+          <span class="cni-qcount">${nProfils}/3 profils</span>
         </div>
       </div>
       <div class="cni-tabs">
@@ -674,7 +673,6 @@ const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentCo
       </div>`;
     nav.appendChild(div);
   });
-  // Total
   const total = chapters.reduce((a, c) => a + c.questions.length, 0);
   document.getElementById('sb-total').innerHTML = `<strong>${total}</strong> questions au total`;
 }
@@ -721,7 +719,10 @@ function renderQuestions(ch) {
     <div class="chap-head">
       <div class="chap-info">
         <div class="chap-badge">Chapitre ${ch.id} · Questions</div>
-        <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+        <div style="display:flex;align-items:center;gap:6px">
+          <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+          <span title="Cliquez sur le titre pour le modifier" style="color:#c5ccd5;font-size:13px;cursor:default;flex-shrink:0">✏️</span>
+        </div>
         <input class="chap-desc-inp" value="${ch.desc}">
       </div>
       ${!isEmpty ? `<div class="chap-actions">
@@ -906,7 +907,8 @@ function renderProfils(ch) {
         <div class="profil-header" style="background:${pc.bgHead};border-bottom:1px solid ${pc.borderHead}">
           <div class="profil-level">
             <div class="profil-dot" style="background:${pc.couleur}"></div>
-            <span class="profil-level-name" style="color:${pc.textColor}">Profil ${i+1} — ${pc.nom}</span>
+            <input value="Profil ${i+1} — ${pc.nom}" style="background:transparent;border:none;border-bottom:1px solid transparent;outline:none;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-family:'Asap',sans-serif;color:${pc.textColor};width:220px;transition:border-color 0.15s;cursor:text" onfocus="this.style.borderBottomColor='${pc.couleur}'" onblur="this.style.borderBottomColor='transparent';profils_config[${i}].nom=this.value.replace(/^Profil ${i+1} — /,'')" title="Cliquez pour renommer ce profil">
+            <span style="color:${pc.textColor};opacity:0.4;font-size:11px;margin-left:2px">✏️</span>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
             <span class="profil-score-range" style="color:${pc.textColor}">Score ${ch.seuils[i].min} → ${ch.seuils[i].max}</span>
@@ -943,7 +945,7 @@ function renderProfils(ch) {
           </div>
 
           <div class="pfield">
-            <label>Mots clés <span style="font-weight:400;text-transform:none;font-style:italic;color:#c5ccd5">(affichage uniquement — pas de valeur en base)</span></label>
+            <label>Mots clés <span style="font-weight:400;text-transform:none;font-style:italic;color:#94a3b8">— s'affichent pour le répondant dans la description de son profil</span></label>
             <div class="mkw-wrap" onclick="this.querySelector('.mkw-inp').focus()">
               ${mkwHTML}
               <input class="mkw-inp" placeholder="+ mot clé" onkeydown="addMkw(event,${i},'${pc.bgHead}','${pc.borderHead}','${pc.textColor}')">
@@ -974,7 +976,10 @@ function renderProfils(ch) {
     <div class="chap-head">
       <div class="chap-info">
         <div class="chap-badge">Chapitre ${ch.id} · Profils de résultat</div>
-        <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+        <div style="display:flex;align-items:center;gap:6px">
+          <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+          <span title="Cliquez sur le titre pour le modifier" style="color:#c5ccd5;font-size:13px;cursor:default;flex-shrink:0">✏️</span>
+        </div>
         <input class="chap-desc-inp" value="${ch.desc}">
       </div>
     </div>
@@ -1180,20 +1185,29 @@ function addFromLib(qid) {
   renderPanelList(document.getElementById('panel-search-inp').value, activeFilterTag);
 }
 
+function renameProfil(i) {
+  const current = profils_config[i].nom;
+  const newName = prompt(`Renommer le profil ${i+1} :`, current);
+  if (newName && newName.trim()) {
+    profils_config[i].nom = newName.trim();
+    renderMain();
+  }
+}
+
 // ── SAVE ──────────────────────────────────────────────────────────────────────
 function chapProblems(c) {
   const problems = [];
 
-  // Questions : min 4, chacune avec min 3 réponses et tous les scores définis
+  // Questions : min 4, chacune avec min 3 réponses et scores valides (0–2)
   if (c.questions.length < 4) {
     problems.push({ type:'q', msg:`${c.questions.length} question${c.questions.length!==1?'s':''} — minimum 4 requises`, tab:'questions' });
   } else {
     const badQ = c.questions.filter(q =>
       !q.answers || q.answers.length < 3 ||
-      q.answers.some(a => typeof a.s !== 'number' || isNaN(a.s))
+      q.answers.some(a => typeof a.s !== 'number' || isNaN(a.s) || a.s < 0 || a.s > 2)
     );
     if (badQ.length > 0) {
-      problems.push({ type:'q', msg:`${badQ.length} question${badQ.length>1?'s':''} incomplète${badQ.length>1?'s':''} — minimum 3 réponses et tous les scores requis`, tab:'questions' });
+      problems.push({ type:'q', msg:`${badQ.length} question${badQ.length>1?'s':''} incomplète${badQ.length>1?'s':''} — min 3 réponses, scores entre 0 et 2 requis`, tab:'questions' });
     }
   }
 
@@ -1207,13 +1221,13 @@ function chapProblems(c) {
     problems.push({ type:'p', msg:`${badP.length} profil${badP.length>1?'s':''} incomplet${badP.length>1?'s':''} — titre, résumé et description requis pour chacun`, tab:'profils' });
   }
 
-  // Seuils : valeurs min/max valides sur les 3 profils
+  // Seuils : valeurs numériques, min < max, cohérence globale
   const badS = c.seuils.some(s =>
     typeof s.min !== 'number' || typeof s.max !== 'number' ||
-    isNaN(s.min) || isNaN(s.max)
+    isNaN(s.min) || isNaN(s.max) || s.min >= s.max || s.min < 0 || s.max > 2.1
   );
   if (badS) {
-    problems.push({ type:'p', msg:`Seuils de scoring invalides — vérifiez les valeurs min/max des 3 profils`, tab:'profils' });
+    problems.push({ type:'p', msg:`Seuils incohérents — chaque min doit être inférieur à son max, entre 0 et 2`, tab:'profils' });
   }
 
   return problems;
