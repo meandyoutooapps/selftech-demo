@@ -365,7 +365,7 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
   <div class="modal">
     <div style="font-size:22px;margin-bottom:12px">🔒</div>
     <h3>Impossible d'enregistrer le thème</h3>
-    <p>Chaque chapitre doit contenir au moins <strong>4 questions</strong> avant de pouvoir enregistrer. Les chapitres suivants sont incomplets :</p>
+    <p>Certains chapitres sont incomplets. Chaque chapitre doit contenir au moins <strong>4 questions</strong> avec réponses et scores, et <strong>3 profils</strong> avec titre, résumé et description. Les chapitres suivants nécessitent des corrections :</p>
     <div id="modal-save-list" style="display:flex;flex-direction:column;gap:6px;margin:12px 0 20px"></div>
     <div class="modal-acts">
       <button class="btn-confirm" style="background:#18375d" onclick="closeSaveModal()">Compléter les questions</button>
@@ -913,12 +913,12 @@ function renderProfils(ch) {
 
           <div class="pfield">
             <label>Titre du profil <span style="color:#eb6366">*</span></label>
-            <input type="text" value="${p.titre}" placeholder="Titre évocateur — le répondant se projette dans ce comportement" oninput="chapters[activeChap].profils[${i}].titre=this.value">
+            <input type="text" value="${p.titre}" placeholder="Titre évocateur — le répondant se projette dans ce comportement" oninput="chapters[activeChap].profils[${i}].titre=this.value;updateSaveButton()">
           </div>
 
           <div class="pfield">
             <label>Phrase courte de résumé</label>
-            <input type="text" class="short" value="${p.phrase}" placeholder="Une phrase concise, bienveillante, sans jugement" oninput="chapters[activeChap].profils[${i}].phrase=this.value">
+            <input type="text" class="short" value="${p.phrase}" placeholder="Une phrase concise, bienveillante, sans jugement" oninput="chapters[activeChap].profils[${i}].phrase=this.value;updateSaveButton()">
           </div>
 
           <div class="pfield">
@@ -932,7 +932,7 @@ function renderProfils(ch) {
                 <div class="rte-sep"></div>
                 <button class="rte-btn" onclick="addLink()" title="Lien hypertexte">🔗</button>
               </div>
-              <div class="rte-area" contenteditable="true" data-placeholder="Description bienveillante et actionnable — peut contenir des liens, du gras, une liste…">${p.description}</div>
+              <div class="rte-area" contenteditable="true" data-placeholder="Description bienveillante et actionnable — peut contenir des liens, du gras, une liste…" oninput="chapters[activeChap].profils[${i}].description=this.innerHTML;updateSaveButton()">${p.description}</div>
             </div>
           </div>
 
@@ -1175,46 +1175,8 @@ function addFromLib(qid) {
 }
 
 // ── SAVE ──────────────────────────────────────────────────────────────────────
-// ── VALIDATION ────────────────────────────────────────────────────────────────
-function chapProblems(c) {
-  const problems = [];
-
-  // Questions : min 4, chacune min 3 réponses avec tous les scores définis
-  if (c.questions.length < 4) {
-    problems.push({ type:'q', msg:`${c.questions.length} question${c.questions.length!==1?'s':''} — minimum 4 requises`, tab:'questions' });
-  } else {
-    const badQ = c.questions.filter(q =>
-      !q.answers || q.answers.length < 3 ||
-      q.answers.some(a => typeof a.s !== 'number' || isNaN(a.s))
-    );
-    if (badQ.length > 0) {
-      problems.push({ type:'q', msg:`${badQ.length} question${badQ.length>1?'s':''} incomplète${badQ.length>1?'s':''} — minimum 3 réponses et tous les scores requis`, tab:'questions' });
-    }
-  }
-
-  // Profils : titre + résumé + description pour les 3
-  const badP = c.profils.filter(p =>
-    !p.titre || !p.titre.trim() ||
-    !p.phrase || !p.phrase.trim() ||
-    !p.description || !p.description.trim()
-  );
-  if (badP.length > 0) {
-    problems.push({ type:'p', msg:`${badP.length} profil${badP.length>1?'s':''} incomplet${badP.length>1?'s':''} — titre, résumé et description requis pour chacun`, tab:'profils' });
-  }
-
-  // Seuils : valeurs min/max valides sur les 3 profils
-  const badS = c.seuils.some(s =>
-    typeof s.min !== 'number' || typeof s.max !== 'number' ||
-    isNaN(s.min) || isNaN(s.max)
-  );
-  if (badS) {
-    problems.push({ type:'p', msg:`Seuils de scoring invalides — vérifiez les valeurs min/max des 3 profils`, tab:'profils' });
-  }
-
-  return problems;
-}
-
 function updateSaveButton() {
+  const incomplete = chapters.filter(c => c.questions.length < 4);
   const btn = document.getElementById('btn-save');
   const hint = document.getElementById('btn-save-hint');
 
@@ -1224,48 +1186,32 @@ function updateSaveButton() {
     return;
   }
 
-  const allProblems = chapters.map(c => ({ c, problems: chapProblems(c) })).filter(x => x.problems.length > 0);
-
-  if (allProblems.length === 0) {
+  if (incomplete.length === 0) {
     btn.disabled = false;
     hint.classList.remove('visible');
   } else {
     btn.disabled = true;
     hint.classList.add('visible');
-    const hasQ = allProblems.some(x => x.problems.some(p => p.type === 'q'));
-    const hasP = allProblems.some(x => x.problems.some(p => p.type === 'p'));
-    if (hasQ && hasP) {
-      hint.textContent = 'Questions et profils incomplets sur certains chapitres';
-    } else if (hasQ) {
-      hint.textContent = 'Questions ou réponses incomplètes sur certains chapitres';
-    } else {
-      hint.textContent = 'Profils incomplets — titre, résumé et description requis';
-    }
   }
 }
-
 function trySave() {
-  if (editorMode === 'autodiag') { goNextAfterSave(); return; }
-
-  const allProblems = chapters.map(c => ({ c, problems: chapProblems(c) })).filter(x => x.problems.length > 0);
-
-  if (allProblems.length > 0) {
+  const incomplete = chapters.filter(c => c.questions.length < 4);
+  if (incomplete.length > 0) {
+    // Construire la liste des chapitres incomplets
     const list = document.getElementById('modal-save-list');
-    list.innerHTML = allProblems.map(({ c, problems }) =>
-      problems.map(p => `
-        <div style="display:flex;align-items:center;justify-content:space-between;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:9px 14px;gap:10px">
-          <div style="flex:1;min-width:0">
-            <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${c.name}</div>
-            <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;margin-top:2px;line-height:1.4">${p.msg}</div>
-          </div>
-          <button onclick="closeSaveModal();setTab(${c.id-1},'${p.tab}')" style="background:#eb6366;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Asap,sans-serif;flex-shrink:0">Compléter →</button>
-        </div>`).join('')
-    ).join('');
+    list.innerHTML = incomplete.map(c => `
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:9px 14px">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${c.name}</div>
+          <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;margin-top:2px">${c.questions.length} question${c.questions.length !== 1 ? 's' : ''} — il en faut au moins 4</div>
+        </div>
+        <button onclick="closeSaveModal();setTab(${c.id-1},'questions')" style="background:#eb6366;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Asap,sans-serif">Compléter →</button>
+      </div>`).join('');
     document.getElementById('modal-save-blocked').classList.add('on');
     return;
   }
-
-  goNextAfterSave();
+ // Tout bon → continuer selon le mode
+goNextAfterSave();
 }
 
 function closeSaveModal() {
@@ -1278,9 +1224,6 @@ updateEditorModeUI();
 renderNav();
 renderMain();
 updateSaveButton();
-</script>
-</body>
-</html>
 </script>
 </body>
 </html>
