@@ -469,149 +469,55 @@ let openCards = {};
 let activeFilterTag = '';
 let activeLib = 'ma';
 let likertInfoOpen = false;
-  function applyDraftThemeFromStorage() {
+ function applyDraftThemeFromStorage() {
   const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
   const raw = localStorage.getItem('selftechDraftTheme');
+  if (!raw) return;
 
-  const emptyProfils = () => [
-    {niveau:1, titre:"", phrase:"", description:"", motscles:[]},
-    {niveau:2, titre:"", phrase:"", description:"", motscles:[]},
-    {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
-  ];
+  try {
+    const draft = JSON.parse(raw);
+    if (!draft || !draft.chapters || !draft.chapters.length) return;
 
-  const defaultSeuils = () => [
-    {min:0, max:0.7},
-    {min:0.7, max:1.7},
-    {min:1.7, max:2.1}
-  ];
+    // Correspondances spécifiques pour éviter les erreurs de slug
+    // Exemple : "Sécurité & culture de sûreté" ne doit pas devenir automatiquement "securite-et-culture-de-surete"
+    const knownSlugsByName = {
+      "Sécurité & culture de sûreté": "securite-culture-surete",
+      "Quel est mon niveau de compréhension des risques cyber ?": "cyber",
+      "Changer sans se crisper : mes réflexes face aux transformations": "transformation",
+      "Suis-je acteur de ma sobriété énergétique au quotidien ?": "sobriete",
+      "Qualité de vie au travail": "qualite-vie-travail"
+    };
 
-  const normalizeChapters = (list) => list.map((c, index) => ({
-    id: index + 1,
-    name: c.name || c.title || `Chapitre ${index + 1}`,
-    desc: c.desc || '',
-    questions: c.questions || [],
-    profils: c.profils || emptyProfils(),
-    seuils: c.seuils || defaultSeuils()
-  }));
+    const draftSlug = draft.slug || knownSlugsByName[draft.name] || slugify(draft.name || '');
 
-  const themePresets = {
-    'qualite-vie-travail': {
-      name: 'Qualité de vie au travail',
-      chapters: [
-        { name: "Comprendre ma charge et mon organisation de travail", desc: "Identifier les situations qui facilitent ou compliquent le travail au quotidien." },
-        { name: "Préserver mon équilibre et mes temps de récupération", desc: "Repérer les réflexes liés au rythme, à la disponibilité et à la récupération." },
-        { name: "Coopérer dans un climat de travail soutenant", desc: "Observer la qualité des relations, de l'entraide et du dialogue dans le collectif." },
-        { name: "Agir sur mon quotidien professionnel", desc: "Identifier les marges de manœuvre, les alertes et les leviers d'amélioration." }
+    // Si un thème est précisé dans l'URL, on ne charge le brouillon que s'il correspond bien
+    if (themeFromUrl && themeFromUrl !== draftSlug) return;
+
+    chapters.splice(0, chapters.length, ...draft.chapters.map((c, index) => ({
+      id: index + 1,
+      name: c.name || `Chapitre ${index + 1}`,
+      desc: c.desc || '',
+      questions: c.questions || [],
+      profils: c.profils || [
+        {niveau:1, titre:"", phrase:"", description:"", motscles:[]},
+        {niveau:2, titre:"", phrase:"", description:"", motscles:[]},
+        {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
+      ],
+      seuils: c.seuils || [
+        {min:0, max:0.7},
+        {min:0.7, max:1.7},
+        {min:1.7, max:2.1}
       ]
-    },
+    })));
 
-    'qualite-vie-au-travail': {
-      name: 'Qualité de vie au travail',
-      chapters: [
-        { name: "Comprendre ma charge et mon organisation de travail", desc: "Identifier les situations qui facilitent ou compliquent le travail au quotidien." },
-        { name: "Préserver mon équilibre et mes temps de récupération", desc: "Repérer les réflexes liés au rythme, à la disponibilité et à la récupération." },
-        { name: "Coopérer dans un climat de travail soutenant", desc: "Observer la qualité des relations, de l'entraide et du dialogue dans le collectif." },
-        { name: "Agir sur mon quotidien professionnel", desc: "Identifier les marges de manœuvre, les alertes et les leviers d'amélioration." }
-      ]
-    },
-
-    'qvt': {
-      name: 'Qualité de vie au travail',
-      chapters: [
-        { name: "Comprendre ma charge et mon organisation de travail", desc: "Identifier les situations qui facilitent ou compliquent le travail au quotidien." },
-        { name: "Préserver mon équilibre et mes temps de récupération", desc: "Repérer les réflexes liés au rythme, à la disponibilité et à la récupération." },
-        { name: "Coopérer dans un climat de travail soutenant", desc: "Observer la qualité des relations, de l'entraide et du dialogue dans le collectif." },
-        { name: "Agir sur mon quotidien professionnel", desc: "Identifier les marges de manœuvre, les alertes et les leviers d'amélioration." }
-      ]
-    },
-
-    'cyber': {
-      name: 'Quel est mon niveau de compréhension des risques cyber ?',
-      chapters: [
-        { name: "Reconnaître les risques cyber du quotidien", desc: "Identifier les situations numériques qui peuvent exposer l'organisation." },
-        { name: "Adopter les bons réflexes de protection", desc: "Sécuriser ses usages, ses mots de passe, ses fichiers et ses accès." },
-        { name: "Réagir face à une situation suspecte", desc: "Savoir quoi faire en cas de doute, d'email étrange ou d'incident potentiel." },
-        { name: "Contribuer à une culture cyber collective", desc: "Comprendre son rôle dans la vigilance numérique de l'entreprise." }
-      ]
-    },
-
-    'transformation': {
-      name: 'Changer sans se crisper : mes réflexes face aux transformations',
-      chapters: [
-        { name: "Accueillir le changement", desc: "Observer ses premiers réflexes face à une transformation." },
-        { name: "Comprendre le sens et les impacts", desc: "Identifier ce qui aide à se repérer dans une période de changement." },
-        { name: "Coopérer pendant la transition", desc: "Analyser sa manière de travailler avec les autres quand les repères évoluent." },
-        { name: "Passer à l'action progressivement", desc: "Repérer les comportements qui permettent d'avancer sans se bloquer." }
-      ]
-    },
-
-    'sobriete': {
-      name: 'Suis-je acteur de ma sobriété énergétique au quotidien ?',
-      chapters: [
-        { name: "Repérer mes usages énergétiques", desc: "Identifier les gestes et habitudes qui consomment de l'énergie au quotidien." },
-        { name: "Adopter des réflexes sobres", desc: "Observer les comportements concrets qui limitent les consommations inutiles." },
-        { name: "Agir avec les autres", desc: "Comprendre comment la sobriété devient un effort collectif." },
-        { name: "Ancrer les pratiques dans la durée", desc: "Transformer les bons gestes en habitudes durables." }
-      ]
-    }
-  };
-
-  // 1. Si on arrive depuis la bibliothèque avec ?theme=...
-  // on charge les chapitres du thème demandé.
-  if (themeFromUrl) {
-    const preset = themePresets[themeFromUrl];
-
-    if (preset) {
-      chapters.splice(0, chapters.length, ...normalizeChapters(preset.chapters));
-      activeChap = 0;
-      activeTab = 'questions';
-      return;
-    }
-
-    // Si le thème dans l'URL correspond au brouillon généré, on charge le brouillon.
-    if (raw) {
-      try {
-        const draft = JSON.parse(raw);
-        const draftSlug = slugify(draft.name || '');
-
-        if (draft && draft.chapters && themeFromUrl === draftSlug) {
-          chapters.splice(0, chapters.length, ...normalizeChapters(draft.chapters));
-          activeChap = 0;
-          activeTab = 'questions';
-          return;
-        }
-      } catch (e) {
-        console.warn('Impossible de charger le thème généré', e);
-      }
-    }
-
-    // Si le thème URL est inconnu, on crée au moins une structure vide au bon nom.
-    const fallbackName = getCurrentThemeName();
-    chapters.splice(0, chapters.length, ...normalizeChapters([
-      { name: "Chapitre 1", desc: `Premier chapitre du thème ${fallbackName}.` },
-      { name: "Chapitre 2", desc: `Deuxième chapitre du thème ${fallbackName}.` },
-      { name: "Chapitre 3", desc: `Troisième chapitre du thème ${fallbackName}.` },
-      { name: "Chapitre 4", desc: `Quatrième chapitre du thème ${fallbackName}.` }
-    ]));
     activeChap = 0;
     activeTab = 'questions';
-    return;
-  }
 
-  // 2. Si aucun thème n'est dans l'URL, on charge le brouillon du nouveau thème.
-  if (raw) {
-    try {
-      const draft = JSON.parse(raw);
-      if (!draft || !draft.chapters || !draft.chapters.length) return;
-
-      chapters.splice(0, chapters.length, ...normalizeChapters(draft.chapters));
-      activeChap = 0;
-      activeTab = 'questions';
-    } catch (e) {
-      console.warn('Impossible de charger le thème généré', e);
-    }
+  } catch (e) {
+    console.warn('Impossible de charger le thème généré', e);
   }
 }
+
 // ── MODE ÉDITEUR : thème seul OU création d'autodiagnostic ───────────────────
 const urlParams = new URLSearchParams(window.location.search);
 const editorMode = urlParams.get('mode') || 'theme';
