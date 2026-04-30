@@ -154,199 +154,91 @@ textarea.inp{resize:vertical;min-height:90px;line-height:1.6}
 .check-row input{margin-top:2px;accent-color:#007883}
 .check-title{font-size:12px;font-weight:700;color:#18375d;display:block}
 .check-sub{font-size:11px;color:#64748b;line-height:1.4;margin-top:2px;display:block}
-.qr-box{width:118px;height:118px;border:1px solid #d8e0ea;border-radius:12px;background:
-linear-gradient(90deg,#18375d 10px,transparent 10px) 12px 12px/28px 28px,
-linear-gradient(#18375d 10px,transparent 10px) 12px 12px/28px 28px,
-#fff;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.qr-box:after{content:"QR";position:absolute;background:#fff;border:1px solid #d8e0ea;border-radius:20px;padding:5px 8px;font-size:10px;font-weight:800;color:#18375d}
-.side-mini{background:#fff;border:1px solid #d8e0ea;border-radius:14px;margin-bottom:12px;overflow:hidden}
-.side-mini-head{padding:12px 14px;background:#18375d;color:#fff;font-size:13px;font-weight:800}
-.side-mini-body{padding:13px 14px}
-.timeline{display:flex;flex-direction:column;gap:10px}
-.time-row{display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:start}
-.time-day{font-size:11px;font-weight:800;color:#007883;background:#f0f8f7;border:1px solid #b8dfe0;border-radius:20px;padding:4px 7px;text-align:center}
-.time-txt{font-size:12px;color:#18375d;font-weight:700}
-.time-sub{font-size:11px;color:#64748b;margin-top:2px;line-height:1.35}
-.progress-wrap{height:8px;background:#edf1f7;border-radius:20px;overflow:hidden;margin:8px 0}
-.progress-fill{height:100%;width:70%;background:#007883;border-radius:20px}
-.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;font-size:10px;font-weight:800;background:#edf1f7;color:#64748b}
-.pill-ok{background:#f0fbf2;color:#27823a}
-.pill-warn{background:#fff8ec;color:#b7840a}
-
-</style>
-</head>
-<body>
-
-<div class="topbar">
-  <div class="logo"><span class="logo-self">SELF</span><div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div></div>
-  <div class="tb-sp"></div>
-  <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
-</div>
-
-<div class="subnav">
-  <button class="sn" onclick="window.location.href='index.html'">Dashboard</button>
-  <button class="sn on" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</button>
-  <button class="sn" onclick="window.location.href='1-selftech_ma_bibliotheque.html'">Ma bibliothèque</button>
-  <button class="sn" onclick="window.location.href='selftech_bibliotheque_partagee.html'">Bibliothèque partagée</button>
-  <button class="sn" onclick="window.location.href='selftech_resultats.html'">Résultats</button>
-  <button class="sn" onclick="window.location.href='selftech_parametres.html'">Paramètres</button>
-</div>
-
-<div class="breadcrumb">
-  <span class="bc-link" onclick="window.location.href='selftech_mes_autodiagnostics_v3.html'">Mes autodiagnostics</span>
-  <span class="bc-sep">›</span>
-  <span class="bc-link" onclick="window.location.href='selftech_creer_autodiagnostic.html'">Créer un autodiagnostic</span>
-  <span class="bc-sep">›</span>
-  <span class="bc-cur">Préparer le lancement</span>
-</div>
-
-<div class="stepper-wrap">
-  <div class="stepper">
-    <div class="step"><div class="step-circle done">✓</div><span class="step-label done">Choisir un thème</span></div>
-    <div class="step-connector done"></div>
-    <div class="step"><div class="step-circle done">✓</div><span class="step-label done">Valider questions &amp; profils</span></div>
-    <div class="step-connector done"></div>
-    <div class="step"><div class="step-circle done">✓</div><span class="step-label done">Paramétrer</span></div>
-    <div class="step-connector done"></div>
-    <div class="step"><div class="step-circle active">4</div><span class="step-label active">Préparer le lancement</span></div>
-    <div class="step-connector todo"></div>
-    <div class="step"><div class="step-circle todo">5</div><span class="step-label todo">Suivre les résultats</span></div>
-  </div>
-</div>
-
-<div class="page-wrap">
-  <h1 class="page-title">Préparer le lancement</h1>
-  <p class="page-sub">Centralisez le lien de passation, le kit de communication et les relances pour maximiser la participation des collaborateurs.</p>
-
-  <div class="launch-grid">
-    <div>
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-lbl">Lancement prévu</div><div class="kpi-val" id="kpi-launch">30/04/2026</div><div class="kpi-sub">Date indiquée au paramétrage</div></div>
-        <div class="kpi"><div class="kpi-lbl">Clôture estimée</div><div class="kpi-val" id="kpi-close">29/05/2026</div><div class="kpi-sub">Période de passation recommandée</div></div>
-        <div class="kpi"><div class="kpi-lbl">Objectif de participation</div><div class="kpi-val">70%</div><div class="progress-wrap"><div class="progress-fill"></div></div><div class="kpi-sub">Objectif conseillé pour une lecture fiable</div></div>
-      </div>
-
-      <div class="block">
-        <div class="block-title">Lien de passation</div>
-        <div class="block-sub">À diffuser dans vos emails, messages Teams / Slack, intranet ou affiches QR code.</div>
-        <div class="launch-url-box">
-          <div><div class="url-label">URL collaborateur</div><div class="url-big" id="launch-url">app.selftech.app/sonora-rh/securite-et-culture-de-surete</div></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn-copy" onclick="copyUrl()">Copier le lien</button><button class="btn-test" onclick="alert('Ouverture de l’autodiagnostic test')">Tester</button></div>
-        </div>
-        <div style="display:flex;gap:16px;align-items:center;margin-top:16px;flex-wrap:wrap">
-          <div class="qr-box" aria-label="QR code de démonstration"></div>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:#18375d;margin-bottom:4px">QR code pour affiches ou intranet</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.5;max-width:470px">Téléchargez le QR code pour le placer sur une affiche, une bannière interne ou un support de conférence.</div>
-            <button class="btn-secondary" style="margin-top:10px" onclick="alert('Téléchargement du QR code')">Télécharger le QR code</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="block">
-        <div class="block-title">Kit de communication</div>
-        <div class="block-sub">Des messages prêts à copier pour aider le commanditaire à obtenir plus de réponses.</div>
-        <div class="comm-tabs">
-          <button class="comm-tab on" onclick="showTemplate('launch', this)">Email de lancement</button>
-          <button class="comm-tab" onclick="showTemplate('reminder', this)">Relance</button>
-          <button class="comm-tab" onclick="showTemplate('last', this)">Dernière chance</button>
-          <button class="comm-tab" onclick="showTemplate('teams', this)">Teams / Slack</button>
-          <button class="comm-tab" onclick="showTemplate('intranet', this)">Post intranet</button>
-          <button class="comm-tab" onclick="showTemplate('restore', this)">Restitution</button>
-        </div>
-        <div class="template-card">
-          <div class="template-head">
-            <div><div class="template-title" id="tpl-title">Email de lancement</div><div class="template-meta" id="tpl-meta">À envoyer le jour du lancement</div></div>
-            <button class="btn-copy" onclick="copyTemplate()">Copier</button>
-          </div>
-          <div class="template-body" id="tpl-body"></div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-          <button class="btn-ai" onclick="regenerateTone()">✨ Adapter avec l’IA</button>
-          <button class="btn-secondary" onclick="alert('Export du kit de communication')">Exporter le kit</button>
-        </div>
-      </div>
-
-      <div class="block">
-        <div class="block-title">Plan de relance conseillé</div>
-        <div class="block-sub">Un rythme simple pour éviter que le lien ne se perde après l’annonce initiale.</div>
-        <div class="timeline">
-          <div class="time-row"><div class="time-day">J</div><div><div class="time-txt">Lancement</div><div class="time-sub">Email DRH + message Teams / Slack + post intranet.</div></div></div>
-          <div class="time-row"><div class="time-day">J+7</div><div><div class="time-txt">Première relance</div><div class="time-sub">Rappeler le caractère anonyme et le temps nécessaire : 5 à 7 minutes.</div></div></div>
-          <div class="time-row"><div class="time-day">J-3</div><div><div class="time-txt">Dernière chance</div><div class="time-sub">Créer une urgence douce avant la clôture de la campagne.</div></div></div>
-          <div class="time-row"><div class="time-day">Après</div><div><div class="time-txt">Restitution</div><div class="time-sub">Remercier les participants et annoncer les prochaines étapes.</div></div></div>
-        </div>
-      </div>
-
-      <div class="block">
-        <div class="block-title">Checklist avant lancement</div>
-        <div class="block-sub">Vérifiez les points essentiels avant d’envoyer le lien aux collaborateurs.</div>
-        <div class="checklist">
-          <label class="check-row"><input type="checkbox" checked onchange="updateChecklist()"><span><span class="check-title">Introduction validée</span><span class="check-sub">Le caractère 100 % anonyme est clairement expliqué.</span></span></label>
-          <label class="check-row"><input type="checkbox" checked onchange="updateChecklist()"><span><span class="check-title">Données socio-démo vérifiées</span><span class="check-sub">Les croisements ne créent pas de groupes trop identifiables.</span></span></label>
-          <label class="check-row"><input type="checkbox" onchange="updateChecklist()"><span><span class="check-title">Lien testé</span><span class="check-sub">Le lien de passation fonctionne sur ordinateur et mobile.</span></span></label>
-          <label class="check-row"><input type="checkbox" onchange="updateChecklist()"><span><span class="check-title">Kit de communication prêt</span><span class="check-sub">Les emails et messages internes ont été copiés ou exportés.</span></span></label>
-          <label class="check-row"><input type="checkbox" onchange="updateChecklist()"><span><span class="check-title">Relances planifiées</span><span class="check-sub">Une relance est prévue pendant la période de passation.</span></span></label>
-        </div>
-      </div>
-
-      <div class="bottom-actions">
-        <button class="btn-back" onclick="window.location.href='4-selftech_parametrage_autodiagnostic.html'">← Retour au paramétrage</button>
-        <button class="btn-continue" id="btn-launch" onclick="launchCampaign()" disabled>Lancer la campagne
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <aside class="sidebar">
-      <div class="sidebar-card">
-        <div class="sidebar-head"><div class="sidebar-head-lbl">Autodiagnostic</div><div class="sidebar-head-val" id="sb-title">Sécurité &amp; culture de sûreté</div></div>
-        <div class="sidebar-body">
-          <div class="sidebar-row"><span class="sidebar-row-lbl">Statut</span><span class="status-badge">Prêt à lancer</span></div>
-          <div class="sidebar-row"><span class="sidebar-row-lbl">Questions</span><span class="sidebar-row-val" id="sb-q">15</span></div>
-          <div class="sidebar-row"><span class="sidebar-row-lbl">Profils</span><span class="sidebar-row-val" id="sb-profils">9</span></div>
-          <div class="sidebar-row"><span class="sidebar-row-lbl">Lancement</span><span class="sidebar-row-val" id="sb-launch">30/04/2026</span></div>
-          <div class="sidebar-row"><span class="sidebar-row-lbl">Clôture</span><span class="sidebar-row-val" id="sb-close">29/05/2026</span></div>
-        </div>
-        <div class="sidebar-url"><div class="sidebar-url-lbl">URL de passation</div><div class="sidebar-url-val" id="sb-url">app.selftech.app/sonora-rh/securite-et-culture-de-surete</div></div>
-      </div>
-
-      <div class="side-mini">
-        <div class="side-mini-head">Préparation</div>
-        <div class="side-mini-body">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px"><span style="font-size:12px;color:#64748b">Checklist</span><span class="pill pill-warn" id="check-pill">2/5</span></div>
-          <div class="progress-wrap"><div class="progress-fill" id="check-progress" style="width:40%"></div></div>
-          <div style="font-size:11px;color:#94a3b8;line-height:1.4">Le bouton de lancement s’active quand tous les points sont cochés.</div>
-        </div>
-      </div>
-
-      <div class="pack-card">
-        <div class="pack-head"><div class="pack-head-lbl">Pack passations</div><div class="pack-head-val">200 restantes sur 1 000</div></div>
-        <div class="pack-body"><div class="pack-bar-w"><div class="pack-bar-f"></div></div><div class="pack-note">Ces passations sont mutualisées pour tous les autodiagnostics de Sonora RH.</div></div>
-      </div>
-
-      <div class="side-mini">
-        <div class="side-mini-head">Besoin d’aide ?</div>
-        <div class="side-mini-body">
-          <div style="font-size:12px;color:#475569;line-height:1.5;margin-bottom:10px">Proposez un accompagnement pour adapter le kit de communication, animer un lancement ou préparer une restitution.</div>
-          <button class="btn-secondary" onclick="alert('Demande envoyée')">Demander un accompagnement</button>
-        </div>
-      </div>
-    </aside>
-  </div>
-</div>
-
-<script>
-var LS_KEY = 'selftech_current_ad';
-
-var templates = {
-  launch: { title: "Email de lancement", meta: "À envoyer le jour du lancement", body: "Bonjour à toutes et tous,\n\nNous lançons aujourd’hui un autodiagnostic consacré à la sécurité et à la culture de sûreté.\n\nIl vous propose des situations concrètes du quotidien professionnel pour mieux identifier vos réflexes, vos points d’appui et les sujets à renforcer collectivement.\n\nLa démarche est entièrement anonyme : aucun login, aucun mot de passe, aucun cookie, aucun suivi d’adresse IP. Vos réponses ne pourront pas être reliées à votre identité.\n\nTemps estimé : 5 à 7 minutes.\n\nLien de passation : {{URL}}\n\nMerci pour votre participation." },
+.qr-box{
+width:132px;height:132px;border:1px solid #d8e0ea;border-radius:12px;background:#fff;
+display:flex;align-items:center;justify-content:center;padding:10px
+}
+.qr-box canvas{width:108px!important;height:108px!important}}\n\nMerci pour votre participation." },
   reminder: { title: "Email de relance", meta: "À envoyer environ 7 jours après le lancement", body: "Bonjour,\n\nPetit rappel : l’autodiagnostic est toujours ouvert.\n\nVotre participation est importante pour mieux comprendre les pratiques du quotidien et cibler les actions les plus utiles.\n\nLa démarche est anonyme et prend seulement 5 à 7 minutes.\n\nLien de passation : {{URL}}\n\nMerci à celles et ceux qui ont déjà répondu." },
   last: { title: "Email dernière chance", meta: "À envoyer 2 à 3 jours avant la clôture", body: "Bonjour,\n\nDernière chance pour participer à l’autodiagnostic avant la clôture de la campagne.\n\nVotre retour compte pour obtenir une vision plus juste des réflexes et besoins du terrain.\n\nLa démarche reste entièrement anonyme.\n\nLien de passation : {{URL}}\n\nMerci pour votre contribution." },
   teams: { title: "Message Teams / Slack", meta: "Format court pour canal interne", body: "📣 L’autodiagnostic sécurité & culture de sûreté est ouvert.\n\n5 à 7 minutes, 100 % anonyme, sans login ni suivi individuel.\n\n👉 {{URL}}\n\nMerci pour votre participation !" },
   intranet: { title: "Post intranet", meta: "À publier sur l’intranet ou une newsletter interne", body: "Nous lançons un autodiagnostic pour mieux comprendre les réflexes sécurité du quotidien.\n\nL’objectif n’est pas d’évaluer les personnes, mais d’identifier les leviers utiles pour progresser collectivement.\n\nLa participation est anonyme et prend 5 à 7 minutes.\n\nAccéder à l’autodiagnostic : {{URL}}" },
   restore: { title: "Message de restitution", meta: "À envoyer après la clôture", body: "Bonjour à toutes et tous,\n\nMerci pour votre participation à l’autodiagnostic.\n\nVos réponses permettent d’identifier les pratiques déjà solides et les sujets sur lesquels nous pouvons progresser collectivement.\n\nLes résultats seront analysés de manière agrégée et donneront lieu à des actions adaptées.\n\nMerci encore pour votre contribution." }
 };
+
+
+function drawQrCode(url) {
+  var container = document.getElementById('qr-code');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Mini générateur QR local, suffisant pour une maquette réaliste.
+  // En production, remplacer par une librairie QR robuste côté front ou back.
+  var size = 29;
+  var canvas = document.createElement('canvas');
+  var px = 6;
+  canvas.width = size * px;
+  canvas.height = size * px;
+  var ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#18375d';
+
+  function hash(str) {
+    var h = 2166136261;
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
+    }
+    return h >>> 0;
+  }
+
+  function drawFinder(x, y) {
+    ctx.fillStyle = '#18375d';
+    ctx.fillRect(x * px, y * px, 7 * px, 7 * px);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect((x + 1) * px, (y + 1) * px, 5 * px, 5 * px);
+    ctx.fillStyle = '#18375d';
+    ctx.fillRect((x + 2) * px, (y + 2) * px, 3 * px, 3 * px);
+  }
+
+  drawFinder(0, 0);
+  drawFinder(size - 7, 0);
+  drawFinder(0, size - 7);
+
+  var seed = hash(url);
+  for (var y = 0; y < size; y++) {
+    for (var x = 0; x < size; x++) {
+      var inFinder = (x < 8 && y < 8) || (x >= size - 8 && y < 8) || (x < 8 && y >= size - 8);
+      if (inFinder) continue;
+
+      var v = (seed + x * 374761393 + y * 668265263 + (x*y) * 2246822519) >>> 0;
+      var on = ((v ^ (v >> 13)) & 7) < 3;
+      if ((x === 6 || y === 6) && !inFinder) on = (x + y) % 2 === 0;
+      if (on) {
+        ctx.fillStyle = '#18375d';
+        ctx.fillRect(x * px, y * px, px, px);
+      }
+    }
+  }
+
+  container.appendChild(canvas);
+}
+
+function downloadQrCode() {
+  var canvas = document.querySelector('#qr-code canvas');
+  if (!canvas) {
+    drawQrCode(getUrl());
+    canvas = document.querySelector('#qr-code canvas');
+  }
+  if (!canvas) return;
+
+  var a = document.createElement('a');
+  a.download = 'qr-code-autodiagnostic-selftech.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
 
 function getUrl() { return document.getElementById('launch-url').textContent; }
 
@@ -392,6 +284,58 @@ function formatDateISOToFR(s) {
   return s;
 }
 
+
+function parseISODate(s) {
+  if (!s || String(s).split('-').length !== 3) return null;
+  var p = String(s).split('-');
+  return new Date(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10));
+}
+
+function diffDays(a, b) {
+  if (!a || !b) return null;
+  return Math.round((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function updateReminderPlan(launchISO, closeISO) {
+  var start = parseISODate(launchISO);
+  var end = parseISODate(closeISO);
+  var duration = diffDays(start, end);
+
+  var firstDay = 'J+15';
+  var lastDay = 'J-10';
+  var firstText = 'Relancer à mi-campagne environ, selon la durée choisie.';
+  var lastText = 'À prévoir environ 10 jours avant la clôture, ou plus près si la campagne est courte.';
+
+  if (duration !== null && duration > 0) {
+    if (duration >= 30) {
+      firstDay = 'J+15';
+      lastDay = 'J-10';
+      firstText = 'Première relance après environ 15 jours de campagne.';
+      lastText = 'Dernière relance 10 jours avant la clôture.';
+    } else if (duration >= 15) {
+      firstDay = 'J+' + Math.max(7, Math.round(duration / 2));
+      lastDay = 'J-5';
+      firstText = 'Première relance à mi-campagne, car la période est plus courte.';
+      lastText = 'Dernière relance 5 jours avant la clôture.';
+    } else {
+      firstDay = 'J+' + Math.max(3, Math.round(duration / 2));
+      lastDay = 'J-2';
+      firstText = 'Relance rapide à prévoir, car la campagne est courte.';
+      lastText = 'Dernière relance 2 jours avant la clôture.';
+    }
+  }
+
+  var firstEl = document.getElementById('first-reminder-day');
+  var lastEl = document.getElementById('last-reminder-day');
+  var firstTextEl = document.getElementById('first-reminder-text');
+  var lastTextEl = document.getElementById('last-reminder-text');
+
+  if (firstEl) firstEl.textContent = firstDay;
+  if (lastEl) lastEl.textContent = lastDay;
+  if (firstTextEl) firstTextEl.textContent = firstText;
+  if (lastTextEl) lastTextEl.textContent = lastText;
+}
+
 function initFromStorage() {
   try {
     var raw = localStorage.getItem(LS_KEY);
@@ -404,6 +348,7 @@ function initFromStorage() {
     document.getElementById('sb-title').textContent = themeTitle.replace(/^Autodiagnostic\s+/i, '');
     document.getElementById('launch-url').textContent = url;
     document.getElementById('sb-url').textContent = url;
+    drawQrCode(url);
 
     var launch = meta.date_lancement || meta.dateLancement || '2026-04-30';
     var close = meta.date_cloture || meta.dateCloture || '2026-05-29';
@@ -412,6 +357,7 @@ function initFromStorage() {
     document.getElementById('kpi-close').textContent = formatDateISOToFR(close);
     document.getElementById('sb-launch').textContent = formatDateISOToFR(launch);
     document.getElementById('sb-close').textContent = formatDateISOToFR(close);
+    updateReminderPlan(launch, close);
 
     if (stored.theme && stored.theme.chapters) {
       var chs = stored.theme.chapters;
@@ -422,6 +368,7 @@ function initFromStorage() {
     console.warn('Impossible de charger les données de lancement', e);
   }
   showTemplate('launch', document.querySelector('.comm-tab'));
+  drawQrCode(getUrl());
   updateChecklist();
 }
 
@@ -430,10 +377,10 @@ function launchCampaign() {
     var raw = localStorage.getItem(LS_KEY);
     var stored = raw ? JSON.parse(raw) : {};
     stored.launch_ready = true;
-    stored.status = 'active';
+    stored.status = 'published';
     localStorage.setItem(LS_KEY, JSON.stringify(stored));
   } catch(e) {}
-  alert('Campagne lancée');
+  alert('Autodiagnostic publié');
   window.location.href = 'selftech_resultats.html';
 }
 
