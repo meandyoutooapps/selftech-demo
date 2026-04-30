@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paramètres du compte — Selftech</title>
+<title>Paramètres du compte — Into The Shift</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/asap@5/index.css">
+<link rel="stylesheet" href="style.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18375d}
@@ -196,11 +197,8 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 <body>
 
 <!-- TOPBAR -->
-<div class="topbar">
-  <div class="logo"><span class="logo-self">SELF</span><div class="logo-tech"><span>T</span><span>E</span><span>C</span><span>H</span></div></div>
-  <div class="tb-sp"></div>
-  <div class="acct"><div class="av">SR</div><span class="acct-n">Sonora RH</span></div>
-</div>
+<div id="header"></div>
+<script src="header.js"></script>
 
 <!-- SUBNAV -->
 <div class="subnav">
@@ -504,7 +502,7 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
       <div id="panel-acces" class="panel">
         <div class="card">
           <div class="card-title">Membres du compte</div>
-          <div class="card-sub">Les membres ont accès au dashboard Selftech de votre organisation selon leur rôle. Les experts externes sont invités sur un autodiagnostic spécifique uniquement.</div>
+          <div class="card-sub">Les membres ont accès au dashboard Into The Shift de votre organisation selon leur rôle. Les experts externes sont invités sur un autodiagnostic spécifique uniquement.</div>
 
           <div>
             <div class="member-row">
@@ -597,7 +595,7 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#6d28d9" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Faire appel à un expert externe
           </div>
-          <div style="font-size:13px;color:#475569;line-height:1.65;margin-bottom:14px">Vous pouvez inviter un consultant, un prestataire RH ou un expert métier pour concevoir ou relire le contenu de vos autodiagnostics. L'expert travaille directement dans l'éditeur Selftech, sur le périmètre que vous lui accordez — sans jamais accéder à vos données ou résultats.</div>
+          <div style="font-size:13px;color:#475569;line-height:1.65;margin-bottom:14px">Vous pouvez inviter un consultant, un prestataire RH ou un expert métier pour concevoir ou relire le contenu de vos autodiagnostics. L'expert travaille directement dans l'éditeur Into The Shift, sur le périmètre que vous lui accordez — sans jamais accéder à vos données ou résultats.</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div style="background:#fff;border:1px solid #c4b5fd;border-radius:9px;padding:12px 14px">
               <div style="font-size:11px;font-weight:700;color:#6d28d9;margin-bottom:4px">✓ Ce que l'expert peut faire</div>
@@ -679,14 +677,14 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 
         <div class="card">
           <div class="card-title" style="color:#c0392b">Zone critique</div>
-          <div class="card-sub">Ces actions sont irréversibles. Contactez Selftech pour toute demande de clôture ou de suppression de données.</div>
+          <div class="card-sub">Ces actions sont irréversibles. Contactez Into The Shift pour toute demande de clôture ou de suppression de données.</div>
 
           <div class="security-row">
             <div class="sec-info">
               <div class="sec-label">Demander la suppression des données</div>
               <div class="sec-desc">Pour supprimer vos données ou fermer votre compte, contactez notre équipe. Nous traitons votre demande sous 72h ouvrées.</div>
             </div>
-            <a href="mailto:cmichelon@selftech.app?subject=Demande%20de%20suppression%20de%20données%20—%20Sonora%20RH" class="btn btn-danger" style="text-decoration:none;font-size:11px;padding:6px 12px">Contacter Selftech</a>
+            <a href="mailto:cmichelon@intotheshift.app?subject=Demande%20de%20suppression%20de%20données%20—%20Sonora%20RH" class="btn btn-danger" style="text-decoration:none;font-size:11px;padding:6px 12px">Contacter Into The Shift</a>
           </div>
         </div>
       </div>
@@ -696,7 +694,7 @@ select.inp{cursor:pointer;appearance:none;background-image:url("data:image/svg+x
 
         <div class="card">
           <div class="card-title">Questions fréquentes</div>
-          <div class="card-sub">Tout ce qu'il faut savoir pour utiliser Selftech efficacement.</div>
+          <div class="card-sub">Tout ce qu'il faut savoir pour utiliser Into The Shift efficacement.</div>
           <div id="faq-list"></div>
         </div>
 
@@ -740,15 +738,15 @@ function toggleSecteur(s) {
 
 // ── FAQ ───────────────────────────────────────────────────────────────────────
 const FAQ = [
-  { cat:"Comprendre Selftech", items:[
-    { q:"Qu'est-ce qu'un autodiagnostic Selftech ?",
-      a:"Un autodiagnostic Selftech est un questionnaire comportemental anonyme déployé auprès d'un groupe de collaborateurs.<br><br>Il ne s'agit pas d'un test de connaissances théoriques. L'objectif est de proposer des situations concrètes du quotidien professionnel pour aider chaque répondant à prendre conscience de ses réflexes, de ses pratiques et de ses axes de progression.<br><br>À la fin du parcours, le répondant obtient un résultat individuel, formulé de manière bienveillante et non culpabilisante. L'organisation accède à une analyse agrégée dans le dashboard, par chapitre et, si elle le souhaite, par segments socio-démographiques configurés au lancement." },
+  { cat:"Comprendre Into The Shift", items:[
+    { q:"Qu'est-ce qu'un autodiagnostic Into The Shift ?",
+      a:"Un autodiagnostic Into The Shift est un questionnaire comportemental anonyme déployé auprès d'un groupe de collaborateurs.<br><br>Il ne s'agit pas d'un test de connaissances théoriques. L'objectif est de proposer des situations concrètes du quotidien professionnel pour aider chaque répondant à prendre conscience de ses réflexes, de ses pratiques et de ses axes de progression.<br><br>À la fin du parcours, le répondant obtient un résultat individuel, formulé de manière bienveillante et non culpabilisante. L'organisation accède à une analyse agrégée dans le dashboard, par chapitre et, si elle le souhaite, par segments socio-démographiques configurés au lancement." },
     { q:"Quelle est la différence entre un thème et un autodiagnostic ?",
       a:"Un <strong>thème</strong> est un modèle réutilisable. Il contient la structure pédagogique de base : les chapitres, les questions, les réponses, les scores et les profils de résultat.<br><br>Un <strong>autodiagnostic</strong> est une campagne déployée à partir d'un thème. Il comprend une URL de passation, une introduction, des données socio-démo éventuelles, des messages de fin, des ressources complémentaires et des résultats associés.<br><br>Un même thème peut donc servir à créer plusieurs autodiagnostics différents, pour plusieurs campagnes ou plusieurs contextes." },
     { q:"À quoi sert un autodiagnostic comportemental ?",
       a:"Un autodiagnostic comportemental sert à provoquer une prise de conscience individuelle à partir de situations concrètes. Contrairement à une enquête classique, il ne demande pas seulement aux répondants de donner leur avis. Il les place face à des situations réalistes et leur propose plusieurs façons de réagir.<br><br>L'intérêt est double :<ul><li>Pour le répondant : mieux comprendre ses propres réflexes.</li><li>Pour l'organisation : identifier les sujets à travailler, les écarts entre populations et les priorités d'action.</li></ul>" },
-    { q:"Est-ce que Selftech remplace une enquête interne ?",
-      a:"Non. Selftech ne remplace pas nécessairement une enquête interne : il répond à un autre objectif.<br><br>Une enquête interne mesure souvent une opinion, une perception ou un niveau de satisfaction. Un autodiagnostic Selftech mesure des réflexes comportementaux à partir de mises en situation. Il permet aussi de donner immédiatement quelque chose au répondant : un profil individuel, des conseils, des ressources ou des pistes de progression.<br><br>Selftech peut donc compléter une enquête interne, ou être utilisé seul lorsqu'on souhaite sensibiliser, engager et mesurer des pratiques." },
+    { q:"Est-ce que Into The Shift remplace une enquête interne ?",
+      a:"Non. Into The Shift ne remplace pas nécessairement une enquête interne : il répond à un autre objectif.<br><br>Une enquête interne mesure souvent une opinion, une perception ou un niveau de satisfaction. Un autodiagnostic Into The Shift mesure des réflexes comportementaux à partir de mises en situation. Il permet aussi de donner immédiatement quelque chose au répondant : un profil individuel, des conseils, des ressources ou des pistes de progression.<br><br>Into The Shift peut donc compléter une enquête interne, ou être utilisé seul lorsqu'on souhaite sensibiliser, engager et mesurer des pratiques." },
   ]},
   { cat:"Création des thèmes et contenus", items:[
     { q:"Qui crée le contenu d'un autodiagnostic ?",
@@ -757,12 +755,12 @@ const FAQ = [
       a:"Oui. L'IA peut proposer une base de travail : chapitres, questions, réponses, scores et profils.<br><br>Cependant, cette génération n'est pas une validation métier. Les contenus produits par l'IA doivent toujours être relus, ajustés et validés par le client avant diffusion. L'IA aide à gagner du temps, à structurer une première version et à proposer des formulations. Elle ne remplace pas l'expertise métier ni la validation finale du contenu." },
     { q:"Peut-on faire appel à un expert externe pour concevoir l'autodiagnostic ?",
       a:"Oui. Le client peut inviter un expert externe sur un autodiagnostic spécifique via le rôle <strong>Expert externe</strong>. Cet expert peut travailler sur la structure, les situations, les réponses, les scores et les profils — sans avoir accès aux résultats, aux données socio-démo ni au reste du compte.<br><br>L'expert n'a pas besoin d'accéder aux données internes du client pour concevoir le contenu.N'hésitez pas à contacter Me&YouToo pour tout besoin d'expertise concernant la diversité, l'inlcusion, sexisme etc... L'accès aux résultats et au dashboard reste entièrement sous le contrôle du client." },
-    { q:"Selftech est-il responsable du contenu des autodiagnostics ?",
-      a:"Non. Selftech fournit l'outil technique permettant de créer, déployer et analyser des autodiagnostics.<br><br>Le client reste responsable du contenu qu'il publie : choix des thèmes, formulation des questions, réponses proposées, scoring, profils de résultat, messages, ressources et données socio-démo collectées.<br><br>Selftech n'est pas responsable de l'exactitude métier, juridique, scientifique, sociale ou pédagogique des contenus publiés par le client." },
+    { q:"Into The Shift est-il responsable du contenu des autodiagnostics ?",
+      a:"Non. Into The Shift fournit l'outil technique permettant de créer, déployer et analyser des autodiagnostics.<br><br>Le client reste responsable du contenu qu'il publie : choix des thèmes, formulation des questions, réponses proposées, scoring, profils de résultat, messages, ressources et données socio-démo collectées.<br><br>Into The Shift n'est pas responsable de l'exactitude métier, juridique, scientifique, sociale ou pédagogique des contenus publiés par le client." },
     { q:"Que signifient les badges de provenance ?",
-      a:"<strong>🤖 Base assistée par IA</strong> — contenu généré avec l'aide de l'intelligence artificielle. Doit être relu, corrigé et validé avant publication.<br><br><strong>⭐ Conçu par expert·e</strong> — contenu qualifié et mis à disposition par Selftech dans la bibliothèque partagée.<br><br><strong>🤝 Contribution client anonymisée</strong> — contenu partagé volontairement par un client dans la bibliothèque communautaire. Ne doit contenir aucune information confidentielle ou nominative. Le client qui le réutilise reste responsable de sa validation avant lancement.<br><br>Dans tous les cas, ces badges indiquent une base de travail — pas une validation finale." },
+      a:"<strong>🤖 Base assistée par IA</strong> — contenu généré avec l'aide de l'intelligence artificielle. Doit être relu, corrigé et validé avant publication.<br><br><strong>⭐ Conçu par expert·e</strong> — contenu qualifié et mis à disposition par Into The Shift dans la bibliothèque partagée.<br><br><strong>🤝 Contribution client anonymisée</strong> — contenu partagé volontairement par un client dans la bibliothèque communautaire. Ne doit contenir aucune information confidentielle ou nominative. Le client qui le réutilise reste responsable de sa validation avant lancement.<br><br>Dans tous les cas, ces badges indiquent une base de travail — pas une validation finale." },
     { q:"Peut-on partager son thème avec la communauté ?",
-      a:"Oui. Lorsqu'un client décide de partager son thème dans la bibliothèque communautaire, il contribue à enrichir les ressources disponibles pour toutes les organisations utilisatrices de Selftech.<br><br><strong>En échange, il reçoit automatiquement 50 passations gratuites créditées sur son pack.</strong><br><br>Le partage est peer-to-peer : Selftech n'est pas garant du contenu partagé. Chaque organisation qui réutilise un thème reste responsable de sa relecture et de sa validation avant lancement." },
+      a:"Oui. Lorsqu'un client décide de partager son thème dans la bibliothèque communautaire, il contribue à enrichir les ressources disponibles pour toutes les organisations utilisatrices de Into The Shift.<br><br><strong>En échange, il reçoit automatiquement 50 passations gratuites créditées sur son pack.</strong><br><br>Le partage est peer-to-peer : Into The Shift n'est pas garant du contenu partagé. Chaque organisation qui réutilise un thème reste responsable de sa relecture et de sa validation avant lancement." },
     { q:"Peut-on réutiliser un thème existant ?",
       a:"Oui. Un thème existant peut être réutilisé pour créer un nouvel autodiagnostic. Le client peut le modifier, ajouter ou supprimer des questions, ajuster les profils, adapter le vocabulaire et personnaliser l'introduction ou les ressources.<br><br>La réutilisation d'un thème permet de gagner du temps, mais ne dispense pas de la validation finale." },
   ]},
@@ -784,11 +782,11 @@ const FAQ = [
     { q:"Les répondants ont-ils besoin d'un compte ?",
       a:"Non. La passation est conçue pour être anonyme. Les répondants accèdent directement à l'autodiagnostic via une URL de passation. <strong>Aucun login, aucun mot de passe, aucun cookie, aucun suivi d'adresse IP.</strong><br><br>C'est précisément ce cadre d'anonymat qui permet d'obtenir des réponses sincères : le répondant n'a aucune raison de chercher la 'bonne réponse'." },
     { q:"Les données socio-démo peuvent-elles remettre en cause l'anonymat ?",
-      a:"Oui, si elles sont trop nombreuses ou trop précises. Le risque d'identification ne vient pas seulement d'un critère isolé, mais du croisement de plusieurs critères.<br><br>Par exemple, croiser un service, un niveau hiérarchique et une ancienneté peut créer des petits groupes de une ou deux personnes seulement.<br><br>C'est pourquoi Selftech calcule automatiquement le groupe croisé estimé et affiche des alertes dès que le risque devient réel." },
+      a:"Oui, si elles sont trop nombreuses ou trop précises. Le risque d'identification ne vient pas seulement d'un critère isolé, mais du croisement de plusieurs critères.<br><br>Par exemple, croiser un service, un niveau hiérarchique et une ancienneté peut créer des petits groupes de une ou deux personnes seulement.<br><br>C'est pourquoi Into The Shift calcule automatiquement le groupe croisé estimé et affiche des alertes dès que le risque devient réel." },
     { q:"Comment préserver l'anonymat dans les données socio-démo ?",
       a:"Pour préserver l'anonymat, il est recommandé de :<ul><li>limiter le nombre de critères socio-démo ;</li><li>éviter les catégories trop fines ;</li><li>regrouper les petites populations ;</li><li>ne pas utiliser de critères inutiles à l'analyse ;</li><li>vérifier la taille des groupes avant lancement ;</li><li>éviter les croisements qui pourraient isoler une personne.</li></ul>" },
     { q:"Qui peut voir les résultats ?",
-      a:"Les résultats sont visibles uniquement par les membres du compte ayant le rôle Admin, Éditeur ou Lecteur résultats.<br><br>Les experts externes n'ont pas accès aux résultats ni aux données socio-démo — uniquement à l'éditeur de contenu.<br><br>Selftech ne donne pas accès aux résultats à des tiers non autorisés." },
+      a:"Les résultats sont visibles uniquement par les membres du compte ayant le rôle Admin, Éditeur ou Lecteur résultats.<br><br>Les experts externes n'ont pas accès aux résultats ni aux données socio-démo — uniquement à l'éditeur de contenu.<br><br>Into The Shift ne donne pas accès aux résultats à des tiers non autorisés." },
     { q:"Les résultats sont-ils individuels ou collectifs ?",
       a:"Il existe deux niveaux :<ul><li>Le <strong>répondant</strong> voit son propre résultat individuel à la fin de son parcours et peut se situer par rapport à ses collègues en général.</li><li>L'<strong>organisation</strong> consulte des résultats agrégés dans le dashboard.</li></ul>L'organisation ne voit pas les résultats individuels nominatifs. Le dashboard sert à analyser les tendances collectives et les écarts entre segments." },
   ]},
@@ -800,11 +798,11 @@ const FAQ = [
   ]},
   { cat:"Pack de passations", items:[
     { q:"Qu'est-ce qu'une passation ?",
-      a:"Une passation correspond à un parcours complété dans un autodiagnostic. Elle n'est pas nominative : Selftech ne peut pas à identifier les personnes qui répondent, à aucun moment du parcours de passations.<br><br>Si une même personne complète deux fois le même autodiagnostic, cela compte comme deux passations. Le pack mesure donc un volume d'usages complétés, et non un nombre de collaborateurs uniques." },
+      a:"Une passation correspond à un parcours complété dans un autodiagnostic. Elle n'est pas nominative : Into The Shift ne peut pas à identifier les personnes qui répondent, à aucun moment du parcours de passations.<br><br>Si une même personne complète deux fois le même autodiagnostic, cela compte comme deux passations. Le pack mesure donc un volume d'usages complétés, et non un nombre de collaborateurs uniques." },
     { q:"Le pack est-il lié à un seul autodiagnostic ?",
       a:"Non. Le pack de passations est mutualisé entre tous les autodiagnostics d'un même compte. Cela permet de lancer plusieurs campagnes ou plusieurs thèmes au cours d'une période donnée, sans acheter un volume séparé pour chaque autodiagnostic." },
     { q:"Comment obtenir des passations gratuites ?",
-      a:"Lorsqu'un client partage son thème dans la bibliothèque communautaire Selftech, <strong>50 passations gratuites sont automatiquement créditées sur son pack.</strong><br><br>Le partage est peer-to-peer : Selftech n'est pas garant du contenu partagé. Chaque organisation qui réutilise un thème reste responsable de sa propre validation avant lancement." },
+      a:"Lorsqu'un client partage son thème dans la bibliothèque communautaire Into The Shift, <strong>50 passations gratuites sont automatiquement créditées sur son pack.</strong><br><br>Le partage est peer-to-peer : Into The Shift n'est pas garant du contenu partagé. Chaque organisation qui réutilise un thème reste responsable de sa propre validation avant lancement." },
     { q:"Comment recharger son pack ?",
       a:"Contactez notre équipe à <strong>cmichelon@meandyoutoo.app</strong> pour acquérir des passations supplémentaires. Nous vous répondons sous 24h ouvrées." },
   ]},
@@ -818,7 +816,7 @@ const FAQ = [
   ]},
   { cat:"Responsabilités et bonnes pratiques", items:[
     { q:"Qui est responsable de la validation finale avant lancement ?",
-      a:"Le client est responsable de la validation finale. Avant publication, il doit vérifier : le contenu des questions, les réponses proposées, le scoring, les profils, l'introduction, les données socio-démo, les ressources et la cohérence globale de l'autodiagnostic.<br><br>Selftech fournit l'outil de création, de déploiement et d'analyse, mais ne se substitue pas à la validation métier du client." },
+      a:"Le client est responsable de la validation finale. Avant publication, il doit vérifier : le contenu des questions, les réponses proposées, le scoring, les profils, l'introduction, les données socio-démo, les ressources et la cohérence globale de l'autodiagnostic.<br><br>Into The Shift fournit l'outil de création, de déploiement et d'analyse, mais ne se substitue pas à la validation métier du client." },
     { q:"Peut-on modifier un autodiagnostic après lancement ?",
       a:"Il est préférable d'éviter de modifier les questions, réponses ou scores une fois la campagne lancée, car cela peut rendre les résultats moins comparables.<br><br>Si une modification importante est nécessaire, il est recommandé d'en mesurer l'impact sur l'analyse des résultats avant de procéder." },
     { q:"Que faire si un contenu généré par IA paraît inadapté ?",
