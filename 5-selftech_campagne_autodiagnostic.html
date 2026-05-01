@@ -10,9 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18375d}
 .topbar{background:#18375d;display:flex;align-items:center;padding:0 24px;height:54px;gap:12px;position:sticky;top:0;z-index:50}
-.logo{display:flex;align-items:stretch}.logo-self{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.5px;align-self:center}
-.logo-tech{background:#eb6366;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 5px;margin-left:3px;border-radius:2px;min-height:30px}
-.logo-tech span{font-size:8px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:.5px}.tb-sp{flex:1}
+.logo{display:flex;align-items:center;height:54px;cursor:pointer}.tb-sp{flex:1}
 .acct{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:5px 13px 5px 5px}
 .av{width:26px;height:26px;border-radius:50%;background:#eb6366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}.acct-n{font-size:13px;color:rgba(255,255,255,.9)}
 .subnav{background:#fff;border-bottom:1px solid #e2e8f0;display:flex;padding:8px 18px;gap:4px;overflow-x:auto}.subnav::-webkit-scrollbar{display:none}
@@ -31,6 +29,8 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}@media(max-width:650px){.kpi-grid{grid-template-columns:1fr}}
 .kpi{background:#fff;border:1px solid #d8e0ea;border-radius:12px;padding:14px}.kpi-lbl{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
 .kpi-val{font-size:18px;font-weight:800;color:#18375d}.kpi-sub{font-size:11px;color:#64748b;margin-top:3px;line-height:1.35}
+.date-edit{width:100%;margin-top:9px;padding:7px 9px;border:1px solid #d8e0ea;border-radius:8px;font-size:12px;color:#18375d;font-family:'Asap',sans-serif;outline:none}
+.date-edit:focus{border-color:#18375d}
 .progress-wrap{height:8px;background:#edf1f7;border-radius:20px;overflow:hidden;margin:8px 0}.progress-fill{height:100%;width:40%;background:#007883;border-radius:20px}
 .block{background:#fff;border:1px solid #d8e0ea;border-radius:14px;padding:22px 24px;margin-bottom:16px}
 .block-title{font-size:15px;font-weight:700;color:#18375d;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -49,6 +49,9 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .time-txt{font-size:12px;color:#18375d;font-weight:700}.time-sub{font-size:11px;color:#64748b;margin-top:2px;line-height:1.35}
 .checklist{display:flex;flex-direction:column;gap:9px}.check-row{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}.check-row input{margin-top:2px;accent-color:#007883}
 .check-title{font-size:12px;font-weight:700;color:#18375d;display:block}.check-sub{font-size:11px;color:#64748b;line-height:1.4;margin-top:2px;display:block}
+.publish-help{display:none;margin-top:12px;background:#fff8ec;border:1px solid #ffd490;color:#8a6408;border-radius:10px;padding:11px 13px;font-size:12px;line-height:1.45}
+.publish-help strong{color:#7a5200}
+.publish-help ul{margin:7px 0 0 18px}
 .bottom-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}.btn-back{padding:10px 20px;border:1px solid #d8e0ea;border-radius:8px;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif}
 .btn-continue{padding:10px 22px;border:none;border-radius:8px;background:#eb6366;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Asap',sans-serif;display:flex;align-items:center;gap:7px}.btn-continue:disabled{background:#f5c0c1;cursor:not-allowed}
 .sidebar{position:sticky;top:78px}.sidebar-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;overflow:hidden;margin-bottom:14px}.sidebar-head{background:#18375d;padding:13px 16px}
@@ -59,6 +62,8 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 .side-mini,.pack-card{background:#fff;border:1px solid #d8e0ea;border-radius:14px;margin-bottom:14px;overflow:hidden}.side-mini-head{padding:12px 14px;background:#18375d;color:#fff;font-size:13px;font-weight:800}.side-mini-body{padding:13px 14px}
 .pack-head{background:#fceaea;padding:10px 14px;border-bottom:1px solid #ffd6d4}.pack-head-lbl{font-size:10px;font-weight:700;color:#c0392b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}.pack-head-val{font-size:13px;font-weight:700;color:#c0392b}
 .pack-body{padding:12px 14px}.pack-bar-w{height:5px;background:#edf1f7;border-radius:3px;overflow:hidden;margin-bottom:6px}.pack-bar-f{height:100%;border-radius:3px;background:#eb6366;width:20%}.pack-note{font-size:11px;color:#94a3b8;line-height:1.4}
+.pack-contact{display:inline-flex;margin-top:10px;font-size:12px;font-weight:800;color:#007883;text-decoration:none}
+.pack-contact:hover{text-decoration:underline}
 .pill{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;font-size:10px;font-weight:800;background:#fff8ec;color:#b7840a}.pill-ok{background:#f0fbf2;color:#27823a}
 </style>
 </head>
@@ -83,9 +88,9 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
 
 <div class="stepper-wrap">
   <div class="stepper">
-    <div class="step"><div class="step-circle done">✓</div><span class="step-label done">Choisir un thème</span></div><div class="step-connector done"></div>
-    <div class="step"><div class="step-circle done">✓</div><span class="step-label done">Valider questions &amp; profils</span></div><div class="step-connector done"></div>
-    <div class="step"><div class="step-circle done">✓</div><span class="step-label done">Paramétrer</span></div><div class="step-connector done"></div>
+    <div class="step" onclick="window.location.href='selftech_creer_autodiagnostic.html'" style="cursor:pointer"><div class="step-circle done">✓</div><span class="step-label done">Choisir un thème</span></div><div class="step-connector done"></div>
+    <div class="step" onclick="window.location.href='3-selftech_editeur_questions.html?mode=autodiag'" style="cursor:pointer"><div class="step-circle done">✓</div><span class="step-label done">Valider questions &amp; profils</span></div><div class="step-connector done"></div>
+    <div class="step" onclick="window.location.href='4-selftech_parametrage_autodiagnostic.html'" style="cursor:pointer"><div class="step-circle done">✓</div><span class="step-label done">Paramétrer</span></div><div class="step-connector done"></div>
     <div class="step"><div class="step-circle active">4</div><span class="step-label active">Préparer le lancement</span></div><div class="step-connector todo"></div>
     <div class="step"><div class="step-circle todo">5</div><span class="step-label todo">Suivre les résultats</span></div>
   </div>
@@ -98,8 +103,18 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
   <div class="launch-grid">
     <main>
       <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-lbl">Lancement prévu</div><div class="kpi-val" id="kpi-launch">30/04/2026</div><div class="kpi-sub">Date indiquée au paramétrage</div></div>
-        <div class="kpi"><div class="kpi-lbl">Clôture choisie</div><div class="kpi-val" id="kpi-close">29/05/2026</div><div class="kpi-sub">Date choisie par le client</div></div>
+        <div class="kpi">
+          <div class="kpi-lbl">Lancement prévu</div>
+          <div class="kpi-val" id="kpi-launch">30/04/2026</div>
+          <input class="date-edit" id="date-launch" type="date" onchange="updateDatesFromInputs()">
+          <div class="kpi-sub">Modifiable avant publication</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Clôture choisie</div>
+          <div class="kpi-val" id="kpi-close">29/05/2026</div>
+          <input class="date-edit" id="date-close" type="date" onchange="updateDatesFromInputs()">
+          <div class="kpi-sub">Date choisie par le client</div>
+        </div>
         <div class="kpi"><div class="kpi-lbl">Participation recommandée</div><div class="kpi-val">40%</div><div class="progress-wrap"><div class="progress-fill"></div></div><div class="kpi-sub">Un bon repère pour dégager des tendances exploitables, sans prétendre à une représentativité parfaite.</div></div>
       </div>
 
@@ -107,7 +122,7 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
         <div class="block-title">Lien de passation</div>
         <div class="block-sub">À diffuser dans les emails, messages Teams / Slack, intranet ou affiches QR code.</div>
         <div class="launch-url-box">
-          <div><div class="url-label">URL collaborateur</div><div class="url-big" id="launch-url">app.selftech.app/sonora-rh/securite-et-culture-de-surete</div></div>
+          <div><div class="url-label">URL collaborateur</div><div class="url-big" id="launch-url">app.intotheshift.io/sonora-rh/securite-et-culture-de-surete</div></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn-copy" onclick="copyUrl()">Copier le lien</button><button class="btn-test" onclick="alert('Ouverture de l’autodiagnostic test')">Tester</button></div>
         </div>
         <div style="display:flex;gap:16px;align-items:center;margin-top:16px;flex-wrap:wrap">
@@ -146,7 +161,7 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
         <div class="block-sub">Le rythme s’adapte à la durée choisie pour la campagne.</div>
         <div class="timeline">
           <div class="time-row"><div class="time-day">J</div><div><div class="time-txt">Lancement</div><div class="time-sub">Email DRH + message Teams / Slack + post intranet.</div></div></div>
-          <div class="time-row"><div class="time-day" id="first-reminder-day">J+15</div><div><div class="time-txt">Première relance</div><div class="time-sub" id="first-reminder-text">Première relance après environ 15 jours de campagne.</div></div></div>
+          <div class="time-row"><div class="time-day" id="first-reminder-day">J+14</div><div><div class="time-txt">Première relance</div><div class="time-sub" id="first-reminder-text">Première relance après environ 14 jours de campagne.</div></div></div>
           <div class="time-row"><div class="time-day" id="last-reminder-day">J-10</div><div><div class="time-txt">Dernière relance</div><div class="time-sub" id="last-reminder-text">Dernière relance 10 jours avant la clôture.</div></div></div>
           <div class="time-row"><div class="time-day">Après</div><div><div class="time-txt">Restitution</div><div class="time-sub">Remercier les participants et annoncer les prochaines étapes.</div></div></div>
         </div>
@@ -162,6 +177,7 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
           <label class="check-row"><input type="checkbox" onchange="updateChecklist()"><span><span class="check-title">Messages prêts</span><span class="check-sub">Les emails et messages internes ont été relus.</span></span></label>
           <label class="check-row"><input type="checkbox" onchange="updateChecklist()"><span><span class="check-title">Relances planifiées</span><span class="check-sub">Une ou plusieurs relances sont prévues pendant la période de passation.</span></span></label>
         </div>
+        <div class="publish-help" id="publish-help"></div>
       </section>
 
       <div class="bottom-actions">
@@ -180,7 +196,7 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
           <div class="sidebar-row"><span class="sidebar-row-lbl">Lancement</span><span class="sidebar-row-val" id="sb-launch">30/04/2026</span></div>
           <div class="sidebar-row"><span class="sidebar-row-lbl">Clôture choisie</span><span class="sidebar-row-val" id="sb-close">29/05/2026</span></div>
         </div>
-        <div class="sidebar-url"><div class="sidebar-url-lbl">URL de passation</div><div class="sidebar-url-val" id="sb-url">app.selftech.app/sonora-rh/securite-et-culture-de-surete</div></div>
+        <div class="sidebar-url"><div class="sidebar-url-lbl">URL de passation</div><div class="sidebar-url-val" id="sb-url">app.intotheshift.io/sonora-rh/securite-et-culture-de-surete</div></div>
       </div>
 
       <div class="side-mini">
@@ -188,20 +204,24 @@ body{font-family:'Asap',sans-serif;background:#f0f2f5;min-height:100vh;color:#18
         <div class="side-mini-body">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px"><span style="font-size:12px;color:#64748b">Checklist</span><span class="pill" id="check-pill">2/5</span></div>
           <div class="progress-wrap"><div class="progress-fill" id="check-progress" style="width:40%"></div></div>
-          <div style="font-size:11px;color:#94a3b8;line-height:1.4">Le bouton de publication s’active quand tous les points sont cochés.</div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.4" id="sidebar-check-hint">Le bouton de publication s’active quand tous les points sont cochés.</div>
         </div>
       </div>
 
       <div class="pack-card">
         <div class="pack-head"><div class="pack-head-lbl">Pack passations</div><div class="pack-head-val">200 restantes sur 1 000</div></div>
-        <div class="pack-body"><div class="pack-bar-w"><div class="pack-bar-f"></div></div><div class="pack-note">Ces passations sont mutualisées pour tous les autodiagnostics de Sonora RH.</div></div>
+        <div class="pack-body">
+          <div class="pack-bar-w"><div class="pack-bar-f"></div></div>
+          <div class="pack-note">Ces passations sont mutualisées pour tous les autodiagnostics de Sonora RH.</div>
+          <a class="pack-contact" href="mailto:contact@intotheshift.io?subject=Recharger%20mon%20pack%20de%20passations">Contactez-nous pour recharger votre pack →</a>
+        </div>
       </div>
 
       <div class="side-mini">
         <div class="side-mini-head">Besoin d’aide ?</div>
         <div class="side-mini-body">
-          <div style="font-size:12px;color:#475569;line-height:1.5;margin-bottom:10px">Proposez un accompagnement pour adapter les messages, animer un lancement ou préparer une restitution.</div>
-          <button class="btn-secondary" onclick="alert('Demande envoyée')">Demander un accompagnement</button>
+          <div style="font-size:12px;color:#475569;line-height:1.5;margin-bottom:10px">Besoin d’un coup de pouce pour réussir votre lancement ? Contactez-nous pour adapter vos messages, obtenir des visuels prêts à diffuser ou préparer la restitution des résultats.</div>
+          <a class="btn-secondary" href="mailto:contact@intotheshift.io?subject=Accompagnement%20lancement%20autodiagnostic">Contacter l’équipe Into The Shift</a>
         </div>
       </div>
     </aside>
@@ -221,57 +241,44 @@ var templates = {
 };
 
 function getUrl(){return document.getElementById('launch-url').textContent;}
-
-function showTemplate(key,btn){
-  document.querySelectorAll('.comm-tab').forEach(function(b){b.classList.remove('on')});
-  if(btn) btn.classList.add('on');
-  var t=templates[key]||templates.launch;
-  document.getElementById('tpl-title').textContent=t.title;
-  document.getElementById('tpl-meta').textContent=t.meta;
-  document.getElementById('tpl-body').textContent=t.body.replaceAll('{{URL}}',getUrl());
-}
-
+function showTemplate(key,btn){document.querySelectorAll('.comm-tab').forEach(function(b){b.classList.remove('on')});if(btn) btn.classList.add('on');var t=templates[key]||templates.launch;document.getElementById('tpl-title').textContent=t.title;document.getElementById('tpl-meta').textContent=t.meta;document.getElementById('tpl-body').textContent=t.body.replaceAll('{{URL}}',getUrl());}
 function copyUrl(){if(navigator.clipboard)navigator.clipboard.writeText(getUrl());alert('Lien copié');}
 function copyTemplate(){var text=document.getElementById('tpl-body').textContent;if(navigator.clipboard)navigator.clipboard.writeText(text);alert('Message copié');}
 function regenerateTone(){alert("Simulation IA : ici, on pourra adapter le ton selon le contexte, le public et le niveau d'urgence.");}
 
-function drawQrCode(url){
-  var container=document.getElementById('qr-code'); if(!container)return; container.innerHTML='';
-  var size=29,px=6,canvas=document.createElement('canvas'); canvas.width=size*px; canvas.height=size*px;
-  var ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-  function drawFinder(x,y){ctx.fillStyle='#18375d';ctx.fillRect(x*px,y*px,7*px,7*px);ctx.fillStyle='#fff';ctx.fillRect((x+1)*px,(y+1)*px,5*px,5*px);ctx.fillStyle='#18375d';ctx.fillRect((x+2)*px,(y+2)*px,3*px,3*px);}
-  drawFinder(0,0); drawFinder(size-7,0); drawFinder(0,size-7);
-  var h=2166136261; for(var i=0;i<url.length;i++){h^=url.charCodeAt(i);h+=(h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24);}
-  for(var y=0;y<size;y++){for(var x=0;x<size;x++){
-    var inFinder=(x<8&&y<8)||(x>=size-8&&y<8)||(x<8&&y>=size-8); if(inFinder)continue;
-    var v=(h+x*374761393+y*668265263+(x*y)*2246822519)>>>0;
-    var on=((v^(v>>13))&7)<3; if((x===6||y===6)&&!inFinder)on=(x+y)%2===0;
-    if(on){ctx.fillStyle='#18375d';ctx.fillRect(x*px,y*px,px,px);}
-  }}
-  container.appendChild(canvas);
-}
-
-function downloadQrCode(){
-  var canvas=document.querySelector('#qr-code canvas'); if(!canvas){drawQrCode(getUrl());canvas=document.querySelector('#qr-code canvas');}
-  if(!canvas)return; var a=document.createElement('a'); a.download='qr-code-autodiagnostic-selftech.png'; a.href=canvas.toDataURL('image/png'); a.click();
-}
-
-function updateChecklist(){
-  var boxes=Array.from(document.querySelectorAll('.check-row input'));
-  var checked=boxes.filter(function(b){return b.checked}).length,total=boxes.length,pct=Math.round((checked/total)*100);
-  document.getElementById('check-pill').textContent=checked+'/'+total;
-  document.getElementById('check-progress').style.width=pct+'%';
-  document.getElementById('check-pill').className='pill '+(checked===total?'pill-ok':'');
-  document.getElementById('btn-launch').disabled=checked!==total;
-}
+function drawQrCode(url){var container=document.getElementById('qr-code'); if(!container)return; container.innerHTML='';var size=29,px=6,canvas=document.createElement('canvas'); canvas.width=size*px; canvas.height=size*px;var ctx=canvas.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);function drawFinder(x,y){ctx.fillStyle='#18375d';ctx.fillRect(x*px,y*px,7*px,7*px);ctx.fillStyle='#fff';ctx.fillRect((x+1)*px,(y+1)*px,5*px,5*px);ctx.fillStyle='#18375d';ctx.fillRect((x+2)*px,(y+2)*px,3*px,3*px);}drawFinder(0,0); drawFinder(size-7,0); drawFinder(0,size-7);var h=2166136261; for(var i=0;i<url.length;i++){h^=url.charCodeAt(i);h+=(h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24);}for(var y=0;y<size;y++){for(var x=0;x<size;x++){var inFinder=(x<8&&y<8)||(x>=size-8&&y<8)||(x<8&&y>=size-8); if(inFinder)continue;var v=(h+x*374761393+y*668265263+(x*y)*2246822519)>>>0;var on=((v^(v>>13))&7)<3; if((x===6||y===6)&&!inFinder)on=(x+y)%2===0;if(on){ctx.fillStyle='#18375d';ctx.fillRect(x*px,y*px,px,px);}}}container.appendChild(canvas);}
+function downloadQrCode(){var canvas=document.querySelector('#qr-code canvas'); if(!canvas){drawQrCode(getUrl());canvas=document.querySelector('#qr-code canvas');}if(!canvas)return; var a=document.createElement('a'); a.download='qr-code-autodiagnostic-into-the-shift.png'; a.href=canvas.toDataURL('image/png'); a.click();}
 
 function formatDateISOToFR(s){if(!s)return'—';var p=String(s).split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:s;}
 function parseISODate(s){var p=String(s||'').split('-');return p.length===3?new Date(parseInt(p[0],10),parseInt(p[1],10)-1,parseInt(p[2],10)):null;}
 function diffDays(a,b){return(!a||!b)?null:Math.round((b.getTime()-a.getTime())/(1000*60*60*24));}
+function toISOFromDateInput(v){return v || '';}
+
+function updateDatesFromInputs(){
+  var launch=document.getElementById('date-launch').value;
+  var close=document.getElementById('date-close').value;
+  document.getElementById('kpi-launch').textContent=formatDateISOToFR(launch);
+  document.getElementById('kpi-close').textContent=formatDateISOToFR(close);
+  document.getElementById('sb-launch').textContent=formatDateISOToFR(launch);
+  document.getElementById('sb-close').textContent=formatDateISOToFR(close);
+  updateReminderPlan(launch,close);
+  saveDates(launch,close);
+  updateChecklist();
+}
+
+function saveDates(launch,close){
+  try{
+    var raw=localStorage.getItem(LS_KEY),stored=raw?JSON.parse(raw):{};
+    stored.meta=stored.meta||{};
+    stored.meta.date_lancement=launch;
+    stored.meta.date_cloture=close;
+    localStorage.setItem(LS_KEY,JSON.stringify(stored));
+  }catch(e){}
+}
 
 function updateReminderPlan(launchISO,closeISO){
   var duration=diffDays(parseISODate(launchISO),parseISODate(closeISO));
-  var firstDay='J+15',lastDay='J-10',firstText='Première relance après environ 15 jours de campagne.',lastText='Dernière relance 10 jours avant la clôture.';
+  var firstDay='J+14',lastDay='J-10',firstText='Première relance après environ 14 jours de campagne.',lastText='Dernière relance 10 jours avant la clôture.';
   if(duration!==null&&duration>0){
     if(duration<15){firstDay='J+'+Math.max(3,Math.round(duration/2));lastDay='J-2';firstText='Relance rapide à prévoir, car la campagne est courte.';lastText='Dernière relance 2 jours avant la clôture.';}
     else if(duration<30){firstDay='J+'+Math.max(7,Math.round(duration/2));lastDay='J-5';firstText='Première relance à mi-campagne, car la période est plus courte.';lastText='Dernière relance 5 jours avant la clôture.';}
@@ -282,31 +289,76 @@ function updateReminderPlan(launchISO,closeISO){
   document.getElementById('last-reminder-text').textContent=lastText;
 }
 
+function updateChecklist(){
+  var boxes=Array.from(document.querySelectorAll('.check-row input'));
+  var checked=boxes.filter(function(b){return b.checked}).length,total=boxes.length,pct=Math.round((checked/total)*100);
+  var launch=document.getElementById('date-launch') ? document.getElementById('date-launch').value : '';
+  var close=document.getElementById('date-close') ? document.getElementById('date-close').value : '';
+  var missing=[];
+  boxes.forEach(function(b){if(!b.checked){missing.push(b.closest('.check-row').querySelector('.check-title').textContent);}});
+  if(!launch) missing.push('Date de lancement');
+  if(!close) missing.push('Date de clôture');
+  if(launch&&close&&parseISODate(close)<=parseISODate(launch)) missing.push('Date de clôture après la date de lancement');
+  var ok=missing.length===0;
+  document.getElementById('check-pill').textContent=checked+'/'+total;
+  document.getElementById('check-progress').style.width=pct+'%';
+  document.getElementById('check-pill').className='pill '+(ok?'pill-ok':'');
+  document.getElementById('btn-launch').disabled=!ok;
+  var help=document.getElementById('publish-help');
+  var sideHint=document.getElementById('sidebar-check-hint');
+  if(help){
+    if(ok){
+      help.style.display='none'; help.innerHTML='';
+    }else{
+      help.style.display='block';
+      help.innerHTML='<strong>Le bouton “Publier l’autodiagnostic” est désactivé car il reste des éléments à valider :</strong><ul>'+missing.map(function(m){return '<li>'+m+'</li>';}).join('')+'</ul>';
+    }
+  }
+  if(sideHint){
+    sideHint.textContent=ok ? 'Tout est prêt : vous pouvez publier l’autodiagnostic.' : 'Publication bloquée : '+missing.length+' élément'+(missing.length>1?'s':'')+' à compléter.';
+  }
+}
+
 function initFromStorage(){
+  var launch='2026-04-30',close='2026-05-29';
   try{
     var raw=localStorage.getItem(LS_KEY),stored=raw?JSON.parse(raw):{},meta=stored.meta||{};
     var themeTitle=(stored.theme&&stored.theme.title)||meta.nom||'Sécurité & culture de sûreté';
     var slug=meta.slug||'securite-et-culture-de-surete';
-    var url='app.selftech.app/sonora-rh/'+slug;
+    var url='app.intotheshift.io/sonora-rh/'+slug;
     document.getElementById('sb-title').textContent=themeTitle.replace(/^Autodiagnostic\s+/i,'');
     document.getElementById('launch-url').textContent=url; document.getElementById('sb-url').textContent=url;
-    var launch=meta.date_lancement||meta.dateLancement||'2026-04-30',close=meta.date_cloture||meta.dateCloture||'2026-05-29';
-    document.getElementById('kpi-launch').textContent=formatDateISOToFR(launch); document.getElementById('kpi-close').textContent=formatDateISOToFR(close);
-    document.getElementById('sb-launch').textContent=formatDateISOToFR(launch); document.getElementById('sb-close').textContent=formatDateISOToFR(close);
-    updateReminderPlan(launch,close);
+    launch=meta.date_lancement||meta.dateLancement||launch;
+    close=meta.date_cloture||meta.dateCloture||close;
     if(stored.theme&&stored.theme.chapters){
       var chs=stored.theme.chapters;
       document.getElementById('sb-q').textContent=chs.reduce(function(a,c){return a+((c.questions||[]).length)},0);
       document.getElementById('sb-profils').textContent=chs.reduce(function(a,c){return a+((c.profils||[]).length)},0);
     }
   }catch(e){console.warn('Impossible de charger les données de lancement',e);}
+  document.getElementById('date-launch').value=launch;
+  document.getElementById('date-close').value=close;
+  document.getElementById('kpi-launch').textContent=formatDateISOToFR(launch);
+  document.getElementById('kpi-close').textContent=formatDateISOToFR(close);
+  document.getElementById('sb-launch').textContent=formatDateISOToFR(launch);
+  document.getElementById('sb-close').textContent=formatDateISOToFR(close);
+  updateReminderPlan(launch,close);
   showTemplate('launch',document.querySelector('.comm-tab'));
   drawQrCode(getUrl());
   updateChecklist();
 }
 
 function publishAutodiag(){
-  try{var raw=localStorage.getItem(LS_KEY),stored=raw?JSON.parse(raw):{};stored.launch_ready=true;stored.status='published';localStorage.setItem(LS_KEY,JSON.stringify(stored));}catch(e){}
+  updateChecklist();
+  if(document.getElementById('btn-launch').disabled) return;
+  try{
+    var raw=localStorage.getItem(LS_KEY),stored=raw?JSON.parse(raw):{};
+    stored.launch_ready=true;stored.status='published';
+    stored.meta=stored.meta||{};
+    stored.meta.date_lancement=document.getElementById('date-launch').value;
+    stored.meta.date_cloture=document.getElementById('date-close').value;
+    localStorage.setItem(LS_KEY,JSON.stringify(stored));
+  }catch(e){}
   alert('Autodiagnostic publié');
   window.location.href='selftech_resultats.html';
 }
