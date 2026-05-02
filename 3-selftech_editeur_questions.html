@@ -60,6 +60,8 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
 .cni-tab{flex:1;padding:5px 8px;border-radius:20px;font-size:11px;font-weight:600;font-family:'Asap',sans-serif;text-align:center;cursor:pointer;border:1px solid #d8e0ea;background:#fff;color:#64748b;transition:all 0.15s}
 .cni-tab.on{background:#18375d;color:#fff;border-color:#18375d}
 .cni-tab:not(.on):hover{background:#eef1f6;border-color:#b8c4d4;color:#18375d}
+.cni-tab.disabled{opacity:.42;cursor:not-allowed;background:#f7f9fc;color:#94a3b8;border-style:dashed}
+.cni-tab.disabled:hover{background:#f7f9fc;color:#94a3b8;border-color:#d8e0ea}
 
 .sb-bot{margin-top:auto;padding-top:14px;border-top:1px solid #e8edf4;display:flex;flex-direction:column;gap:6px}
 .sb-total{font-size:11px;color:#94a3b8;font-family:'Asap',sans-serif;text-align:center;padding:0 4px}
@@ -118,18 +120,8 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
 .q-card.open .q-num{background:#18375d;color:#fff}
 .q-main{flex:1;min-width:0}
 .q-text{font-size:13px;font-weight:600;color:#18375d;font-family:'Asap',sans-serif;line-height:1.4;margin-bottom:7px}
-  .editable-q{
-  outline:none;
-  border-radius:6px;
-  padding:2px 4px;
-  margin-left:-4px;
-  min-height:18px;
-  cursor:text;
-}
-.editable-q:focus{
-  background:#edf1f7;
-  box-shadow:0 0 0 1px #d8e0ea inset;
-}
+.editable-q{outline:none;border-radius:6px;padding:2px 4px;margin-left:-4px;min-height:18px;cursor:text}
+.editable-q:focus{background:#edf1f7;box-shadow:0 0 0 1px #d8e0ea inset}
 .q-tags-row{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
 
 /* Tags de provenance */
@@ -368,6 +360,18 @@ body{font-family:'Asap',sans-serif;background:#f4f6f9;min-height:100vh}
   </div>
 </div>
 
+<!-- MODALE PROFILS BLOQUÉS -->
+<div class="modal-overlay" id="modal-profiles-locked">
+  <div class="modal">
+    <div style="font-size:22px;margin-bottom:12px">🔒</div>
+    <h3>Complétez d’abord les questions</h3>
+    <p>Les profils de résultat se rédigent à partir des questions et des scores du chapitre. Ajoutez au moins <strong>4 questions valides</strong>, avec au moins <strong>3 réponses scorées</strong> par question, avant d’ouvrir les profils.</p>
+    <div class="modal-acts">
+      <button class="btn-confirm" style="background:#18375d" onclick="closeProfilesLockedModal()">Compris</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODALE REGEN -->
 <div class="modal-overlay" id="modal-regen">
   <div class="modal">
@@ -421,7 +425,7 @@ const chapters = [
       {niveau:2,titre:"Vous avez l'œil, mais pas encore le réflexe",phrase:"Votre sensibilité aux risques existe — elle s'exprime encore de façon irrégulière.",description:"Vous percevez les risques dans certaines situations, mais cela reste lié au contexte ou à votre état d'attention du moment. Ce qui vous manque encore, c'est la constance du regard. Vous êtes à un stade charnière : les automatismes de vigilance se construisent.",motscles:["Irrégulier","En construction"]},
       {niveau:3,titre:"La vigilance fait partie de votre ADN professionnel",phrase:"Vous repérez et traitez les risques avec constance, même quand personne ne regarde.",description:"Vous avez intégré la vigilance comme une posture naturelle. Vous ne cherchez pas les risques — vous les voyez, presque instinctivement. Ce réflexe est une ressource précieuse pour vous et pour les personnes qui travaillent avec vous.",motscles:["Ancré","Ressource collective"]},
     ],
-    seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]
+    seuils:[{min:0,max:0.66},{min:0.66,max:1.32},{min:1.32,max:2}]
   },
   { id:2, name:"Adopter les bons réflexes",       desc:"Mettre en pratique les comportements préventifs.",        questions:[
     {id:'q6',type:'choix',prov:'AI',text:"Vous êtes sur le point de commencer une tâche et réalisez que vous n'avez pas vos EPI. Vous êtes à 5 minutes de les récupérer.",tags:[{t:'EPI',ai:false},{t:'Réflexe',ai:true}],answers:[
@@ -435,9 +439,9 @@ const chapters = [
       {l:"Je préviens un collègue pour qu'il le signale",s:1},
       {l:"Je le mets hors service et le signale immédiatement",s:2},
     ]},
-  ], profils:[{niveau:1,titre:"Les réflexes préventifs ne sont pas encore naturels",phrase:"Les automatismes de protection se construisent encore.",description:"",motscles:[]},{niveau:2,titre:"Vous faites les bons gestes dans les situations connues",phrase:"Il reste des angles morts dans les contextes moins habituels.",description:"",motscles:[]},{niveau:3,titre:"Prévenir est un réflexe que vous n'avez plus besoin d'activer",phrase:"Vos comportements préventifs sont devenus une seconde nature.",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
-  { id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l'impact des comportements collectifs.",       questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
-  { id:4, name:"Réagir et signaler",               desc:"Réagir face à un incident et mobiliser les bons interlocuteurs.", questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.7},{min:0.7,max:1.7},{min:1.7,max:2.1}]},
+  ], profils:[{niveau:1,titre:"Les réflexes préventifs ne sont pas encore naturels",phrase:"Les automatismes de protection se construisent encore.",description:"",motscles:[]},{niveau:2,titre:"Vous faites les bons gestes dans les situations connues",phrase:"Il reste des angles morts dans les contextes moins habituels.",description:"",motscles:[]},{niveau:3,titre:"Prévenir est un réflexe que vous n'avez plus besoin d'activer",phrase:"Vos comportements préventifs sont devenus une seconde nature.",description:"",motscles:[]}], seuils:[{min:0,max:0.66},{min:0.66,max:1.32},{min:1.32,max:2}]},
+  { id:3, name:"Travailler en équipe en sécurité", desc:"Comprendre l'impact des comportements collectifs.",       questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.66},{min:0.66,max:1.32},{min:1.32,max:2}]},
+  { id:4, name:"Réagir et signaler",               desc:"Réagir face à un incident et mobiliser les bons interlocuteurs.", questions:[], profils:[{niveau:1,titre:"",phrase:"",description:"",motscles:[]},{niveau:2,titre:"",phrase:"",description:"",motscles:[]},{niveau:3,titre:"",phrase:"",description:"",motscles:[]}], seuils:[{min:0,max:0.66},{min:0.66,max:1.32},{min:1.32,max:2}]},
 ];
 
 const profils_config = [
@@ -459,12 +463,69 @@ const sharedLibQuestions = [
 ];
 
 let activeChap = 0;
-let activeTab = 'questions'; // 'questions' | 'profils'
+let activeTab = 'questions';
 let openCards = {};
 let activeFilterTag = '';
 let activeLib = 'ma';
 let likertInfoOpen = false;
- function applyDraftThemeFromStorage() {
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+}
+function stripHtml(value){
+  const d = document.createElement('div');
+  d.innerHTML = value || '';
+  return d.textContent || d.innerText || '';
+}
+function questionHasValidScoring(q){
+  return q && Array.isArray(q.answers) && q.answers.length >= 3 && q.answers.every(a => {
+    const n = Number(a.s);
+    return !isNaN(n) && n >= 0 && n <= 2;
+  });
+}
+function chapterQuestionsReady(c){
+  return c && Array.isArray(c.questions) && c.questions.length >= 4 && c.questions.every(questionHasValidScoring);
+}
+function openProfilesLockedModal(){
+  const modal = document.getElementById('modal-profiles-locked');
+  if (modal) modal.classList.add('on');
+}
+function closeProfilesLockedModal(){
+  const modal = document.getElementById('modal-profiles-locked');
+  if (modal) modal.classList.remove('on');
+}
+function getQuestionMaxScore(q){
+  const scores = (q.answers || []).map(a => Number(a.s)).filter(n => !isNaN(n));
+  return scores.length ? Math.max(...scores) : 2;
+}
+function getChapterMaxAverageScore(ch){
+  const validQuestions = (ch.questions || []).filter(questionHasValidScoring);
+  if (!validQuestions.length) return 2;
+  const totalMax = validQuestions.reduce((sum, q) => sum + getQuestionMaxScore(q), 0);
+  return totalMax / validQuestions.length;
+}
+function roundScore(n){
+  return Math.round(Number(n) * 100) / 100;
+}
+function suggestAutoSeuils(ch){
+  const max = getChapterMaxAverageScore(ch);
+  return [
+    {min:0, max:roundScore(max * 0.33)},
+    {min:roundScore(max * 0.33), max:roundScore(max * 0.66)},
+    {min:roundScore(max * 0.66), max:roundScore(max)}
+  ];
+}
+function applyAutoSeuils(ch){
+  if (!chapterQuestionsReady(ch)) return;
+  ch.seuils = suggestAutoSeuils(ch);
+}
+function refreshThresholdsAfterQuestionChange(){
+  const ch = chapters[activeChap];
+  if (chapterQuestionsReady(ch)) applyAutoSeuils(ch);
+}
+
+function applyDraftThemeFromStorage() {
   const themeFromUrl = new URLSearchParams(window.location.search).get('theme');
   const raw = localStorage.getItem('selftechDraftTheme');
   if (!raw) return;
@@ -473,8 +534,6 @@ let likertInfoOpen = false;
     const draft = JSON.parse(raw);
     if (!draft || !draft.chapters || !draft.chapters.length) return;
 
-    // Correspondances spécifiques pour éviter les erreurs de slug
-    // Exemple : "Sécurité & culture de sûreté" ne doit pas devenir automatiquement "securite-et-culture-de-surete"
     const knownSlugsByName = {
       "Sécurité & culture de sûreté": "securite-culture-surete",
       "Quel est mon niveau de compréhension des risques cyber ?": "cyber",
@@ -485,7 +544,6 @@ let likertInfoOpen = false;
 
     const draftSlug = draft.slug || knownSlugsByName[draft.name] || slugify(draft.name || '');
 
-    // Si un thème est précisé dans l'URL, on ne charge le brouillon que s'il correspond bien
     if (themeFromUrl && themeFromUrl !== draftSlug) return;
 
     chapters.splice(0, chapters.length, ...draft.chapters.map((c, index) => ({
@@ -499,11 +557,15 @@ let likertInfoOpen = false;
         {niveau:3, titre:"", phrase:"", description:"", motscles:[]}
       ],
       seuils: c.seuils || [
-        {min:0, max:0.7},
-        {min:0.7, max:1.7},
-        {min:1.7, max:2.1}
+        {min:0, max:0.66},
+        {min:0.66, max:1.32},
+        {min:1.32, max:2}
       ]
     })));
+
+    chapters.forEach(ch => {
+      if (chapterQuestionsReady(ch)) applyAutoSeuils(ch);
+    });
 
     activeChap = 0;
     activeTab = 'questions';
@@ -572,7 +634,7 @@ function updateEditorModeUI() {
     }
 
     navButtons.forEach(b => b.classList.remove('on'));
-    if (navButtons[1]) navButtons[1].classList.add('on'); // Mes autodiagnostics
+    if (navButtons[1]) navButtons[1].classList.add('on');
 
   } else {
     if (saveBtn) saveBtn.textContent = 'Enregistrer dans ma bibliothèque';
@@ -588,7 +650,7 @@ function updateEditorModeUI() {
     }
 
     navButtons.forEach(b => b.classList.remove('on'));
-    if (navButtons[2]) navButtons[2].classList.add('on'); // Ma bibliothèque
+    if (navButtons[2]) navButtons[2].classList.add('on');
   }
 }
 
@@ -651,21 +713,21 @@ const icoTrash = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><p
 const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>`;
 
 // ── RENDER NAV ────────────────────────────────────────────────────────────────
-
-  function renderNav() {
+function renderNav() {
   const nav = document.getElementById('chap-nav');
   nav.innerHTML = '';
   chapters.forEach((c, i) => {
     const n = c.questions.length;
-    const nProfils = c.profils.filter(p => p.titre.trim() && p.phrase.trim() && p.description.trim()).length;
+    const nProfils = c.profils.filter(p => String(p.titre || '').trim() && String(p.phrase || '').trim() && stripHtml(p.description).trim()).length;
     const dotColorQ = n >= 4 ? '#77cd8a' : n > 0 ? '#ffc744' : '#d8e0ea';
     const dotColorP = nProfils === 3 ? '#77cd8a' : nProfils > 0 ? '#ffc744' : '#d8e0ea';
+    const profilesReady = chapterQuestionsReady(c);
     const div = document.createElement('div');
     div.className = `cni ${i === activeChap ? 'on' : ''}`;
     div.innerHTML = `
       <div class="cni-head" onclick="selectChap(${i})">
         <div class="cni-lbl">Chapitre ${c.id}</div>
-        <div class="cni-name">${c.name}</div>
+        <div class="cni-name">${escapeHtml(c.name)}</div>
         <div class="cni-meta">
           <span class="cni-dot" style="background:${dotColorQ}"></span>
           <span class="cni-qcount">${n}/10 questions</span>
@@ -677,7 +739,7 @@ const icoStar = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentCo
       </div>
       <div class="cni-tabs">
         <button class="cni-tab ${i === activeChap && activeTab === 'questions' ? 'on' : ''}" onclick="setTab(${i},'questions')">Questions</button>
-        <button class="cni-tab ${i === activeChap && activeTab === 'profils' ? 'on' : ''}" onclick="setTab(${i},'profils')">Profils</button>
+        <button class="cni-tab ${i === activeChap && activeTab === 'profils' ? 'on' : ''} ${profilesReady ? '' : 'disabled'}" onclick="setTab(${i},'profils')" title="Complétez d’abord les questions du chapitre">Profils</button>
       </div>`;
     nav.appendChild(div);
   });
@@ -694,6 +756,17 @@ function selectChap(i) {
 }
 
 function setTab(i, tab) {
+  if (tab === 'profils' && !chapterQuestionsReady(chapters[i])) {
+    activeChap = i;
+    activeTab = 'questions';
+    openCards = {};
+    renderNav();
+    renderMain();
+    updateSaveButton();
+    openProfilesLockedModal();
+    return;
+  }
+  if (tab === 'profils') applyAutoSeuils(chapters[i]);
   activeChap = i;
   activeTab = tab;
   openCards = {};
@@ -718,22 +791,19 @@ function renderMain() {
 function renderQuestions(ch) {
   const n = ch.questions.length;
   const pct = Math.round((n / 10) * 100);
-
-  // Option D — libellé contextuel
   const isEmpty = n === 0;
   const btnRegenLabel = isEmpty ? 'Générer les questions avec l\'IA' : 'Régénérer avec l\'IA';
   const btnRegenAction = isEmpty ? 'confirmRegen()' : 'askRegen()';
 
-  // En-tête commun
   const header = `
     <div class="chap-head">
       <div class="chap-info">
         <div class="chap-badge">Chapitre ${ch.id} · Questions</div>
         <div style="display:flex;align-items:center;gap:6px">
-          <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+          <input class="chap-name-inp" value="${escapeHtml(ch.name)}" oninput="chapters[activeChap].name=this.value;renderNav()">
           <span title="Cliquez sur le titre pour le modifier" style="color:#c5ccd5;font-size:13px;cursor:default;flex-shrink:0">✏️</span>
         </div>
-        <input class="chap-desc-inp" value="${ch.desc}">
+        <input class="chap-desc-inp" value="${escapeHtml(ch.desc)}" oninput="chapters[activeChap].desc=this.value">
       </div>
       ${!isEmpty ? `<div class="chap-actions">
         <button class="btn-regen-all" onclick="${btnRegenAction}">
@@ -755,10 +825,8 @@ function renderQuestions(ch) {
       </div>` : ''}
     </div>`;
 
-  // Option A — état vide proéminent avec 3 CTAs hiérarchisés
   const emptyState = `
     <div style="padding:12px 0 0">
-      <!-- CTA principal : IA -->
       <div onclick="confirmRegen()" style="background:linear-gradient(135deg,#18375d 0%,#007883 100%);border-radius:14px;padding:28px 24px;cursor:pointer;transition:opacity 0.15s;margin-bottom:12px" onmouseover="this.style.opacity='0.92'" onmouseout="this.style.opacity='1'">
         <div style="display:flex;align-items:center;gap:14px">
           <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
@@ -771,8 +839,6 @@ function renderQuestions(ch) {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
-
-      <!-- CTAs secondaires -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div onclick="openPanel()" style="background:#fff;border:1px solid #d8e0ea;border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color 0.15s" onmouseover="this.style.borderColor='#007883';this.style.background='#f0fcfc'" onmouseout="this.style.borderColor='#d8e0ea';this.style.background='#fff'">
           <div style="width:36px;height:36px;border-radius:9px;background:#e5f4f5;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
@@ -791,9 +857,7 @@ function renderQuestions(ch) {
       </div>
     </div>`;
 
-  const qHTML = n === 0
-    ? emptyState
-    : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
+  const qHTML = n === 0 ? emptyState : ch.questions.map((q, qi) => renderCard(q, qi)).join('');
 
   document.getElementById('main-editor').innerHTML = `
     ${header}
@@ -806,7 +870,7 @@ function renderQuestions(ch) {
       <span class="likert-info-ico">ℹ️</span>
       <div class="likert-info-body">
         <strong>Conversion échelle → score</strong> — Les questions Likert (1→5) sont normalisées : 1=0 · 2=0,5 · 3=1 · 4=1,5 · 5=2.
-        <span id="likert-extra" style="display:none"> Pour les formulations négatives, l'échelle est inversée : 1=2 · 2=1,5 · 3=1 · 4=0,5 · 5=0. Les mises en situation à choix (0/1/2) et les Likert normalisés sont calculés ensemble pour la moyenne du chapitre.</span>
+        <span id="likert-extra" style="display:none"> Pour les formulations négatives, l'échelle est inversée : 1=2 · 2=1,5 · 3=1 · 4=0,5 · 5=0. Les mises en situation à choix (0/1/2) et les Likert normalisés sont calculés ensemble pour la moyenne du chapitre. Les profils restent donc sur une échelle 0 → 2, même si vous ajoutez des questions.</span>
       </div>
       <span class="likert-info-toggle" onclick="toggleLikertInfo()">Voir plus</span>
     </div>` : ''}
@@ -824,15 +888,30 @@ function updateQuestionText(qid, value) {
   const q = chapters[activeChap].questions.find(q => q.id === qid);
   if (q) q.text = value;
 }
+function updateAnswerText(qid, ai, value) {
+  const q = chapters[activeChap].questions.find(q => q.id === qid);
+  if (q && q.answers[ai]) q.answers[ai].l = value;
+}
+function updateAnswerScore(qid, ai, score) {
+  const q = chapters[activeChap].questions.find(q => q.id === qid);
+  if (!q || !q.answers[ai]) return;
+  const n = Number(score);
+  if (isNaN(n) || n < 0 || n > 2) return;
+  q.answers[ai].s = n;
+  refreshThresholdsAfterQuestionChange();
+  renderNav();
+  updateSaveButton();
+}
+
 function renderCard(q, qi) {
   const open = openCards[q.id];
   const p = PROV[q.prov] || {};
   const provHTML = p.label ? `<span class="tag-prov ${p.cls}">${p.ico} ${p.label}</span>` : '';
-  const tagsHTML = q.tags.map((t, ti) => `
-    <span class="tag-pill ${t.ai ? 'ai-sug' : ''}">${t.ai ? '✦ ' : ''}${t.t}
+  const tagsHTML = (q.tags || []).map((t, ti) => `
+    <span class="tag-pill ${t.ai ? 'ai-sug' : ''}">${t.ai ? '✦ ' : ''}${escapeHtml(t.t)}
       <span class="tag-x" onclick="removeTag('${q.id}',${ti});event.stopPropagation()">×</span>
     </span>`).join('');
-  const addBtn = q.tags.length < 6 ? `<span class="tag-add" onclick="addTag('${q.id}');event.stopPropagation()">+ Tag</span>` : '';
+  const addBtn = (q.tags || []).length < 6 ? `<span class="tag-add" onclick="addTag('${q.id}');event.stopPropagation()">+ Tag</span>` : '';
 
   let bodyHTML = '';
   if (open) {
@@ -841,17 +920,17 @@ function renderCard(q, qi) {
       ? `<div class="likert-list">${q.answers.map((a, ai) => `
           <div class="la-row">
             <div class="la-bar"></div>
-            <input class="la-inp" value="${a.l}" style="color:${ai===0?'#eb6366':ai===4?'#007883':'#475569'}">
+            <input class="la-inp" value="${escapeHtml(a.l)}" style="color:${ai===0?'#eb6366':ai===4?'#007883':'#475569'}" oninput="updateAnswerText('${q.id}',${ai},this.value)">
             <span class="la-score-info">→ score ${a.s}</span>
-            <div class="score-pill" onclick="editScore(this,event)" data-score="${a.s}">
+            <div class="score-pill" onclick="editScore(this,event,'${q.id}',${ai})" data-score="${a.s}">
               <span class="sp-lbl">Score</span><span class="sp-val">${a.s}</span>
             </div>
           </div>`).join('')}</div>`
-      : `<div class="mc-list">${q.answers.map(a => `
+      : `<div class="mc-list">${q.answers.map((a, ai) => `
           <div class="mc-row">
             <div class="mc-dot"></div>
-            <input class="mc-inp" value="${a.l}">
-            <div class="score-pill" onclick="editScore(this,event)" data-score="${a.s}">
+            <input class="mc-inp" value="${escapeHtml(a.l)}" oninput="updateAnswerText('${q.id}',${ai},this.value)">
+            <div class="score-pill" onclick="editScore(this,event,'${q.id}',${ai})" data-score="${a.s}">
               <span class="sp-lbl">Score</span><span class="sp-val">${a.s}</span>
             </div>
           </div>`).join('')}</div>`;
@@ -873,9 +952,7 @@ function renderCard(q, qi) {
      spellcheck="true"
      onclick="event.stopPropagation()"
      onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();} event.stopPropagation();"
-     oninput="updateQuestionText('${q.id}', this.innerText)">
-  ${q.text}
-</div>
+     oninput="updateQuestionText('${q.id}', this.innerText)">${escapeHtml(q.text)}</div>
           <div class="q-tags-row">${provHTML}${tagsHTML}${addBtn}</div>
         </div>
         <div class="q-right" onclick="event.stopPropagation()">
@@ -891,6 +968,16 @@ function renderCard(q, qi) {
 
 // ── VUE PROFILS ───────────────────────────────────────────────────────────────
 function renderProfils(ch) {
+  if (!chapterQuestionsReady(ch)) {
+    activeTab = 'questions';
+    renderNav();
+    renderQuestions(ch);
+    openProfilesLockedModal();
+    return;
+  }
+
+  applyAutoSeuils(ch);
+
   const seuilsHTML = ch.seuils.map((s, i) => {
     const pc = profils_config[i];
     return `
@@ -898,17 +985,17 @@ function renderProfils(ch) {
         <div class="seuil-dot" style="background:${pc.couleur}"></div>
         <span class="seuil-label">${pc.nom}</span>
         <div class="seuil-range">
-          <input class="seuil-inp" type="number" min="0" max="2" step="0.1" value="${s.min}" onchange="chapters[activeChap].seuils[${i}].min=parseFloat(this.value)">
+          <input class="seuil-inp" type="number" min="0" max="2" step="0.01" value="${s.min}" onchange="chapters[activeChap].seuils[${i}].min=parseFloat(this.value);updateSaveButton()">
           <span class="seuil-sep">→</span>
-          <input class="seuil-inp" type="number" min="0" max="2.1" step="0.1" value="${s.max}" onchange="chapters[activeChap].seuils[${i}].max=parseFloat(this.value)">
+          <input class="seuil-inp" type="number" min="0" max="2" step="0.01" value="${s.max}" onchange="chapters[activeChap].seuils[${i}].max=parseFloat(this.value);updateSaveButton()">
         </div>
       </div>`;
   }).join('');
 
   const profilsHTML = ch.profils.map((p, i) => {
     const pc = profils_config[i];
-    const mkwHTML = p.motscles.map((m, mi) => `
-      <span class="mkw" style="background:${pc.bgHead};border-color:${pc.borderHead};color:${pc.textColor}">${m}
+    const mkwHTML = (p.motscles || []).map((m, mi) => `
+      <span class="mkw" style="background:${pc.bgHead};border-color:${pc.borderHead};color:${pc.textColor}">${escapeHtml(m)}
         <span class="mkw-x" onclick="removeMkw(${i},${mi})">×</span>
       </span>`).join('');
 
@@ -921,7 +1008,7 @@ function renderProfils(ch) {
             <span style="color:${pc.textColor};opacity:0.4;font-size:11px;margin-left:2px">✏️</span>
           </div>
           <div style="display:flex;align-items:center;gap:10px">
-            <span class="profil-score-range" style="color:${pc.textColor}">Score ${ch.seuils[i].min} → ${ch.seuils[i].max}</span>
+            <span class="profil-score-range" style="color:${pc.textColor}">Moyenne ${ch.seuils[i].min} → ${ch.seuils[i].max}</span>
             <button class="btn-ai-profil" style="background:rgba(0,0,0,0.08);color:${pc.textColor}" onclick="genProfil(${i})">
               ${icoStar} Générer avec l'IA
             </button>
@@ -931,12 +1018,12 @@ function renderProfils(ch) {
 
           <div class="pfield">
             <label>Titre du profil <span style="color:#eb6366">*</span></label>
-            <input type="text" value="${p.titre}" placeholder="Titre évocateur — le répondant se projette dans ce comportement" oninput="chapters[activeChap].profils[${i}].titre=this.value;updateSaveButton()">
+            <input type="text" value="${escapeHtml(p.titre)}" placeholder="Titre évocateur — le répondant se projette dans ce comportement" oninput="chapters[activeChap].profils[${i}].titre=this.value;updateSaveButton()">
           </div>
 
           <div class="pfield">
             <label>Phrase courte de résumé</label>
-            <input type="text" class="short" value="${p.phrase}" placeholder="Une phrase concise, bienveillante, sans jugement" oninput="chapters[activeChap].profils[${i}].phrase=this.value;updateSaveButton()">
+            <input type="text" class="short" value="${escapeHtml(p.phrase)}" placeholder="Une phrase concise, bienveillante, sans jugement" oninput="chapters[activeChap].profils[${i}].phrase=this.value;updateSaveButton()">
           </div>
 
           <div class="pfield">
@@ -987,17 +1074,17 @@ function renderProfils(ch) {
       <div class="chap-info">
         <div class="chap-badge">Chapitre ${ch.id} · Profils de résultat</div>
         <div style="display:flex;align-items:center;gap:6px">
-          <input class="chap-name-inp" value="${ch.name}" oninput="chapters[activeChap].name=this.value;renderNav()">
+          <input class="chap-name-inp" value="${escapeHtml(ch.name)}" oninput="chapters[activeChap].name=this.value;renderNav()">
           <span title="Cliquez sur le titre pour le modifier" style="color:#c5ccd5;font-size:13px;cursor:default;flex-shrink:0">✏️</span>
         </div>
-        <input class="chap-desc-inp" value="${ch.desc}">
+        <input class="chap-desc-inp" value="${escapeHtml(ch.desc)}" oninput="chapters[activeChap].desc=this.value">
       </div>
     </div>
 
     <div class="seuils-card">
       <div class="seuils-head">
-        <span class="seuils-title">${icoStar} Seuils de score par profil</span>
-        <span class="seuils-hint">Calculés automatiquement · ajustables manuellement · score de 0 à 2</span>
+        <span class="seuils-title">${icoStar} Seuils de moyenne par profil</span>
+        <span class="seuils-hint">Calculés automatiquement · ajustables manuellement · moyenne de 0 à 2</span>
       </div>
       <div class="seuils-row">${seuilsHTML}</div>
     </div>
@@ -1007,12 +1094,20 @@ function renderProfils(ch) {
 
 // ── INTERACTIONS QUESTIONS ────────────────────────────────────────────────────
 function toggleCard(id) { openCards[id] = !openCards[id]; renderMain(); }
-function deleteQ(id) { chapters[activeChap].questions = chapters[activeChap].questions.filter(q => q.id !== id); delete openCards[id]; renderNav(); renderMain(); updateSaveButton(); }
+function deleteQ(id) {
+  chapters[activeChap].questions = chapters[activeChap].questions.filter(q => q.id !== id);
+  delete openCards[id];
+  refreshThresholdsAfterQuestionChange();
+  renderNav();
+  renderMain();
+  updateSaveButton();
+}
 function regenOne(id, btn) {
   btn.style.animation = 'spin 0.7s linear infinite'; btn.disabled = true;
   setTimeout(() => {
     const ch = chapters[activeChap], idx = ch.questions.findIndex(q => q.id === id);
     if (idx > -1) ch.questions[idx] = { id, type: 'choix', prov: 'AI', text: "Lors d'un briefing sécurité, vous réalisez que vous n'avez pas bien mémorisé une consigne. Que faites-vous ?", tags: [{t:'Connaissance',ai:true},{t:'Réaction',ai:true}], answers: [{l:"Je fais semblant d'avoir compris",s:0},{l:"Je demande à un collègue après la réunion",s:1},{l:"Je pose la question immédiatement, sans hésiter",s:2}] };
+    refreshThresholdsAfterQuestionChange();
     renderNav(); renderMain(); updateSaveButton();
   }, 1000);
 }
@@ -1020,7 +1115,9 @@ function addManual() {
   if (chapters[activeChap].questions.length >= 10) return;
   const id = 'q' + Date.now();
   chapters[activeChap].questions.push({ id, type: 'choix', prov: 'CLIENT', text: "Nouvelle mise en situation", tags: [], answers: [{l:"Réponse A",s:0},{l:"Réponse B",s:1},{l:"Réponse C",s:2}] });
-  openCards[id] = true; renderNav(); renderMain(); updateSaveButton();
+  openCards[id] = true;
+  refreshThresholdsAfterQuestionChange();
+  renderNav(); renderMain(); updateSaveButton();
 }
 
 function addOneAI() {
@@ -1065,6 +1162,7 @@ function addOneAI() {
     const id = 'q' + Date.now();
     chapters[activeChap].questions.push({ id, type: pick.type, prov: 'AI', text: pick.text, tags: pick.tags, answers: pick.answers });
     openCards[id] = true;
+    refreshThresholdsAfterQuestionChange();
     renderNav(); renderMain(); updateSaveButton();
   }, 1100);
 }
@@ -1085,16 +1183,19 @@ function confirmRegen() {
     {id:'qr4',type:'likert',prov:'AI',text:"Je connais le plan d'évacuation de mon bâtiment.",tags:[{t:'Évacuation',ai:true}],answers:[{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}]},
     {id:'qr5',type:'choix',prov:'AI',text:"Un premier incendie se déclare dans un local voisin. Votre premier réflexe ?",tags:[{t:'Incendie',ai:true},{t:'Réflexe',ai:true}],answers:[{l:"J'évalue si je peux l'éteindre seul",s:0},{l:"J'alerte et j'attends des instructions",s:1},{l:"J'alerte immédiatement et j'évacue",s:2}]},
   ];
+  refreshThresholdsAfterQuestionChange();
   openCards = {}; renderNav(); renderMain(); updateSaveButton();
 }
 
 // ── SCORING ───────────────────────────────────────────────────────────────────
-function editScore(pill, e) {
+function editScore(pill, e, qid, ai) {
   e.stopPropagation();
   const isEditing = pill.classList.contains('editing');
   document.querySelectorAll('.score-pill.editing').forEach(p => closeScore(p));
   if (isEditing) return;
   pill.classList.add('editing');
+  pill.dataset.qid = qid;
+  pill.dataset.ai = ai;
   const lbl = pill.querySelector('.sp-lbl'), valEl = pill.querySelector('.sp-val');
   lbl.classList.add('e'); valEl.classList.add('e'); valEl.style.display = 'none';
   const inp = document.createElement('input');
@@ -1106,7 +1207,16 @@ function editScore(pill, e) {
 }
 function closeScore(pill) {
   const inp = pill.querySelector('input');
-  if (inp) { pill.dataset.score = inp.value || pill.dataset.score; inp.remove(); }
+  if (inp) {
+    const n = Number(inp.value);
+    if (!isNaN(n) && n >= 0 && n <= 2) {
+      pill.dataset.score = String(n);
+      const qid = pill.dataset.qid;
+      const ai = Number(pill.dataset.ai);
+      updateAnswerScore(qid, ai, n);
+    }
+    inp.remove();
+  }
   const valEl = pill.querySelector('.sp-val');
   if (valEl) { valEl.textContent = pill.dataset.score; valEl.style.display = ''; valEl.classList.remove('e'); }
   const lbl = pill.querySelector('.sp-lbl');
@@ -1180,7 +1290,7 @@ function updateLibToggle() {
 function currentLib() { return activeLib === 'ma' ? myLibQuestions : sharedLibQuestions; }
 function renderPanelTags() {
   const all = [...new Set(currentLib().flatMap(q => q.tags))];
-  document.getElementById('panel-tags-wrap').innerHTML = all.map(t => `<span class="filter-tag ${t === activeFilterTag ? 'on' : ''}" onclick="filterByTag('${t}')">${t}</span>`).join('');
+  document.getElementById('panel-tags-wrap').innerHTML = all.map(t => `<span class="filter-tag ${t === activeFilterTag ? 'on' : ''}" onclick="filterByTag('${escapeHtml(t)}')">${escapeHtml(t)}</span>`).join('');
 }
 function filterByTag(t) { activeFilterTag = activeFilterTag === t ? '' : t; renderPanelTags(); renderPanelList(document.getElementById('panel-search-inp').value, activeFilterTag); }
 function filterPanel(val) { renderPanelList(val, activeFilterTag); }
@@ -1192,10 +1302,10 @@ function renderPanelList(search, tag) {
   list.innerHTML = filtered.map(q => `
     <div class="panel-q" id="pq-${q.id}">
       <div style="flex:1">
-        <div class="panel-q-text">${q.text}</div>
+        <div class="panel-q-text">${escapeHtml(q.text)}</div>
         <div class="panel-q-meta">
           <span class="tag-prov ${q.prov==='EXPERT'?'expert':q.prov==='CLIENT'?'client':''}" style="font-size:10px">${PROV_MAP[q.prov]} ${PROV[q.prov]?.label||''}</span>
-          ${q.tags.map(t => `<span class="tag-pill" style="font-size:10px">${t}</span>`).join('')}
+          ${q.tags.map(t => `<span class="tag-pill" style="font-size:10px">${escapeHtml(t)}</span>`).join('')}
         </div>
       </div>
       <button class="btn-add-from-base" onclick="addFromLib('${q.id}')" title="Ajouter">+</button>
@@ -1207,6 +1317,7 @@ function addFromLib(qid) {
   if (!bq) return;
   bq.added = true;
   chapters[activeChap].questions.push({ id: 'q' + Date.now(), type: 'likert', prov: bq.prov, text: bq.text, tags: bq.tags.map(t => ({t, ai:false})), answers: [{l:"Jamais",s:0},{l:"Rarement",s:0.5},{l:"Parfois",s:1},{l:"Souvent",s:1.5},{l:"Toujours",s:2}] });
+  refreshThresholdsAfterQuestionChange();
   renderNav(); renderMain(); updateSaveButton();
   renderPanelList(document.getElementById('panel-search-inp').value, activeFilterTag);
 }
@@ -1224,36 +1335,33 @@ function renameProfil(i) {
 function chapProblems(c) {
   const problems = [];
 
-  // Questions : min 4, chacune avec min 3 réponses et scores valides (0–2)
   if (c.questions.length < 4) {
     problems.push({ type:'q', msg:`${c.questions.length} question${c.questions.length!==1?'s':''} — minimum 4 requises`, tab:'questions' });
   } else {
     const badQ = c.questions.filter(q =>
       !q.answers || q.answers.length < 3 ||
-      q.answers.some(a => typeof a.s !== 'number' || isNaN(a.s) || a.s < 0 || a.s > 2)
+      q.answers.some(a => isNaN(Number(a.s)) || Number(a.s) < 0 || Number(a.s) > 2)
     );
     if (badQ.length > 0) {
       problems.push({ type:'q', msg:`${badQ.length} question${badQ.length>1?'s':''} incomplète${badQ.length>1?'s':''} — min 3 réponses, scores entre 0 et 2 requis`, tab:'questions' });
     }
   }
 
-  // Profils : titre + résumé + description pour les 3
   const badP = c.profils.filter(p =>
     !p.titre || !p.titre.trim() ||
     !p.phrase || !p.phrase.trim() ||
-    !p.description || !p.description.trim()
+    !stripHtml(p.description).trim()
   );
   if (badP.length > 0) {
     problems.push({ type:'p', msg:`${badP.length} profil${badP.length>1?'s':''} incomplet${badP.length>1?'s':''} — titre, résumé et description requis pour chacun`, tab:'profils' });
   }
 
-  // Seuils : valeurs numériques, min < max, cohérence globale
   const badS = c.seuils.some(s =>
-    typeof s.min !== 'number' || typeof s.max !== 'number' ||
-    isNaN(s.min) || isNaN(s.max) || s.min >= s.max || s.min < 0 || s.max > 2.1
+    isNaN(Number(s.min)) || isNaN(Number(s.max)) ||
+    Number(s.min) >= Number(s.max) || Number(s.min) < 0 || Number(s.max) > 2
   );
   if (badS) {
-    problems.push({ type:'p', msg:`Seuils incohérents — chaque min doit être inférieur à son max, entre 0 et 2`, tab:'profils' });
+    problems.push({ type:'p', msg:`Seuils incohérents — chaque min doit être inférieur à son max, sur une moyenne entre 0 et 2`, tab:'profils' });
   }
 
   return problems;
@@ -1291,7 +1399,7 @@ function trySave() {
       problems.map(p => `
         <div style="display:flex;align-items:center;justify-content:space-between;background:#fafbfc;border:1px solid #e8edf4;border-radius:8px;padding:9px 14px;gap:10px">
           <div style="flex:1;min-width:0">
-            <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${c.name}</div>
+            <div style="font-size:12px;font-weight:700;color:#18375d;font-family:Asap,sans-serif">Chapitre ${c.id} — ${escapeHtml(c.name)}</div>
             <div style="font-size:11px;color:#94a3b8;font-family:Asap,sans-serif;margin-top:2px;line-height:1.4">${p.msg}</div>
           </div>
           <button onclick="closeSaveModal();setTab(${c.id-1},'${p.tab}')" style="background:#eb6366;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Asap,sans-serif;flex-shrink:0">Compléter →</button>
@@ -1310,6 +1418,9 @@ function closeSaveModal() {
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 applyDraftThemeFromStorage();
+chapters.forEach(ch => {
+  if (chapterQuestionsReady(ch)) applyAutoSeuils(ch);
+});
 updateEditorModeUI();
 renderNav();
 renderMain();
